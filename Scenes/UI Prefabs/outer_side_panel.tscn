@@ -1,0 +1,17 @@
+[gd_scene format=3 uid="uid://blt2xfgped1n8"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_g73pw"]
+bg_color = Color(1, 1, 1, 0)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.039215688, 1, 0.3019608, 0)
+
+[node name="Outer Side Panel" type="Panel" unique_id=469996951]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_g73pw")

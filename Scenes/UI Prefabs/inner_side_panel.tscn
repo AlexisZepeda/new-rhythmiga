@@ -1,0 +1,17 @@
+[gd_scene format=3 uid="uid://d3tcsll630mrm"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_aalt7"]
+bg_color = Color(1, 1, 1, 0)
+border_width_left = 8
+border_width_top = 8
+border_width_right = 8
+border_width_bottom = 8
+border_color = Color(0, 0, 0.39215687, 0)
+
+[node name="Inner Side Panel" type="Panel" unique_id=585441006]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_aalt7")

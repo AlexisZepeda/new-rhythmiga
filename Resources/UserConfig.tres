@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="UserConfig" format=3 uid="uid://dd4w4wre7bldh"]
+
+[ext_resource type="Script" uid="uid://dgspdixw2ahjg" path="res://Resources/UserConfig.gd" id="1_2q4pk"]
+
+[resource]
+script = ExtResource("1_2q4pk")
+path = "res://Saves"
+metadata/_custom_type_script = "uid://dgspdixw2ahjg"

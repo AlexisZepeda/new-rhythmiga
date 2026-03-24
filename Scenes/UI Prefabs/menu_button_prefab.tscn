@@ -1,0 +1,13 @@
+[gd_scene format=3 uid="uid://fs3aj35j6dw0"]
+
+[ext_resource type="Theme" uid="uid://dqvkivmkth1ot" path="res://Resources/Themes/MenuButton.tres" id="1_5r6vd"]
+[ext_resource type="Script" uid="uid://cr4rp2c8bjhc1" path="res://Scripts/UI Prefabs/MenuButtonPrefab.gd" id="2_3r2gm"]
+
+[node name="MenuButton Prefab" type="Button" unique_id=1617453365]
+offset_right = 8.0
+offset_bottom = 8.0
+theme = ExtResource("1_5r6vd")
+theme_override_font_sizes/font_size = 28
+text = "Button"
+flat = true
+script = ExtResource("2_3r2gm")

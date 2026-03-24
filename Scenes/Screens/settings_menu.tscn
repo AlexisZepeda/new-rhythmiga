@@ -1,0 +1,254 @@
+[gd_scene format=3 uid="uid://c5eq0rs778vpw"]
+
+[ext_resource type="Script" uid="uid://dotxw4av6hi8f" path="res://Scripts/Screens/SettingsMenu.gd" id="1_g8ys1"]
+[ext_resource type="Theme" uid="uid://kwgoi4r6jr0i" path="res://Resources/Themes/Global.tres" id="1_hrnuu"]
+[ext_resource type="PackedScene" uid="uid://blt2xfgped1n8" path="res://Scenes/UI Prefabs/outer_side_panel.tscn" id="2_167i8"]
+[ext_resource type="Resource" uid="uid://dd4w4wre7bldh" path="res://Resources/UserConfig.tres" id="2_qer3s"]
+[ext_resource type="PackedScene" uid="uid://d3tcsll630mrm" path="res://Scenes/UI Prefabs/inner_side_panel.tscn" id="3_qer3s"]
+[ext_resource type="PackedScene" uid="uid://cwrt4avb8tv4l" path="res://Scenes/UI Prefabs/volume_slider.tscn" id="4_3domo"]
+[ext_resource type="Script" uid="uid://bvbfg5j5bew8h" path="res://Scripts/UI/ResolutionSettings.gd" id="5_167i8"]
+[ext_resource type="PackedScene" uid="uid://spd0payvbbux" path="res://Scenes/UI Prefabs/header_text_prefab.tscn" id="5_hrnuu"]
+[ext_resource type="AudioStream" uid="uid://0jgrs78esi1o" path="res://Sounds/MIDI Menu.ogg" id="5_mrulr"]
+[ext_resource type="Script" uid="uid://dvaqjt3fxymw4" path="res://Scripts/UI/AudioSettings.gd" id="5_qfe0j"]
+[ext_resource type="AudioStream" uid="uid://wlgmjtdkn7x0" path="res://Sounds/Hit SFX.ogg" id="6_qfe0j"]
+[ext_resource type="PackedScene" uid="uid://cipiemic4dbd3" path="res://Scenes/Screens/Settings/input_settings.tscn" id="7_3domo"]
+
+[node name="Settings Menu" type="Control" unique_id=297158495 node_paths=PackedStringArray("sfx_player", "master_volume", "music_volume", "sfx_volume")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+theme = ExtResource("1_hrnuu")
+script = ExtResource("1_g8ys1")
+main_menu_path = "uid://c2pcwa46ftj3t"
+user_config = ExtResource("2_qer3s")
+sfx_player = NodePath("SFXPlayer")
+master_volume = NodePath("Panel/AspectRatioContainer/Inner Side Panel/MarginContainer/TabContainer/Audio/Audio/Master/Master Volume Slider")
+music_volume = NodePath("Panel/AspectRatioContainer/Inner Side Panel/MarginContainer/TabContainer/Audio/Audio/Music/Music Volume Slider")
+sfx_volume = NodePath("Panel/AspectRatioContainer/Inner Side Panel/MarginContainer/TabContainer/Audio/Audio/SFX/SFX Volume Slider")
+
+[node name="Panel" parent="." unique_id=469996951 instance=ExtResource("2_167i8")]
+layout_mode = 1
+mouse_filter = 1
+
+[node name="Header Text Prefab" parent="Panel" unique_id=1284460278 instance=ExtResource("5_hrnuu")]
+visible = false
+layout_mode = 0
+title = "Settings"
+
+[node name="AspectRatioContainer" type="AspectRatioContainer" parent="Panel" unique_id=300775744]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Inner Side Panel" parent="Panel/AspectRatioContainer" unique_id=585441006 instance=ExtResource("3_qer3s")]
+layout_mode = 2
+mouse_filter = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="Panel/AspectRatioContainer/Inner Side Panel" unique_id=1450345743]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 100
+theme_override_constants/margin_top = 100
+theme_override_constants/margin_right = 100
+theme_override_constants/margin_bottom = 100
+
+[node name="TabContainer" type="TabContainer" parent="Panel/AspectRatioContainer/Inner Side Panel/MarginContainer" unique_id=1327219632]
+layout_mode = 2
+current_tab = 0
+
+[node name="Audio" type="MarginContainer" parent="Panel/AspectRatioContainer/Inner Side Panel/MarginContainer/TabContainer" unique_id=1221004743]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+metadata/_tab_index = 0
+
+[node name="Audio" type="VBoxContainer" parent="Panel/AspectRatioContainer/Inner Side Panel/MarginContainer/TabContainer/Audio" unique_id=1684795360 node_paths=PackedStringArray("master_slider", "music_slider", "sfx_slider", "apply_button", "reset_button")]
+custom_minimum_size = Vector2(300, 100)
+layout_mode = 2
+script = ExtResource("5_qfe0j")
+master_slider = NodePath("Master/Master Volume Slider")
+music_slider = NodePath("Music/Music Volume Slider")
+sfx_slider = NodePath("SFX/SFX Volume Slider")
+apply_button = NodePath("HBoxContainer/ApplyButton")
+reset_button = NodePath("HBoxContainer/ResetButton")
+
+[node name="Audio Settings" type="Label" parent="Panel/AspectRatioContainer/Inner Side Panel/MarginContainer/TabContainer/Audio/Audio" unique_id=971885642]
+layout_mode = 2
+text = "Audio Settings"
+
+[node name="Master" type="VBoxContainer" parent="Panel/AspectRatioContainer/Inner Side Panel/MarginContainer/TabContainer/Audio/Audio" unique_id=273534889]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+
+[node name="Master Label" type="Label" parent="Panel/AspectRatioContainer/Inner Side Panel/MarginContainer/TabContainer/Audio/Audio/Master" unique_id=1057220995]
+layout_mode = 2
+text = "Master"
+
+[node name="Master Volume Slider" parent="Panel/AspectRatioContainer/Inner Side Panel/MarginContainer/TabContainer/Audio/Audio/Master" unique_id=1488175512 instance=ExtResource("4_3domo")]
+layout_mode = 2
+
+[node name="Music" type="VBoxContainer" parent="Panel/AspectRatioContainer/Inner Side Panel/MarginContainer/TabContainer/Audio/Audio" unique_id=961541006]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+
+[node name="Music Label" type="Label" parent="Panel/AspectRatioContainer/Inner Side Panel/MarginContainer/TabContainer/Audio/Audio/Music" unique_id=225361770]
+layout_mode = 2
+text = "Music"
+
+[node name="Music Volume Slider" parent="Panel/AspectRatioContainer/Inner Side Panel/MarginContainer/TabContainer/Audio/Audio/Music" unique_id=504969367 instance=ExtResource("4_3domo")]
+layout_mode = 2
+audio_bus_name = "Music"
+
+[node name="SFX" type="VBoxContainer" parent="Panel/AspectRatioContainer/Inner Side Panel/MarginContainer/TabContainer/Audio/Audio" unique_id=1970533250]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+
+[node name="SFX Label" type="Label" parent="Panel/AspectRatioContainer/Inner Side Panel/MarginContainer/TabContainer/Audio/Audio/SFX" unique_id=1962136460]
+layout_mode = 2
+text = "SFX"
+
+[node name="SFX Volume Slider" parent="Panel/AspectRatioContainer/Inner Side Panel/MarginContainer/TabContainer/Audio/Audio/SFX" unique_id=1900524910 instance=ExtResource("4_3domo")]
+layout_mode = 2
+audio_bus_name = "SFX"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel/AspectRatioContainer/Inner Side Panel/MarginContainer/TabContainer/Audio/Audio" unique_id=793513827]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 10
+
+[node name="ApplyButton" type="Button" parent="Panel/AspectRatioContainer/Inner Side Panel/MarginContainer/TabContainer/Audio/Audio/HBoxContainer" unique_id=238822971]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 10
+text = "Apply"
+
+[node name="ResetButton" type="Button" parent="Panel/AspectRatioContainer/Inner Side Panel/MarginContainer/TabContainer/Audio/Audio/HBoxContainer" unique_id=980825531]
+layout_mode = 2
+text = "Reset"
+
+[node name="Video" type="MarginContainer" parent="Panel/AspectRatioContainer/Inner Side Panel/MarginContainer/TabContainer" unique_id=413456886]
+visible = false
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+metadata/_tab_index = 1
+
+[node name="Video" type="VBoxContainer" parent="Panel/AspectRatioContainer/Inner Side Panel/MarginContainer/TabContainer/Video" unique_id=853831574]
+layout_mode = 2
+
+[node name="Resolution Settings" type="Label" parent="Panel/AspectRatioContainer/Inner Side Panel/MarginContainer/TabContainer/Video/Video" unique_id=203631599]
+layout_mode = 2
+text = "Video Settings"
+
+[node name="Resolution" type="VBoxContainer" parent="Panel/AspectRatioContainer/Inner Side Panel/MarginContainer/TabContainer/Video/Video" unique_id=1966415982 node_paths=PackedStringArray("resolution_option_button", "windows_option_button", "aspect_ratio_button", "apply", "reset")]
+layout_mode = 2
+script = ExtResource("5_167i8")
+resolution_option_button = NodePath("ResolutionOption")
+windows_option_button = NodePath("WindowsOption")
+aspect_ratio_button = NodePath("GUIAspectRatioOption")
+apply = NodePath("../HBoxContainer/ApplyButton")
+reset = NodePath("../HBoxContainer/ResetButton")
+
+[node name="ResolutionOption" type="OptionButton" parent="Panel/AspectRatioContainer/Inner Side Panel/MarginContainer/TabContainer/Video/Video/Resolution" unique_id=1703676605]
+layout_mode = 2
+
+[node name="WindowsOption" type="OptionButton" parent="Panel/AspectRatioContainer/Inner Side Panel/MarginContainer/TabContainer/Video/Video/Resolution" unique_id=169732303]
+layout_mode = 2
+
+[node name="GUIAspectRatioOption" type="OptionButton" parent="Panel/AspectRatioContainer/Inner Side Panel/MarginContainer/TabContainer/Video/Video/Resolution" unique_id=193285043]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel/AspectRatioContainer/Inner Side Panel/MarginContainer/TabContainer/Video/Video" unique_id=1273084171]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 3
+
+[node name="ApplyButton" type="Button" parent="Panel/AspectRatioContainer/Inner Side Panel/MarginContainer/TabContainer/Video/Video/HBoxContainer" unique_id=2119489339]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 8
+text = "Apply"
+
+[node name="ResetButton" type="Button" parent="Panel/AspectRatioContainer/Inner Side Panel/MarginContainer/TabContainer/Video/Video/HBoxContainer" unique_id=1451834469]
+layout_mode = 2
+size_flags_vertical = 8
+text = "Reset"
+
+[node name="Input" type="MarginContainer" parent="Panel/AspectRatioContainer/Inner Side Panel/MarginContainer/TabContainer" unique_id=1950433279]
+visible = false
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+metadata/_tab_index = 2
+
+[node name="Input" type="VBoxContainer" parent="Panel/AspectRatioContainer/Inner Side Panel/MarginContainer/TabContainer/Input" unique_id=424645626]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Panel/AspectRatioContainer/Inner Side Panel/MarginContainer/TabContainer/Input/Input" unique_id=421399626]
+layout_mode = 2
+text = "Control Settings"
+
+[node name="Input Settings" parent="Panel/AspectRatioContainer/Inner Side Panel/MarginContainer/TabContainer/Input/Input" unique_id=1501833609 node_paths=PackedStringArray("apply", "reset") instance=ExtResource("7_3domo")]
+layout_mode = 2
+apply = NodePath("../HBoxContainer/ApplyButton")
+reset = NodePath("../HBoxContainer/ResetButton")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel/AspectRatioContainer/Inner Side Panel/MarginContainer/TabContainer/Input/Input" unique_id=1756319305]
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="ApplyButton" type="Button" parent="Panel/AspectRatioContainer/Inner Side Panel/MarginContainer/TabContainer/Input/Input/HBoxContainer" unique_id=1219060176]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 10
+text = "Apply"
+
+[node name="ResetButton" type="Button" parent="Panel/AspectRatioContainer/Inner Side Panel/MarginContainer/TabContainer/Input/Input/HBoxContainer" unique_id=112290142]
+layout_mode = 2
+text = "Reset"
+
+[node name="Back Button" type="Button" parent="Panel/AspectRatioContainer/Inner Side Panel" unique_id=890739466]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 609.0
+offset_right = 53.0
+offset_bottom = 640.0
+size_flags_horizontal = 0
+size_flags_vertical = 8
+text = "Back"
+
+[node name="MusicPlayer" type="AudioStreamPlayer" parent="." unique_id=342660907]
+stream = ExtResource("5_mrulr")
+autoplay = true
+bus = &"Music"
+
+[node name="SFXPlayer" type="AudioStreamPlayer" parent="." unique_id=2082354207]
+stream = ExtResource("6_qfe0j")
+bus = &"SFX"
+
+[connection signal="value_changed" from="Panel/AspectRatioContainer/Inner Side Panel/MarginContainer/TabContainer/Audio/Audio/SFX/SFX Volume Slider" to="." method="_on_sfx_volume_slider_value_changed"]
+[connection signal="aspect_ratio_changed" from="Panel/AspectRatioContainer/Inner Side Panel/MarginContainer/TabContainer/Video/Video/Resolution" to="." method="_on_resolution_aspect_ratio_changed"]
+[connection signal="item_selected" from="Panel/AspectRatioContainer/Inner Side Panel/MarginContainer/TabContainer/Video/Video/Resolution/ResolutionOption" to="Panel/AspectRatioContainer/Inner Side Panel/MarginContainer/TabContainer/Video/Video/Resolution" method="_on_resolution_option_item_selected"]
+[connection signal="item_selected" from="Panel/AspectRatioContainer/Inner Side Panel/MarginContainer/TabContainer/Video/Video/Resolution/WindowsOption" to="Panel/AspectRatioContainer/Inner Side Panel/MarginContainer/TabContainer/Video/Video/Resolution" method="_on_windows_option_item_selected"]
+[connection signal="item_selected" from="Panel/AspectRatioContainer/Inner Side Panel/MarginContainer/TabContainer/Video/Video/Resolution/GUIAspectRatioOption" to="Panel/AspectRatioContainer/Inner Side Panel/MarginContainer/TabContainer/Video/Video/Resolution" method="_on_gui_aspect_ratio_item_selected"]
+[connection signal="pressed" from="Panel/AspectRatioContainer/Inner Side Panel/Back Button" to="." method="_on_back_button_pressed"]

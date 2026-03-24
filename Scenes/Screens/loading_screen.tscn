@@ -1,0 +1,161 @@
+[gd_scene format=3 uid="uid://dmddrhehbfwv0"]
+
+[ext_resource type="Script" uid="uid://d1ehxssqb45bq" path="res://Scripts/Screens/LoadingScreen.gd" id="1_4lo7f"]
+[ext_resource type="PackedScene" uid="uid://spd0payvbbux" path="res://Scenes/UI Prefabs/header_text_prefab.tscn" id="2_8smod"]
+[ext_resource type="Texture2D" uid="uid://w8p5adteli3n" path="res://Sprites/64x64 textures (7).png" id="2_50x8y"]
+
+[sub_resource type="Animation" id="Animation_50x8y"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("HBoxContainer/TextureRect2:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("HBoxContainer/TextureRect:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("HBoxContainer/TextureRect3:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_8smod"]
+resource_name = "idle"
+length = 1.2
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("HBoxContainer/TextureRect:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("HBoxContainer/TextureRect2:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.100000024, 0.6, 1.1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("HBoxContainer/TextureRect3:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.20000005, 0.70000005, 1.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_2cgux"]
+_data = {
+&"RESET": SubResource("Animation_50x8y"),
+&"idle": SubResource("Animation_8smod")
+}
+
+[node name="Loading Screen" type="Control" unique_id=376289343 node_paths=PackedStringArray("loadingBar")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_4lo7f")
+loadingBar = NodePath("MarginContainer/Loading Progress")
+header_prefab = ExtResource("2_8smod")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=552058633]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.039215688, 0.039215688, 0.039215688, 1)
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=968763421]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Loading Progress" type="ProgressBar" parent="MarginContainer" unique_id=446726667]
+visible = false
+custom_minimum_size = Vector2(200, 25)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="Label" type="Label" parent="MarginContainer" unique_id=734171461]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 8
+text = "Loading"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer" unique_id=1789431925]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 8
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/HBoxContainer" unique_id=1926136518]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+texture = ExtResource("2_50x8y")
+stretch_mode = 2
+
+[node name="TextureRect2" type="TextureRect" parent="MarginContainer/HBoxContainer" unique_id=1065272117]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+texture = ExtResource("2_50x8y")
+stretch_mode = 2
+
+[node name="TextureRect3" type="TextureRect" parent="MarginContainer/HBoxContainer" unique_id=1472013374]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+texture = ExtResource("2_50x8y")
+stretch_mode = 2
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="MarginContainer" unique_id=1724488039]
+libraries/ = SubResource("AnimationLibrary_2cgux")
+autoplay = &"idle"

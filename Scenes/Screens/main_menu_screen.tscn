@@ -1,0 +1,81 @@
+[gd_scene format=3 uid="uid://c2pcwa46ftj3t"]
+
+[ext_resource type="Script" uid="uid://cjkfv7de0u7ti" path="res://Scripts/Screens/MainMenuScreen.gd" id="1_81gx0"]
+[ext_resource type="Theme" uid="uid://kwgoi4r6jr0i" path="res://Resources/Themes/Global.tres" id="1_lalg0"]
+[ext_resource type="PackedScene" uid="uid://blt2xfgped1n8" path="res://Scenes/UI Prefabs/outer_side_panel.tscn" id="2_3ehj6"]
+[ext_resource type="PackedScene" uid="uid://d3tcsll630mrm" path="res://Scenes/UI Prefabs/inner_side_panel.tscn" id="3_lalg0"]
+[ext_resource type="PackedScene" uid="uid://spd0payvbbux" path="res://Scenes/UI Prefabs/header_text_prefab.tscn" id="5_o4xna"]
+[ext_resource type="PackedScene" uid="uid://fs3aj35j6dw0" path="res://Scenes/UI Prefabs/menu_button_prefab.tscn" id="6_o4xna"]
+
+[node name="Main Menu Screen" type="Control" unique_id=542506337 node_paths=PackedStringArray("header", "button_vbox")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_lalg0")
+script = ExtResource("1_81gx0")
+settings_menu_path = "res://Scenes/Screens/settings_menu.tscn"
+header = NodePath("Panel/Header Text Prefab")
+button_vbox = NodePath("Panel/AspectRatioContainer/Inner Side Panel/MarginContainer/ButtonVbox")
+header_prefab = ExtResource("5_o4xna")
+
+[node name="Panel" parent="." unique_id=469996951 instance=ExtResource("2_3ehj6")]
+layout_mode = 1
+
+[node name="Header Text Prefab" parent="Panel" unique_id=1284460278 instance=ExtResource("5_o4xna")]
+visible = false
+layout_mode = 1
+offset_right = 118.0
+offset_bottom = 52.0
+title = "Main Menu"
+
+[node name="AspectRatioContainer" type="AspectRatioContainer" parent="Panel" unique_id=407136022]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Inner Side Panel" parent="Panel/AspectRatioContainer" unique_id=585441006 instance=ExtResource("3_lalg0")]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="Panel/AspectRatioContainer/Inner Side Panel" unique_id=370299505]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="ButtonVbox" type="VBoxContainer" parent="Panel/AspectRatioContainer/Inner Side Panel/MarginContainer" unique_id=54110029]
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_constants/separation = 20
+
+[node name="Song List Button" parent="Panel/AspectRatioContainer/Inner Side Panel/MarginContainer/ButtonVbox" unique_id=1617453365 instance=ExtResource("6_o4xna")]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+size_flags_horizontal = 0
+text = "Song List"
+alignment = 0
+
+[node name="Chart Editor Button" parent="Panel/AspectRatioContainer/Inner Side Panel/MarginContainer/ButtonVbox" unique_id=80889928 instance=ExtResource("6_o4xna")]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+size_flags_horizontal = 0
+text = "Editor"
+alignment = 0
+
+[node name="Settings Button" parent="Panel/AspectRatioContainer/Inner Side Panel/MarginContainer/ButtonVbox" unique_id=395866316 instance=ExtResource("6_o4xna")]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+size_flags_horizontal = 0
+text = "Settings"
+alignment = 0

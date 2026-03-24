@@ -1,0 +1,66 @@
+[gd_scene format=3 uid="uid://cjn1upblkcud"]
+
+[ext_resource type="Theme" uid="uid://kwgoi4r6jr0i" path="res://Resources/Themes/Global.tres" id="1_1pj1r"]
+[ext_resource type="Script" uid="uid://cbfd5ea381mnr" path="res://Scripts/Screens/TitleScreen.gd" id="1_wk421"]
+[ext_resource type="PackedScene" uid="uid://blt2xfgped1n8" path="res://Scenes/UI Prefabs/outer_side_panel.tscn" id="2_ed76m"]
+[ext_resource type="Resource" uid="uid://dd4w4wre7bldh" path="res://Resources/UserConfig.tres" id="2_ogsbk"]
+[ext_resource type="PackedScene" uid="uid://d3tcsll630mrm" path="res://Scenes/UI Prefabs/inner_side_panel.tscn" id="3_ogsbk"]
+[ext_resource type="PackedScene" uid="uid://spd0payvbbux" path="res://Scenes/UI Prefabs/header_text_prefab.tscn" id="7_1pj1r"]
+
+[node name="Title Screen" type="Control" unique_id=1142186767 node_paths=PackedStringArray("header")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_1pj1r")
+script = ExtResource("1_wk421")
+main_ui_path = "uid://fu7al4v7g23w"
+user_config = ExtResource("2_ogsbk")
+header = NodePath("Panel/AspectRatioContainer/Inner Side Panel/CenterContainer/VBoxContainer/Header Text Prefab")
+
+[node name="Panel" parent="." unique_id=469996951 instance=ExtResource("2_ed76m")]
+layout_mode = 1
+
+[node name="AspectRatioContainer" type="AspectRatioContainer" parent="Panel" unique_id=315640212]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Inner Side Panel" parent="Panel/AspectRatioContainer" unique_id=585441006 instance=ExtResource("3_ogsbk")]
+layout_mode = 2
+
+[node name="CenterContainer" type="CenterContainer" parent="Panel/AspectRatioContainer/Inner Side Panel" unique_id=1234265195]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/AspectRatioContainer/Inner Side Panel/CenterContainer" unique_id=1858449741]
+layout_mode = 2
+
+[node name="Header Text Prefab" parent="Panel/AspectRatioContainer/Inner Side Panel/CenterContainer/VBoxContainer" unique_id=1284460278 instance=ExtResource("7_1pj1r")]
+layout_mode = 2
+alignment = 1
+title = "Rhythmiga"
+horizontal_align = 1
+vertical_align = 1
+
+[node name="Title" type="Label" parent="Panel/AspectRatioContainer/Inner Side Panel/CenterContainer/VBoxContainer" unique_id=838580935]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 4
+text = "New Rhythmiga"
+
+[node name="Label" type="Label" parent="Panel/AspectRatioContainer/Inner Side Panel/CenterContainer/VBoxContainer" unique_id=1006487709]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 8
+text = "Click Anywhere"

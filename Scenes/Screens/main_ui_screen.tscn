@@ -1,0 +1,24 @@
+[gd_scene format=3 uid="uid://fu7al4v7g23w"]
+
+[ext_resource type="Theme" uid="uid://kwgoi4r6jr0i" path="res://Resources/Themes/Global.tres" id="1_klsah"]
+[ext_resource type="Script" uid="uid://cq0qc7xr6mql3" path="res://Scripts/Screens/MainUIScreen.gd" id="1_p21yw"]
+[ext_resource type="PackedScene" uid="uid://spd0payvbbux" path="res://Scenes/UI Prefabs/header_text_prefab.tscn" id="2_klsah"]
+
+[node name="Main UI Screen" type="Control" unique_id=1838194555 node_paths=PackedStringArray("header")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme = ExtResource("1_klsah")
+script = ExtResource("1_p21yw")
+main_menu_screen = "res://Scenes/Screens/main_menu_screen.tscn"
+settings_menu_screen = "res://Scenes/Screens/settings_menu.tscn"
+header = NodePath("Header Text Prefab")
+
+[node name="Header Text Prefab" parent="." unique_id=1284460278 instance=ExtResource("2_klsah")]
+layout_mode = 0
+mouse_filter = 2
+title = "Title"

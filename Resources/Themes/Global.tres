@@ -1,0 +1,7 @@
+[gd_resource type="Theme" format=3 uid="uid://kwgoi4r6jr0i"]
+
+[ext_resource type="FontFile" uid="uid://sw5v761b4urd" path="res://Fonts/Cat North/CatNorth.otf" id="1_p1j05"]
+
+[resource]
+default_font = ExtResource("1_p1j05")
+Label/fonts/font = ExtResource("1_p1j05")

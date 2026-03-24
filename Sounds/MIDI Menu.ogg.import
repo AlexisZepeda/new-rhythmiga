@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://0jgrs78esi1o"
+path="res://.godot/imported/MIDI Menu.ogg-91e7bcccdddfc9575f0097395880adcd.oggvorbisstr"
+
+[deps]
+
+source_file="res://Sounds/MIDI Menu.ogg"
+dest_files=["res://.godot/imported/MIDI Menu.ogg-91e7bcccdddfc9575f0097395880adcd.oggvorbisstr"]
+
+[params]
+
+loop=true
+loop_offset=0.0
+bpm=0.0
+beat_count=0
+bar_beats=4

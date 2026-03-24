@@ -1,0 +1,74 @@
+[gd_scene format=3 uid="uid://cnf3osr40qit8"]
+
+[ext_resource type="Script" uid="uid://8lbhvp2cvro4" path="res://Scripts/Screens/GlobalBackground.gd" id="1_3d1fb"]
+[ext_resource type="Shader" uid="uid://nbkvt7cb806c" path="res://Shaders/background.gdshader" id="1_vpjpc"]
+[ext_resource type="Texture2D" uid="uid://o5j5k6e1cgnv" path="res://Sprites/256x256 textures (71).png" id="2_3d1fb"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_1pj1r"]
+shader = ExtResource("1_vpjpc")
+shader_parameter/first_color = Color(0, 0, 0, 1)
+shader_parameter/second_color = Color(0, 0, 0.19607843, 1)
+shader_parameter/position = 0.25000003562499995
+shader_parameter/size = 1.5000000475
+shader_parameter/angle = 270.000012825
+shader_parameter/background_color = Color(0.5176471, 0.38431373, 0, 1)
+shader_parameter/GWM = 1.5
+shader_parameter/TM = 0.25
+shader_parameter/wave_speed = 0.6
+
+[sub_resource type="Curve" id="Curve_2egpy"]
+_data = [Vector2(0.7287234, 1), 0.0, -0.08801479, 0, 0, Vector2(0.9042554, 0.8764045), -1.7282935, -1.7282935, 0, 0, Vector2(1, 0.6292135), -3.8867433, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="Gradient" id="Gradient_1pj1r"]
+offsets = PackedFloat32Array(0, 0.037037037, 0.83950615, 1)
+colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0)
+
+[node name="SubViewportContainer" type="SubViewportContainer" unique_id=386490694 node_paths=PackedStringArray("background")]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+stretch = true
+script = ExtResource("1_3d1fb")
+background = NodePath("SubViewport/Control/ColorRect")
+
+[node name="SubViewport" type="SubViewport" parent="." unique_id=1630960314]
+handle_input_locally = false
+size = Vector2i(648, 648)
+render_target_update_mode = 4
+
+[node name="Control" type="Control" parent="SubViewport" unique_id=1635611760]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="SubViewport/Control" unique_id=560929724]
+material = SubResource("ShaderMaterial_1pj1r")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="SubViewport" unique_id=1298145291]
+visible = false
+position = Vector2(0, 648)
+amount = 30
+texture = ExtResource("2_3d1fb")
+lifetime = 30.0
+randomness = 0.27
+lifetime_randomness = 0.52
+emission_shape = 6
+emission_ring_inner_radius = 0.8
+emission_ring_radius = 1.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 30.0
+initial_velocity_max = 30.0
+scale_amount_curve = SubResource("Curve_2egpy")
+color_ramp = SubResource("Gradient_1pj1r")

@@ -1,0 +1,13 @@
+[gd_scene format=3 uid="uid://cwrt4avb8tv4l"]
+
+[ext_resource type="Script" uid="uid://crybg8gwp0yu4" path="res://Scripts/UI Prefabs/VolumeSlider.gd" id="1_0rqdt"]
+
+[node name="Volume Slider" type="HSlider" unique_id=1488175512]
+offset_right = 8.0
+offset_bottom = 16.0
+max_value = 1.0
+step = 0.001
+script = ExtResource("1_0rqdt")
+
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]
+[connection signal="value_changed" from="." to="." method="_on_value_changed"]

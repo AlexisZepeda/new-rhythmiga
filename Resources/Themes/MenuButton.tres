@@ -1,0 +1,10 @@
+[gd_resource type="Theme" format=3 uid="uid://dqvkivmkth1ot"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_gfeox"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_tp7iq"]
+
+[resource]
+Button/font_sizes/font_size = 28
+Button/styles/hover = SubResource("StyleBoxEmpty_gfeox")
+Button/styles/normal = SubResource("StyleBoxEmpty_tp7iq")

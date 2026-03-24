@@ -1,0 +1,203 @@
+[gd_scene format=3 uid="uid://cipiemic4dbd3"]
+
+[ext_resource type="PackedScene" uid="uid://2otwqlqsiruf" path="res://Scenes/UI Prefabs/action_remap_button.tscn" id="1_mt7fl"]
+[ext_resource type="Script" uid="uid://bluu7nbh8qr18" path="res://Scripts/UI/InputSettings.gd" id="1_twrxj"]
+
+[node name="Input Settings" type="Control" unique_id=1501833609 node_paths=PackedStringArray("tap_1", "tap_2", "tap_3", "tap_4", "left_1", "left_2", "up_1", "up_2", "right_1", "right_2", "down_1", "down_2", "apply", "reset")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 1
+script = ExtResource("1_twrxj")
+tap_1 = NodePath("VBoxContainer/ScrollContainer/VBoxContainer/Tap1 Container/Tap1")
+tap_2 = NodePath("VBoxContainer/ScrollContainer/VBoxContainer/Tap2 Container/Tap2")
+tap_3 = NodePath("VBoxContainer/ScrollContainer/VBoxContainer/Tap3 Container/Tap3")
+tap_4 = NodePath("VBoxContainer/ScrollContainer/VBoxContainer/Tap4 Container/Tap4")
+left_1 = NodePath("VBoxContainer/ScrollContainer/VBoxContainer/Left Joy Left/Left1")
+left_2 = NodePath("VBoxContainer/ScrollContainer/VBoxContainer/Right Joy Left/Left2")
+up_1 = NodePath("VBoxContainer/ScrollContainer/VBoxContainer/Left Joy Up/Up1")
+up_2 = NodePath("VBoxContainer/ScrollContainer/VBoxContainer/Right Joy Up/Up2")
+right_1 = NodePath("VBoxContainer/ScrollContainer/VBoxContainer/Left Joy Right/Right1")
+right_2 = NodePath("VBoxContainer/ScrollContainer/VBoxContainer/Right Joy Right/Right2")
+down_1 = NodePath("VBoxContainer/ScrollContainer/VBoxContainer/Left Joy Down/Down1")
+down_2 = NodePath("VBoxContainer/ScrollContainer/VBoxContainer/Right Joy Down/Down2")
+apply = NodePath("")
+reset = NodePath("")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=748397180]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 10
+
+[node name="Label" type="Label" parent="VBoxContainer" unique_id=396536642]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Click on a button to reassign its action."
+
+[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer" unique_id=1673662335]
+custom_minimum_size = Vector2(0, 300)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/ScrollContainer" unique_id=1976513486]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Tap1 Container" type="HBoxContainer" parent="VBoxContainer/ScrollContainer/VBoxContainer" unique_id=1334375613]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/ScrollContainer/VBoxContainer/Tap1 Container" unique_id=691652964]
+layout_mode = 2
+size_flags_horizontal = 2
+text = "Tap 1"
+
+[node name="Tap1" parent="VBoxContainer/ScrollContainer/VBoxContainer/Tap1 Container" unique_id=790829720 instance=ExtResource("1_mt7fl")]
+layout_mode = 2
+action = "Tap Left 1"
+
+[node name="Tap2 Container" type="HBoxContainer" parent="VBoxContainer/ScrollContainer/VBoxContainer" unique_id=1456553014]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/ScrollContainer/VBoxContainer/Tap2 Container" unique_id=1227822854]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Tap 2"
+
+[node name="Tap2" parent="VBoxContainer/ScrollContainer/VBoxContainer/Tap2 Container" unique_id=497594479 instance=ExtResource("1_mt7fl")]
+layout_mode = 2
+action = "Tap Left 2"
+
+[node name="Tap3 Container" type="HBoxContainer" parent="VBoxContainer/ScrollContainer/VBoxContainer" unique_id=1205865937]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/ScrollContainer/VBoxContainer/Tap3 Container" unique_id=1885662345]
+layout_mode = 2
+size_flags_horizontal = 2
+text = "Tap 3"
+
+[node name="Tap3" parent="VBoxContainer/ScrollContainer/VBoxContainer/Tap3 Container" unique_id=1721229879 instance=ExtResource("1_mt7fl")]
+layout_mode = 2
+action = "Tap Right 1"
+
+[node name="Tap4 Container" type="HBoxContainer" parent="VBoxContainer/ScrollContainer/VBoxContainer" unique_id=668509870]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/ScrollContainer/VBoxContainer/Tap4 Container" unique_id=204927771]
+layout_mode = 2
+size_flags_horizontal = 2
+text = "Tap 4"
+
+[node name="Tap4" parent="VBoxContainer/ScrollContainer/VBoxContainer/Tap4 Container" unique_id=789365466 instance=ExtResource("1_mt7fl")]
+layout_mode = 2
+action = "Tap Right 2"
+
+[node name="HSeparator" type="HSeparator" parent="VBoxContainer/ScrollContainer/VBoxContainer" unique_id=256810843]
+layout_mode = 2
+
+[node name="Left Joy Left" type="HBoxContainer" parent="VBoxContainer/ScrollContainer/VBoxContainer" unique_id=468152762]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/ScrollContainer/VBoxContainer/Left Joy Left" unique_id=995477368]
+layout_mode = 2
+size_flags_horizontal = 2
+text = "Left Slide (Left Stick)"
+
+[node name="Left1" parent="VBoxContainer/ScrollContainer/VBoxContainer/Left Joy Left" unique_id=1213929997 instance=ExtResource("1_mt7fl")]
+layout_mode = 2
+action = "Left Slide Left Joy"
+
+[node name="Left Joy Up" type="HBoxContainer" parent="VBoxContainer/ScrollContainer/VBoxContainer" unique_id=485953288]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/ScrollContainer/VBoxContainer/Left Joy Up" unique_id=1351162682]
+layout_mode = 2
+size_flags_horizontal = 2
+text = "Up Slide (Left Stick)"
+
+[node name="Up1" parent="VBoxContainer/ScrollContainer/VBoxContainer/Left Joy Up" unique_id=1376552799 instance=ExtResource("1_mt7fl")]
+layout_mode = 2
+action = "Up Slide Left Joy"
+
+[node name="Left Joy Right" type="HBoxContainer" parent="VBoxContainer/ScrollContainer/VBoxContainer" unique_id=426250799]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/ScrollContainer/VBoxContainer/Left Joy Right" unique_id=1489383990]
+layout_mode = 2
+size_flags_horizontal = 2
+text = "Right Slide (Left Stick)"
+
+[node name="Right1" parent="VBoxContainer/ScrollContainer/VBoxContainer/Left Joy Right" unique_id=1414467772 instance=ExtResource("1_mt7fl")]
+layout_mode = 2
+action = "Right Slide Left Joy"
+
+[node name="Left Joy Down" type="HBoxContainer" parent="VBoxContainer/ScrollContainer/VBoxContainer" unique_id=1239593662]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/ScrollContainer/VBoxContainer/Left Joy Down" unique_id=869911994]
+layout_mode = 2
+size_flags_horizontal = 2
+text = "Down Slide (Left Stick)"
+
+[node name="Down1" parent="VBoxContainer/ScrollContainer/VBoxContainer/Left Joy Down" unique_id=913807544 instance=ExtResource("1_mt7fl")]
+layout_mode = 2
+action = "Down Slide Left Joy"
+
+[node name="HSeparator2" type="HSeparator" parent="VBoxContainer/ScrollContainer/VBoxContainer" unique_id=1532771450]
+layout_mode = 2
+
+[node name="Right Joy Left" type="HBoxContainer" parent="VBoxContainer/ScrollContainer/VBoxContainer" unique_id=1334772937]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/ScrollContainer/VBoxContainer/Right Joy Left" unique_id=1222069096]
+layout_mode = 2
+size_flags_horizontal = 2
+text = "Left Slide (Right Stick)"
+
+[node name="Left2" parent="VBoxContainer/ScrollContainer/VBoxContainer/Right Joy Left" unique_id=1099579133 instance=ExtResource("1_mt7fl")]
+layout_mode = 2
+action = "Left Slide Right Joy"
+
+[node name="Right Joy Up" type="HBoxContainer" parent="VBoxContainer/ScrollContainer/VBoxContainer" unique_id=1035487462]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/ScrollContainer/VBoxContainer/Right Joy Up" unique_id=1671492290]
+layout_mode = 2
+size_flags_horizontal = 2
+text = "Up Slide (Right Stick)"
+
+[node name="Up2" parent="VBoxContainer/ScrollContainer/VBoxContainer/Right Joy Up" unique_id=664646136 instance=ExtResource("1_mt7fl")]
+layout_mode = 2
+action = "Up Slide Right Joy"
+
+[node name="Right Joy Right" type="HBoxContainer" parent="VBoxContainer/ScrollContainer/VBoxContainer" unique_id=386629414]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/ScrollContainer/VBoxContainer/Right Joy Right" unique_id=1223477278]
+layout_mode = 2
+size_flags_horizontal = 2
+text = "Right Slide (Right Stick)"
+
+[node name="Right2" parent="VBoxContainer/ScrollContainer/VBoxContainer/Right Joy Right" unique_id=879087359 instance=ExtResource("1_mt7fl")]
+layout_mode = 2
+action = "Right Slide Right Joy"
+
+[node name="Right Joy Down" type="HBoxContainer" parent="VBoxContainer/ScrollContainer/VBoxContainer" unique_id=508310446]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/ScrollContainer/VBoxContainer/Right Joy Down" unique_id=1045937082]
+layout_mode = 2
+size_flags_horizontal = 2
+text = "Down Slide (Right Stick)"
+
+[node name="Down2" parent="VBoxContainer/ScrollContainer/VBoxContainer/Right Joy Down" unique_id=1215616904 instance=ExtResource("1_mt7fl")]
+layout_mode = 2
+action = "Down Slide Right Joy"
