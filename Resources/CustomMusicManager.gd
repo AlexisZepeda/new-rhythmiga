@@ -5,6 +5,7 @@ const OGG_EXTENSION: String = "ogg"
 
 enum Library_Keys {
 	SONG_PATH,
+	SONG_NAME,
 	EASY_CHART_PATH,
 	MEDIUM_CHART_PATH,
 	HARD_CHART_PATH,
@@ -52,6 +53,7 @@ static func open_folder(folder_name: String) -> void:
 	if not library.has(folder_name):
 		library[folder_name] = {
 			Library_Keys.SONG_PATH: "",
+			Library_Keys.SONG_NAME: "",
 			Library_Keys.EASY_CHART_PATH: "",
 			Library_Keys.MEDIUM_CHART_PATH: "",
 			Library_Keys.HARD_CHART_PATH: "",
@@ -62,6 +64,7 @@ static func open_folder(folder_name: String) -> void:
 		var music_file_path: String = "%s/%s" % [path, valid_files.get(0)]
 		
 		if library[folder_name][Library_Keys.SONG_PATH] != music_file_path:
+			library[folder_name][Library_Keys.SONG_NAME] = (music_file_path.get_basename()).get_file()
 			library[folder_name][Library_Keys.SONG_PATH] = music_file_path
 		else:
 			print("")
@@ -95,3 +98,11 @@ static func check_valid_chart_files(array: PackedStringArray) -> void:
 			pass
 		elif file.begins_with("HARD"):
 			pass
+
+
+static func get_song_path(id: String) -> String:
+	for key: String in library:
+		if library[key][Library_Keys.SONG_NAME] == id:
+			return library[key][Library_Keys.SONG_PATH]
+	
+	return ""

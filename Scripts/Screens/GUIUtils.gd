@@ -29,6 +29,10 @@ static func update_container(panel: Panel, arc: AspectRatioContainer, gui_aspect
 		panel.offset_right = -gui_margin
 
 
+static func update_margin_container(margin_container: MarginContainer, margin: int) -> void:
+	margin_container.add_theme_constant_override("margin_top", margin)
+
+
 static func get_all_buttons(node: Node) -> Array:
 	var buttons: Array = []
 	

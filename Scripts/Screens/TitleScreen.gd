@@ -12,9 +12,13 @@ var gui_margin := 0.0
 @onready var arc: AspectRatioContainer = $Panel/AspectRatioContainer
 
 
+func _init() -> void:
+	CustomMusicManager.load_custom_music_directory()
+
+
 func _ready() -> void:
 	user_config.load_config()
-	CustomMusicManager.load_custom_music_directory()
+
 	# The `resized` signal will be emitted when the window size changes, as the root Control node
 	# is resized whenever the window size changes. This is because the root Control node
 	# uses a Full Rect anchor, so its size will always be equal to the window size.

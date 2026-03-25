@@ -14,8 +14,6 @@ extends VBoxContainer
 
 func _ready() -> void:
 	pivot_offset_ratio = Vector2(0.5, 0.5)
-	
-	#appear_anim()
 
 
 func set_label_text(value: String) -> void:
@@ -52,10 +50,13 @@ func disappear_anim() -> void:
 
 
 func enter_anim(position_offset: Vector2) -> void:
+	modulate.a = 0.0
+	
 	var pos_tween: Tween = create_tween()
 	var mod_tween: Tween = create_tween()
 	var target_pos: Vector2 = position + position_offset
 	
 	pos_tween.tween_property(self, "position:x", target_pos.x, 0.75).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 	mod_tween.tween_property(self, "modulate:a", 1.0, 0.5).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
-	await pos_tween.finished
+	
+	await mod_tween.finished
