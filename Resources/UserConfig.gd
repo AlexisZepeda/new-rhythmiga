@@ -47,7 +47,7 @@ func load_config() -> void:
 				music_audio_level = config_file.get_value(section, "music_volume", music_audio_level)
 				sfx_audio_level = config_file.get_value(section, "sfx_volume", sfx_audio_level)
 	
-	print_user_pref()
+	#print_user_pref()
 	set_user_preferences()
 
 
