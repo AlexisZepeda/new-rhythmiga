@@ -17,6 +17,7 @@ script = ExtResource("1_p21yw")
 main_menu_screen = "res://Scenes/Screens/main_menu_screen.tscn"
 settings_menu_screen = "res://Scenes/Screens/settings_menu.tscn"
 header = NodePath("Header Text Prefab")
+header_prefab = ExtResource("2_klsah")
 
 [node name="Header Text Prefab" parent="." unique_id=1284460278 instance=ExtResource("2_klsah")]
 layout_mode = 0

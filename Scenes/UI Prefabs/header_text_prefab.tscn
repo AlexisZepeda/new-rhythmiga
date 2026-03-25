@@ -122,6 +122,7 @@ _data = {
 }
 
 [node name="Header Text Prefab" type="VBoxContainer" unique_id=1284460278 node_paths=PackedStringArray("label", "animation_player")]
+custom_minimum_size = Vector2(40, 40)
 offset_right = 101.0
 offset_bottom = 67.0
 script = ExtResource("1_22634")

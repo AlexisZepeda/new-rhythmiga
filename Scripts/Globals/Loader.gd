@@ -3,14 +3,15 @@ extends Node
 signal LOADING_PROGRESS_UPDATED(percentage)
 signal LOADED_SCENE(node: Node)
 
-@export var loadingScene = preload("res://Scenes/Screens/loading_screen.tscn").instantiate()
+@export var loadingScene = preload("res://Scenes/Screens/Background Screens/loading_screen.tscn").instantiate()
 
 var scene_path
+var parent: Node
 
-func load_scene(caller: Node, path: String):
+func load_scene(caller: Node, path: String, new_parent: Node):
 	# AWAIT FOR TESTING LOADING PURPOSE
 	#await GlobalBackground.change_wave_speed()
-	GlobalBackground.change_wave_speed()
+	#GlobalBackground.change_wave_speed()
 	
 	scene_path = path
 	
@@ -19,6 +20,7 @@ func load_scene(caller: Node, path: String):
 	ResourceLoader.load_threaded_request(scene_path)
 	
 	caller.queue_free()
+	parent = new_parent
 
 
 func _process(_delta):
@@ -30,11 +32,11 @@ func _process(_delta):
 		LOADING_PROGRESS_UPDATED.emit(progress[0])
 
 		if (loaderStatus == ResourceLoader.THREAD_LOAD_LOADED):
-			GlobalBackground.change_wave_speed(false)
+			#GlobalBackground.change_wave_speed(false)
 			var loadedScene = ResourceLoader.load_threaded_get(scene_path).instantiate()
 			
 			get_tree().root.remove_child(loadingScene)
-			get_tree().root.add_child(loadedScene)
+			parent.add_child(loadedScene)
 			
 			LOADED_SCENE.emit(loadedScene)
 			scene_path = null

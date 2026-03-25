@@ -35,4 +35,4 @@ func _unhandled_input(event: InputEvent) -> void:
 			
 			await header.disappear_anim()
 			
-			Loader.load_scene(self, main_ui_path)
+			Loader.load_scene(self, main_ui_path, get_tree().root)

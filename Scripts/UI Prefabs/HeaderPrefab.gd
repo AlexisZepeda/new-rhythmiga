@@ -12,7 +12,6 @@ extends VBoxContainer
 @export_category("")
 
 
-
 func _ready() -> void:
 	pivot_offset_ratio = Vector2(0.5, 0.5)
 	
@@ -33,6 +32,11 @@ func _set_vertical_align(value: VerticalAlignment) -> void:
 	label.vertical_alignment = value
 
 
+func reset_properties() -> void:
+	scale = Vector2.ONE
+	modulate.a = 1.0
+
+
 func appear_anim() -> void:
 	animation_player.play("appear")
 	await animation_player.animation_finished
@@ -48,8 +52,6 @@ func disappear_anim() -> void:
 
 
 func enter_anim(position_offset: Vector2) -> void:
-	scale = Vector2(1.0, 1.0)
-	
 	var pos_tween: Tween = create_tween()
 	var mod_tween: Tween = create_tween()
 	var target_pos: Vector2 = position + position_offset

@@ -1,3 +1,4 @@
+class_name MainUIScreen
 extends Control
 
 @export_category("Screens")
@@ -6,9 +7,19 @@ extends Control
 @export_category("")
 
 @export var header: HeaderPrefab
+@export var header_prefab: PackedScene
+
+enum UI_Screens {
+	SONG_LIST,
+	CHART_EDITOR,
+	SETTINGS,
+	NONE,
+}
 
 var panel: PanelContainer
 var first_scene_loaded: bool = true
+
+var child_scene: Node
 
 
 func _ready() -> void:
@@ -19,27 +30,42 @@ func _ready() -> void:
 	
 	await get_tree().process_frame
 	
-	Loader.load_scene(panel, main_menu_screen)
+	Loader.load_scene(panel, main_menu_screen, self)
 
 
 func _on_loaded_scene(node: Node) -> void:
-	
 	if node != self:
+		child_scene = node
+		
 		node.CHANGING_SCENE.connect(_on_changing_scene)
 		
 		header.set_label_text(node.title)
 		
 		if first_scene_loaded:
+			
 			header.enter_anim(Vector2(100, 0))
 			first_scene_loaded = false
 
 
-func _on_changing_scene(new_position: Vector2) -> void:
-	var prev_position: Vector2 = header.position
+func _on_changing_scene(new_position: Vector2, title: String) -> void:
+	var prev_position: Vector2 = header.position + Vector2(100.0, 0.0)
 	
 	await header.disappear_anim()
 	
+	header.queue_free()
+	
+	await header.tree_exited
+	
+	header = header_prefab.instantiate()
+	add_child(header)
+	
+	header.set_label_text(title)
 	header.position = new_position
 	
-	var tween: Tween = create_tween()
-	tween.tween_property(header, "position", prev_position, 0.5)
+	if new_position == Vector2.ZERO:
+		first_scene_loaded = true
+	else:
+		var tween: Tween = create_tween()
+		tween.tween_property(header, "position", prev_position, 0.5)
+	
+	child_scene.change_scene()

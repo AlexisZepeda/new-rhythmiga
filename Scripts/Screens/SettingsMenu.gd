@@ -1,6 +1,6 @@
 extends Control
 
-signal CHANGING_SCENE
+signal CHANGING_SCENE(header_position: Vector2, new_title: String)
 
 @export_file var main_menu_path: String
 @export var title: String = "Settings"
@@ -43,8 +43,7 @@ func _on_back_button_pressed() -> void:
 	
 	user_config.save_config()
 	
-	CHANGING_SCENE.emit()
-	Loader.load_scene(self, main_menu_path)
+	CHANGING_SCENE.emit(Vector2.ZERO, "")
 
 
 func _on_sfx_volume_slider_value_changed(value: float) -> void:
@@ -59,3 +58,7 @@ func _on_sfx_volume_slider_value_changed(value: float) -> void:
 func _on_resolution_aspect_ratio_changed(aspect_ratio: float) -> void:
 	gui_aspect_ratio = aspect_ratio
 	GUIUtils.update_container.call_deferred(panel, arc, gui_aspect_ratio, gui_margin)
+
+
+func change_scene() -> void:
+	Loader.load_scene(self, main_menu_path, get_parent())

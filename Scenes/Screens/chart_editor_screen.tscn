@@ -1,0 +1,36 @@
+[gd_scene format=3 uid="uid://bbq1i2wvggy0w"]
+
+[ext_resource type="PackedScene" uid="uid://blt2xfgped1n8" path="res://Scenes/UI Prefabs/outer_side_panel.tscn" id="1_rll8v"]
+[ext_resource type="Script" uid="uid://cify8jffwvbs2" path="res://Scripts/Screens/chart_editor_screen.gd" id="1_u222e"]
+[ext_resource type="PackedScene" uid="uid://d3tcsll630mrm" path="res://Scenes/UI Prefabs/inner_side_panel.tscn" id="2_u222e"]
+
+[node name="Chart Editor Screen" type="Control" unique_id=1798853612 node_paths=PackedStringArray("back_button")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_u222e")
+main_menu_path = "res://Scenes/Screens/main_menu_screen.tscn"
+back_button = NodePath("Panel/AspectRatioContainer/Inner Side Panel/Back Button")
+
+[node name="Panel" parent="." unique_id=469996951 instance=ExtResource("1_rll8v")]
+layout_mode = 0
+anchors_preset = 0
+
+[node name="AspectRatioContainer" type="AspectRatioContainer" parent="Panel" unique_id=1291615296]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Inner Side Panel" parent="Panel/AspectRatioContainer" unique_id=585441006 instance=ExtResource("2_u222e")]
+layout_mode = 2
+
+[node name="Back Button" type="Button" parent="Panel/AspectRatioContainer/Inner Side Panel" unique_id=903270975]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 609.0
+offset_right = 57.0
+offset_bottom = 640.0
+text = "Back"

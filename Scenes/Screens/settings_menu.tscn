@@ -7,7 +7,6 @@
 [ext_resource type="PackedScene" uid="uid://d3tcsll630mrm" path="res://Scenes/UI Prefabs/inner_side_panel.tscn" id="3_qer3s"]
 [ext_resource type="PackedScene" uid="uid://cwrt4avb8tv4l" path="res://Scenes/UI Prefabs/volume_slider.tscn" id="4_3domo"]
 [ext_resource type="Script" uid="uid://bvbfg5j5bew8h" path="res://Scripts/UI/ResolutionSettings.gd" id="5_167i8"]
-[ext_resource type="PackedScene" uid="uid://spd0payvbbux" path="res://Scenes/UI Prefabs/header_text_prefab.tscn" id="5_hrnuu"]
 [ext_resource type="AudioStream" uid="uid://0jgrs78esi1o" path="res://Sounds/MIDI Menu.ogg" id="5_mrulr"]
 [ext_resource type="Script" uid="uid://dvaqjt3fxymw4" path="res://Scripts/UI/AudioSettings.gd" id="5_qfe0j"]
 [ext_resource type="AudioStream" uid="uid://wlgmjtdkn7x0" path="res://Sounds/Hit SFX.ogg" id="6_qfe0j"]
@@ -33,11 +32,6 @@ sfx_volume = NodePath("Panel/AspectRatioContainer/Inner Side Panel/MarginContain
 [node name="Panel" parent="." unique_id=469996951 instance=ExtResource("2_167i8")]
 layout_mode = 1
 mouse_filter = 1
-
-[node name="Header Text Prefab" parent="Panel" unique_id=1284460278 instance=ExtResource("5_hrnuu")]
-visible = false
-layout_mode = 0
-title = "Settings"
 
 [node name="AspectRatioContainer" type="AspectRatioContainer" parent="Panel" unique_id=300775744]
 layout_mode = 1

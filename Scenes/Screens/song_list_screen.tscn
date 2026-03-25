@@ -1,0 +1,42 @@
+[gd_scene format=3 uid="uid://bjiqcp65vhx4v"]
+
+[ext_resource type="PackedScene" uid="uid://blt2xfgped1n8" path="res://Scenes/UI Prefabs/outer_side_panel.tscn" id="1_b4ta6"]
+[ext_resource type="Script" uid="uid://dntbd573urdfy" path="res://Scripts/Screens/SongListScreen.gd" id="1_esvqc"]
+[ext_resource type="PackedScene" uid="uid://d3tcsll630mrm" path="res://Scenes/UI Prefabs/inner_side_panel.tscn" id="2_esvqc"]
+
+[node name="Song List Screen" type="Control" unique_id=289960780 node_paths=PackedStringArray("back_button")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_esvqc")
+main_menu_path = "res://Scenes/Screens/main_menu_screen.tscn"
+back_button = NodePath("Panel/AspectRatioContainer/Inner Side Panel/Back Button")
+
+[node name="Panel" parent="." unique_id=469996951 instance=ExtResource("1_b4ta6")]
+layout_mode = 1
+
+[node name="AspectRatioContainer" type="AspectRatioContainer" parent="Panel" unique_id=1849965267]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Inner Side Panel" parent="Panel/AspectRatioContainer" unique_id=585441006 instance=ExtResource("2_esvqc")]
+layout_mode = 2
+
+[node name="Back Button" type="Button" parent="Panel/AspectRatioContainer/Inner Side Panel" unique_id=521325276]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 8.0
+offset_top = -39.0
+offset_right = 57.0
+offset_bottom = -8.0
+grow_vertical = 0
+text = "Back"

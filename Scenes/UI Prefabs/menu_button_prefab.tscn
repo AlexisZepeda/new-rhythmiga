@@ -11,3 +11,4 @@ theme_override_font_sizes/font_size = 28
 text = "Button"
 flat = true
 script = ExtResource("2_3r2gm")
+screen = 3

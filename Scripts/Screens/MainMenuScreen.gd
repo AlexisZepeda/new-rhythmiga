@@ -1,20 +1,21 @@
 extends Control
 
-signal CHANGING_SCENE(header_position: Vector2)
+signal CHANGING_SCENE(header_position: Vector2, new_title: String)
 
 @export_file_path var settings_menu_path: String
+@export_file_path var song_list_menu_path: String
+@export_file_path var chart_editor_menu_path: String
 @export var title: String = "Main Menu"
 
-@export var header: HeaderPrefab
 @export var button_vbox: VBoxContainer
-
-@export var header_prefab: PackedScene
 
 var scale_factor := 1.0
 var gui_aspect_ratio:float = -1.0
 var gui_margin := 0.0
 
 var all_buttons: Array
+
+var scene_path: String
 
 @onready var panel: Panel = $Panel
 @onready var arc: AspectRatioContainer = $Panel/AspectRatioContainer
@@ -23,6 +24,10 @@ func _ready() -> void:
 	# The `resized` signal will be emitted when the window size changes, as the root Control node
 	# is resized whenever the window size changes. This is because the root Control node
 	# uses a Full Rect anchor, so its size will always be equal to the window size.
+	gui_aspect_ratio = GUI.get_aspect_ratio()
+	resized.connect(_on_resized)
+	GUIUtils.update_container.call_deferred(panel, arc, gui_aspect_ratio, gui_margin)
+	
 	
 	all_buttons = GUIUtils.get_all_buttons(button_vbox)
 	
@@ -30,15 +35,13 @@ func _ready() -> void:
 		var pressed = Callable(self, "_on_pressed").bind(btn)
 		btn.pressed.connect(pressed)
 	
-	#await header.enter_anim(Vector2(100, 0))
 	await get_tree().process_frame
 	
 	all_buttons.sort_custom(GUIUtils.buttons_array_sorting)
-	animate_buttons(all_buttons.duplicate(), true, 0.50, Vector2(-10, 0), Vector2.ZERO, 0.75)
+	await animate_buttons(all_buttons.duplicate(), true, 0.50, Vector2(-10, 0), Vector2.ZERO, 0.75)
 	
-	gui_aspect_ratio = GUI.get_aspect_ratio()
-	resized.connect(_on_resized)
-	GUIUtils.update_container.call_deferred(panel, arc, gui_aspect_ratio, gui_margin)
+	for btn: MenuButtonPrefab in all_buttons:
+		btn.connect_signals()
 
 
 func _on_resized() -> void:
@@ -48,24 +51,16 @@ func _on_resized() -> void:
 func _on_pressed(button: MenuButtonPrefab) -> void:
 	var button_position: Vector2 = button.position + button_vbox.position + arc.position
 	
-	CHANGING_SCENE.emit(button_position)
-	
-	await header.disappear_anim()
-	
-	animate_buttons(all_buttons, false, 0.50, Vector2(0, 0), Vector2.ONE, 0.50)
-	
-	var new_header: HeaderPrefab = header_prefab.instantiate()
-	add_child(new_header)
-	new_header.set_label_text("Settings")
-	
-	new_header.position = button.position + button_vbox.position + arc.position
-	
-	var tween: Tween = create_tween()
-	tween.tween_property(new_header, "position", header.position, 0.5)
-	
-	await get_tree().create_timer(2.0).timeout
-	
-	Loader.load_scene(self, settings_menu_path)
+	match button.screen:
+		MainUIScreen.UI_Screens.SONG_LIST:
+			CHANGING_SCENE.emit(button_position, "Song List")
+			scene_path = song_list_menu_path
+		MainUIScreen.UI_Screens.CHART_EDITOR:
+			CHANGING_SCENE.emit(button_position, "Editor")
+			scene_path = chart_editor_menu_path
+		MainUIScreen.UI_Screens.SETTINGS:
+			CHANGING_SCENE.emit(button_position, "Settings")
+			scene_path = settings_menu_path
 
 
 func animate_buttons(buttons: Array, forward: bool=true, delay_between_buttons: float=0.16, move_offset: Vector2=Vector2(-20, 0), scale_offset: Vector2=Vector2.ZERO, animation_length:float=0.52) -> void:
@@ -102,3 +97,9 @@ func animate_buttons(buttons: Array, forward: bool=true, delay_between_buttons: 
 		pos_tween.chain().tween_property(btn, "position:x", btn.original_position.x, animation_length).set_trans(Tween.TRANS_SINE)
 		
 		await get_tree().create_timer(delay_between_buttons).timeout
+
+
+func change_scene() -> void:
+	await animate_buttons(all_buttons, false, 0.50, Vector2(0, 0), Vector2.ONE, 0.50)
+	
+	Loader.load_scene(self, scene_path, get_parent())

@@ -3,7 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://2otwqlqsiruf" path="res://Scenes/UI Prefabs/action_remap_button.tscn" id="1_mt7fl"]
 [ext_resource type="Script" uid="uid://bluu7nbh8qr18" path="res://Scripts/UI/InputSettings.gd" id="1_twrxj"]
 
-[node name="Input Settings" type="Control" unique_id=1501833609 node_paths=PackedStringArray("tap_1", "tap_2", "tap_3", "tap_4", "left_1", "left_2", "up_1", "up_2", "right_1", "right_2", "down_1", "down_2", "apply", "reset")]
+[node name="Input Settings" type="Control" unique_id=1501833609 node_paths=PackedStringArray("tap_1", "tap_2", "tap_3", "tap_4", "left_1", "left_2", "up_1", "up_2", "right_1", "right_2", "down_1", "down_2")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -26,8 +26,6 @@ right_1 = NodePath("VBoxContainer/ScrollContainer/VBoxContainer/Left Joy Right/R
 right_2 = NodePath("VBoxContainer/ScrollContainer/VBoxContainer/Right Joy Right/Right2")
 down_1 = NodePath("VBoxContainer/ScrollContainer/VBoxContainer/Left Joy Down/Down1")
 down_2 = NodePath("VBoxContainer/ScrollContainer/VBoxContainer/Right Joy Down/Down2")
-apply = NodePath("")
-reset = NodePath("")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=748397180]
 layout_mode = 1
@@ -109,7 +107,7 @@ layout_mode = 2
 [node name="Label" type="Label" parent="VBoxContainer/ScrollContainer/VBoxContainer/Left Joy Left" unique_id=995477368]
 layout_mode = 2
 size_flags_horizontal = 2
-text = "Left Slide (Left Stick)"
+text = "Left (Left Stick)"
 
 [node name="Left1" parent="VBoxContainer/ScrollContainer/VBoxContainer/Left Joy Left" unique_id=1213929997 instance=ExtResource("1_mt7fl")]
 layout_mode = 2
@@ -121,7 +119,7 @@ layout_mode = 2
 [node name="Label" type="Label" parent="VBoxContainer/ScrollContainer/VBoxContainer/Left Joy Up" unique_id=1351162682]
 layout_mode = 2
 size_flags_horizontal = 2
-text = "Up Slide (Left Stick)"
+text = "Up (Left Stick)"
 
 [node name="Up1" parent="VBoxContainer/ScrollContainer/VBoxContainer/Left Joy Up" unique_id=1376552799 instance=ExtResource("1_mt7fl")]
 layout_mode = 2
@@ -133,7 +131,7 @@ layout_mode = 2
 [node name="Label" type="Label" parent="VBoxContainer/ScrollContainer/VBoxContainer/Left Joy Right" unique_id=1489383990]
 layout_mode = 2
 size_flags_horizontal = 2
-text = "Right Slide (Left Stick)"
+text = "Right (Left Stick)"
 
 [node name="Right1" parent="VBoxContainer/ScrollContainer/VBoxContainer/Left Joy Right" unique_id=1414467772 instance=ExtResource("1_mt7fl")]
 layout_mode = 2
@@ -145,7 +143,7 @@ layout_mode = 2
 [node name="Label" type="Label" parent="VBoxContainer/ScrollContainer/VBoxContainer/Left Joy Down" unique_id=869911994]
 layout_mode = 2
 size_flags_horizontal = 2
-text = "Down Slide (Left Stick)"
+text = "Down (Left Stick)"
 
 [node name="Down1" parent="VBoxContainer/ScrollContainer/VBoxContainer/Left Joy Down" unique_id=913807544 instance=ExtResource("1_mt7fl")]
 layout_mode = 2
@@ -160,7 +158,7 @@ layout_mode = 2
 [node name="Label" type="Label" parent="VBoxContainer/ScrollContainer/VBoxContainer/Right Joy Left" unique_id=1222069096]
 layout_mode = 2
 size_flags_horizontal = 2
-text = "Left Slide (Right Stick)"
+text = "Left (Right Stick)"
 
 [node name="Left2" parent="VBoxContainer/ScrollContainer/VBoxContainer/Right Joy Left" unique_id=1099579133 instance=ExtResource("1_mt7fl")]
 layout_mode = 2
@@ -172,7 +170,7 @@ layout_mode = 2
 [node name="Label" type="Label" parent="VBoxContainer/ScrollContainer/VBoxContainer/Right Joy Up" unique_id=1671492290]
 layout_mode = 2
 size_flags_horizontal = 2
-text = "Up Slide (Right Stick)"
+text = "Up (Right Stick)"
 
 [node name="Up2" parent="VBoxContainer/ScrollContainer/VBoxContainer/Right Joy Up" unique_id=664646136 instance=ExtResource("1_mt7fl")]
 layout_mode = 2
@@ -184,7 +182,7 @@ layout_mode = 2
 [node name="Label" type="Label" parent="VBoxContainer/ScrollContainer/VBoxContainer/Right Joy Right" unique_id=1223477278]
 layout_mode = 2
 size_flags_horizontal = 2
-text = "Right Slide (Right Stick)"
+text = "Right (Right Stick)"
 
 [node name="Right2" parent="VBoxContainer/ScrollContainer/VBoxContainer/Right Joy Right" unique_id=879087359 instance=ExtResource("1_mt7fl")]
 layout_mode = 2
@@ -196,7 +194,7 @@ layout_mode = 2
 [node name="Label" type="Label" parent="VBoxContainer/ScrollContainer/VBoxContainer/Right Joy Down" unique_id=1045937082]
 layout_mode = 2
 size_flags_horizontal = 2
-text = "Down Slide (Right Stick)"
+text = "Down (Right Stick)"
 
 [node name="Down2" parent="VBoxContainer/ScrollContainer/VBoxContainer/Right Joy Down" unique_id=1215616904 instance=ExtResource("1_mt7fl")]
 layout_mode = 2

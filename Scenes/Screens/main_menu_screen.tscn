@@ -4,10 +4,9 @@
 [ext_resource type="Theme" uid="uid://kwgoi4r6jr0i" path="res://Resources/Themes/Global.tres" id="1_lalg0"]
 [ext_resource type="PackedScene" uid="uid://blt2xfgped1n8" path="res://Scenes/UI Prefabs/outer_side_panel.tscn" id="2_3ehj6"]
 [ext_resource type="PackedScene" uid="uid://d3tcsll630mrm" path="res://Scenes/UI Prefabs/inner_side_panel.tscn" id="3_lalg0"]
-[ext_resource type="PackedScene" uid="uid://spd0payvbbux" path="res://Scenes/UI Prefabs/header_text_prefab.tscn" id="5_o4xna"]
 [ext_resource type="PackedScene" uid="uid://fs3aj35j6dw0" path="res://Scenes/UI Prefabs/menu_button_prefab.tscn" id="6_o4xna"]
 
-[node name="Main Menu Screen" type="Control" unique_id=542506337 node_paths=PackedStringArray("header", "button_vbox")]
+[node name="Main Menu Screen" type="Control" unique_id=542506337 node_paths=PackedStringArray("button_vbox")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -17,19 +16,12 @@ grow_vertical = 2
 theme = ExtResource("1_lalg0")
 script = ExtResource("1_81gx0")
 settings_menu_path = "res://Scenes/Screens/settings_menu.tscn"
-header = NodePath("Panel/Header Text Prefab")
+song_list_menu_path = "res://Scenes/Screens/song_list_screen.tscn"
+chart_editor_menu_path = "res://Scenes/Screens/chart_editor_screen.tscn"
 button_vbox = NodePath("Panel/AspectRatioContainer/Inner Side Panel/MarginContainer/ButtonVbox")
-header_prefab = ExtResource("5_o4xna")
 
 [node name="Panel" parent="." unique_id=469996951 instance=ExtResource("2_3ehj6")]
 layout_mode = 1
-
-[node name="Header Text Prefab" parent="Panel" unique_id=1284460278 instance=ExtResource("5_o4xna")]
-visible = false
-layout_mode = 1
-offset_right = 118.0
-offset_bottom = 52.0
-title = "Main Menu"
 
 [node name="AspectRatioContainer" type="AspectRatioContainer" parent="Panel" unique_id=407136022]
 layout_mode = 1
@@ -65,6 +57,7 @@ layout_mode = 2
 size_flags_horizontal = 0
 text = "Song List"
 alignment = 0
+screen = 0
 
 [node name="Chart Editor Button" parent="Panel/AspectRatioContainer/Inner Side Panel/MarginContainer/ButtonVbox" unique_id=80889928 instance=ExtResource("6_o4xna")]
 custom_minimum_size = Vector2(40, 40)
@@ -72,6 +65,7 @@ layout_mode = 2
 size_flags_horizontal = 0
 text = "Editor"
 alignment = 0
+screen = 1
 
 [node name="Settings Button" parent="Panel/AspectRatioContainer/Inner Side Panel/MarginContainer/ButtonVbox" unique_id=395866316 instance=ExtResource("6_o4xna")]
 custom_minimum_size = Vector2(40, 40)
@@ -79,3 +73,4 @@ layout_mode = 2
 size_flags_horizontal = 0
 text = "Settings"
 alignment = 0
+screen = 2

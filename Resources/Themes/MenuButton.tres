@@ -5,6 +5,8 @@
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_tp7iq"]
 
 [resource]
+Button/colors/font_color = Color(0.78431374, 0.78431374, 0.78431374, 1)
+Button/colors/font_hover_color = Color(0.95, 0.95, 0.95, 1)
 Button/font_sizes/font_size = 28
 Button/styles/hover = SubResource("StyleBoxEmpty_gfeox")
 Button/styles/normal = SubResource("StyleBoxEmpty_tp7iq")
