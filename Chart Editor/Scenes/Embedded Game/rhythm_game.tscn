@@ -1,0 +1,265 @@
+[gd_scene format=3 uid="uid://bfguicx1m70d1"]
+
+[ext_resource type="Script" uid="uid://ckfiges3fxnxa" path="res://Scripts/Embedded Game/RhythmGame.gd" id="1_76km0"]
+[ext_resource type="Script" uid="uid://dl0100si7jvui" path="res://Scripts/Embedded Game/Input/RhythmGameInputManager.gd" id="2_jf0kq"]
+[ext_resource type="Script" uid="uid://c6ykormd8do0v" path="res://Scripts/Embedded Game/NoteManager.gd" id="3_jf0kq"]
+[ext_resource type="Script" uid="uid://dwym4sim3haix" path="res://Scripts/Embedded Game/GameManager.gd" id="3_n4j4y"]
+[ext_resource type="AudioStream" uid="uid://l0h3coe170pp" path="res://Music/Hit SFX.ogg" id="3_njeya"]
+[ext_resource type="Resource" uid="uid://ddp2l2krneyko" path="res://Resources/InputToCommandManager.tres" id="4_rw37b"]
+[ext_resource type="Resource" uid="uid://eef2yluepmw1" path="res://Resources/CurrentGameStats.tres" id="6_164ha"]
+[ext_resource type="Texture2D" uid="uid://c6u2y0ytum6tx" path="res://Sprites/Embedded Game/Judgement.png" id="7_n2tj6"]
+[ext_resource type="Script" uid="uid://c5jow466yiy7h" path="res://Scripts/Embedded Game/UI/DebugUI.gd" id="8_wkmn2"]
+[ext_resource type="Script" uid="uid://dft1j78d3t8yt" path="res://Scripts/Embedded Game/UI/GameUI.gd" id="11_cvody"]
+[ext_resource type="PackedScene" uid="uid://dmgkcsxdw1emc" path="res://Scenes/Embedded Game/UI/Utility/timing_label_prefab.tscn" id="12_0i2wr"]
+
+[node name="Rhythm Game" type="Node2D" unique_id=872145979 node_paths=PackedStringArray("note_manager", "note_manager_2", "note_manager_3", "note_manager_4", "lane_1", "lane_2", "lane_3", "lane_4", "game_manager", "game_ui", "debug_ui")]
+script = ExtResource("1_76km0")
+data = "res://Chart Data/data.txt"
+note_manager = NodePath("GameManager/Notes")
+note_manager_2 = NodePath("GameManager/Notes2")
+note_manager_3 = NodePath("GameManager/Notes3")
+note_manager_4 = NodePath("GameManager/Notes4")
+lane_1 = NodePath("Judgement Sprites/Lane 1")
+lane_2 = NodePath("Judgement Sprites/Lane 2")
+lane_3 = NodePath("Judgement Sprites/Lane 3")
+lane_4 = NodePath("Judgement Sprites/Lane 4")
+play_stats = ExtResource("6_164ha")
+game_manager = NodePath("GameManager")
+game_ui = NodePath("CanvasLayer/Game UI")
+debug_ui = NodePath("CanvasLayer/Debug")
+
+[node name="SFXPlayer" type="AudioStreamPlayer" parent="." unique_id=1638318593]
+stream = ExtResource("3_njeya")
+bus = &"SFX"
+
+[node name="RhythmGameInputManager" type="Node" parent="." unique_id=1800473599]
+script = ExtResource("2_jf0kq")
+input_to_command_manager = ExtResource("4_rw37b")
+metadata/_custom_type_script = "uid://dl0100si7jvui"
+
+[node name="Judgement Sprites" type="Node2D" parent="." unique_id=1040335697]
+
+[node name="Lane 1" type="Sprite2D" parent="Judgement Sprites" unique_id=2040975118]
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("7_n2tj6")
+
+[node name="Lane 2" type="Sprite2D" parent="Judgement Sprites" unique_id=2079788805]
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("7_n2tj6")
+
+[node name="Lane 3" type="Sprite2D" parent="Judgement Sprites" unique_id=1702216530]
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("7_n2tj6")
+
+[node name="Lane 4" type="Sprite2D" parent="Judgement Sprites" unique_id=1551953278]
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("7_n2tj6")
+
+[node name="GameManager" type="Node2D" parent="." unique_id=1241803146 node_paths=PackedStringArray("debug_ui")]
+script = ExtResource("3_n4j4y")
+debug_ui = NodePath("../CanvasLayer/Debug")
+input_to_command_manager = ExtResource("4_rw37b")
+
+[node name="Notes" type="Node2D" parent="GameManager" unique_id=1718989285 node_paths=PackedStringArray("rhythm_game", "sfx_player")]
+script = ExtResource("3_jf0kq")
+rhythm_game = NodePath("../..")
+sfx_player = NodePath("../../SFXPlayer")
+play_stats = ExtResource("6_164ha")
+
+[node name="Notes2" type="Node2D" parent="GameManager" unique_id=2010859904 node_paths=PackedStringArray("rhythm_game", "sfx_player")]
+script = ExtResource("3_jf0kq")
+rhythm_game = NodePath("../..")
+sfx_player = NodePath("../../SFXPlayer")
+play_stats = ExtResource("6_164ha")
+
+[node name="Notes3" type="Node2D" parent="GameManager" unique_id=2083494154 node_paths=PackedStringArray("rhythm_game", "sfx_player")]
+script = ExtResource("3_jf0kq")
+rhythm_game = NodePath("../..")
+sfx_player = NodePath("../../SFXPlayer")
+play_stats = ExtResource("6_164ha")
+
+[node name="Notes4" type="Node2D" parent="GameManager" unique_id=956154559 node_paths=PackedStringArray("rhythm_game", "sfx_player")]
+script = ExtResource("3_jf0kq")
+rhythm_game = NodePath("../..")
+sfx_player = NodePath("../../SFXPlayer")
+play_stats = ExtResource("6_164ha")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1955421491]
+
+[node name="Game UI" type="Control" parent="CanvasLayer" unique_id=818850164 node_paths=PackedStringArray("rhythm_game", "song_progress_bar")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("11_cvody")
+rhythm_game = NodePath("../..")
+timing_label_prefab = ExtResource("12_0i2wr")
+song_progress_bar = NodePath("ProgressBar")
+
+[node name="ProgressBar" type="ProgressBar" parent="CanvasLayer/Game UI" unique_id=1030508638]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -10.0
+grow_horizontal = 2
+grow_vertical = 0
+max_value = 1.0
+step = 0.0
+show_percentage = false
+
+[node name="Debug" type="Control" parent="CanvasLayer" unique_id=69946722 node_paths=PackedStringArray("label_1", "label_2", "label_3", "label_4", "label_5", "label_beat", "queue_front", "queue_2", "queue_3", "queue_end", "label_e", "label_f", "label_i", "label_j", "perfect", "critical", "great", "good", "bad", "miss")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("8_wkmn2")
+label_1 = NodePath("Note Deltas/Curr Beat")
+label_2 = NodePath("Note Deltas/Raw Curr Beat")
+label_3 = NodePath("Note Deltas/Label")
+label_4 = NodePath("Note Deltas/Label2")
+label_5 = NodePath("Note Deltas/Label3")
+label_beat = NodePath("Note Deltas/Label4")
+queue_front = NodePath("Lane Queue/Label")
+queue_2 = NodePath("Lane Queue/Label2")
+queue_3 = NodePath("Lane Queue/Label3")
+queue_end = NodePath("Lane Queue/Label4")
+label_e = NodePath("Keys Pressed/E")
+label_f = NodePath("Keys Pressed/F")
+label_i = NodePath("Keys Pressed/I")
+label_j = NodePath("Keys Pressed/J")
+perfect = NodePath("Hit Count/Perfect")
+critical = NodePath("Hit Count/Critical")
+great = NodePath("Hit Count/Great")
+good = NodePath("Hit Count/Good")
+bad = NodePath("Hit Count/Bad")
+miss = NodePath("Hit Count/Miss")
+
+[node name="Note Deltas" type="VBoxContainer" parent="CanvasLayer/Debug" unique_id=613648715]
+visible = false
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Curr Beat" type="Label" parent="CanvasLayer/Debug/Note Deltas" unique_id=952193181]
+layout_mode = 2
+
+[node name="Raw Curr Beat" type="Label" parent="CanvasLayer/Debug/Note Deltas" unique_id=2072528810]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/Debug/Note Deltas" unique_id=1555790833]
+layout_mode = 2
+
+[node name="Label2" type="Label" parent="CanvasLayer/Debug/Note Deltas" unique_id=1293469330]
+layout_mode = 2
+
+[node name="Label3" type="Label" parent="CanvasLayer/Debug/Note Deltas" unique_id=862497978]
+layout_mode = 2
+
+[node name="Label4" type="Label" parent="CanvasLayer/Debug/Note Deltas" unique_id=2005335046]
+layout_mode = 2
+
+[node name="Lane Queue" type="VBoxContainer" parent="CanvasLayer/Debug" unique_id=1084049655]
+visible = false
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+grow_horizontal = 0
+
+[node name="Label" type="Label" parent="CanvasLayer/Debug/Lane Queue" unique_id=660489981]
+layout_mode = 2
+
+[node name="Label2" type="Label" parent="CanvasLayer/Debug/Lane Queue" unique_id=787484142]
+layout_mode = 2
+
+[node name="Label3" type="Label" parent="CanvasLayer/Debug/Lane Queue" unique_id=328596562]
+layout_mode = 2
+
+[node name="Label4" type="Label" parent="CanvasLayer/Debug/Lane Queue" unique_id=9240883]
+layout_mode = 2
+
+[node name="Keys Pressed" type="VBoxContainer" parent="CanvasLayer/Debug" unique_id=1086771406]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -104.0
+offset_right = 40.0
+grow_vertical = 0
+
+[node name="E" type="Label" parent="CanvasLayer/Debug/Keys Pressed" unique_id=2103500613]
+layout_mode = 2
+text = "E"
+
+[node name="F" type="Label" parent="CanvasLayer/Debug/Keys Pressed" unique_id=1466502730]
+layout_mode = 2
+text = "F"
+
+[node name="I" type="Label" parent="CanvasLayer/Debug/Keys Pressed" unique_id=2006485402]
+layout_mode = 2
+text = "I"
+
+[node name="J" type="Label" parent="CanvasLayer/Debug/Keys Pressed" unique_id=873800907]
+layout_mode = 2
+text = "J"
+
+[node name="Hit Count" type="VBoxContainer" parent="CanvasLayer/Debug" unique_id=133209046]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -40.0
+offset_top = -40.0
+grow_horizontal = 0
+grow_vertical = 0
+
+[node name="Perfect" type="Label" parent="CanvasLayer/Debug/Hit Count" unique_id=1946451964]
+layout_mode = 2
+text = "Perfect 0"
+
+[node name="Critical" type="Label" parent="CanvasLayer/Debug/Hit Count" unique_id=174016798]
+layout_mode = 2
+text = "Critical 0"
+
+[node name="Great" type="Label" parent="CanvasLayer/Debug/Hit Count" unique_id=100127862]
+layout_mode = 2
+text = "Great 0"
+
+[node name="Good" type="Label" parent="CanvasLayer/Debug/Hit Count" unique_id=998019509]
+layout_mode = 2
+text = "Good 0"
+
+[node name="Bad" type="Label" parent="CanvasLayer/Debug/Hit Count" unique_id=1401194654]
+layout_mode = 2
+text = "Bad 0"
+
+[node name="Miss" type="Label" parent="CanvasLayer/Debug/Hit Count" unique_id=64472252]
+layout_mode = 2
+text = "Miss 0"
+
+[node name="Judgement Line" type="Line2D" parent="." unique_id=959081165]
+visible = false
+points = PackedVector2Array(1614, 0, 1614, 1080)
+width = 5.0
+
+[connection signal="command_emitted" from="RhythmGameInputManager" to="GameManager" method="_on_rhythm_game_input_manager_command_emitted"]
+[connection signal="array_change" from="GameManager/Notes" to="." method="_on_notes_array_change"]
+[connection signal="play_stats_updated" from="GameManager/Notes" to="CanvasLayer/Debug" method="_on_notes_play_stats_updated"]
+[connection signal="previous_note_type" from="GameManager/Notes" to="GameManager" method="_on_previous_note_type"]
+[connection signal="array_change" from="GameManager/Notes2" to="." method="_on_notes_2_array_change"]
+[connection signal="play_stats_updated" from="GameManager/Notes2" to="CanvasLayer/Debug" method="_on_notes_play_stats_updated"]
+[connection signal="previous_note_type" from="GameManager/Notes2" to="GameManager" method="_on_previous_note_type"]
+[connection signal="array_change" from="GameManager/Notes3" to="." method="_on_notes_3_array_change"]
+[connection signal="play_stats_updated" from="GameManager/Notes3" to="CanvasLayer/Debug" method="_on_notes_play_stats_updated"]
+[connection signal="previous_note_type" from="GameManager/Notes3" to="GameManager" method="_on_previous_note_type"]
+[connection signal="array_change" from="GameManager/Notes4" to="." method="_on_notes_4_array_change"]
+[connection signal="play_stats_updated" from="GameManager/Notes4" to="CanvasLayer/Debug" method="_on_notes_play_stats_updated"]
+[connection signal="previous_note_type" from="GameManager/Notes4" to="GameManager" method="_on_previous_note_type"]

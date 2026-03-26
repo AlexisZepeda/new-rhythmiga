@@ -1,0 +1,23 @@
+[gd_scene format=3 uid="uid://di6ps25qebi1u"]
+
+[ext_resource type="Texture2D" uid="uid://bririunljopan" path="res://Sprites/Chart Editor/Button Icons/Hold Slide Button Icon.png" id="1_10pxq"]
+[ext_resource type="Script" uid="uid://bcqb5g27rwk86" path="res://Scripts/Chart Editor/UI/TriggerButton.gd" id="3_jnsk4"]
+
+[node name="TriggerButton" type="TextureButton" unique_id=1762702933]
+custom_minimum_size = Vector2(64, 64)
+toggle_mode = true
+texture_normal = ExtResource("1_10pxq")
+texture_pressed = ExtResource("1_10pxq")
+ignore_texture_size = true
+stretch_mode = 0
+script = ExtResource("3_jnsk4")
+
+[node name="PanelContainer" type="PanelContainer" parent="." unique_id=592975822]
+show_behind_parent = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1

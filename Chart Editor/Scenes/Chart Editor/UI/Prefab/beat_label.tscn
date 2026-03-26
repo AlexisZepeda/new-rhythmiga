@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://v63sm7asm4l1"]
+
+[ext_resource type="Script" uid="uid://baa4d0wobhs73" path="res://Scripts/Chart Editor/UI/BeatLabel.gd" id="1_udw1a"]
+
+[node name="Label" type="ColorRect" unique_id=1806713306 node_paths=PackedStringArray("label")]
+offset_right = 40.0
+offset_bottom = 23.0
+size_flags_horizontal = 4
+color = Color(0.019607844, 0.019607844, 0.019607844, 1)
+script = ExtResource("1_udw1a")
+label = NodePath("TextureRect")
+
+[node name="TextureRect" type="Label" parent="." unique_id=693743399]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "11"

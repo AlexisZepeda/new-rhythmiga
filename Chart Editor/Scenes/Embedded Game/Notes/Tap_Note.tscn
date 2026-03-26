@@ -1,0 +1,12 @@
+[gd_scene load_steps=3 format=3 uid="uid://bbiwcbut3ny5u"]
+
+[ext_resource type="Script" uid="uid://c685gvjateixt" path="res://Scripts/Notes/TapNote.gd" id="1_casc8"]
+[ext_resource type="Texture2D" uid="uid://pvgd6eqi2m7t" path="res://Sprites/Tap.png" id="2_casc8"]
+
+[node name="Tap" type="Node2D" node_paths=PackedStringArray("base_sprite")]
+scale = Vector2(0.1, 0.1)
+script = ExtResource("1_casc8")
+base_sprite = NodePath("Sprite2D")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_casc8")

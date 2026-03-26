@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://d4g7a7d1sqtnx"
+path="res://.godot/imported/Battle 2.ogg-d9caf442fb8c2bb46fe1fde3bc35e20a.oggvorbisstr"
+
+[deps]
+
+source_file="res://Chart Editor/Music/Battle 2.ogg"
+dest_files=["res://.godot/imported/Battle 2.ogg-d9caf442fb8c2bb46fe1fde3bc35e20a.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

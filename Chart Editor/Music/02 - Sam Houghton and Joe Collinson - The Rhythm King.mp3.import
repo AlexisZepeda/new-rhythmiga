@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://b2pbabykx67py"
+path="res://.godot/imported/02 - Sam Houghton and Joe Collinson - The Rhythm King.mp3-f8bbd53a3a96960549c0d89513d92eff.mp3str"
+
+[deps]
+
+source_file="res://Chart Editor/Music/02 - Sam Houghton and Joe Collinson - The Rhythm King.mp3"
+dest_files=["res://.godot/imported/02 - Sam Houghton and Joe Collinson - The Rhythm King.mp3-f8bbd53a3a96960549c0d89513d92eff.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

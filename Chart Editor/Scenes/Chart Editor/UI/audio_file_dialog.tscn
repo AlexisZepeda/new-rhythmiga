@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://d3pjuoiblys3b"]
+
+[ext_resource type="Script" uid="uid://4vs5byvke1x5" path="res://Scripts/Chart Editor/UI/AudioFileDialog.gd" id="1_qctqt"]
+
+[node name="Audio File Dialog" type="FileDialog" unique_id=2128614875]
+oversampling_override = 1.0
+title = "Open a File"
+position = Vector2i(0, 36)
+file_mode = 0
+access = 2
+filters = PackedStringArray("*.ogg", "*.wav")
+use_native_dialog = true
+script = ExtResource("1_qctqt")
+
+[connection signal="file_selected" from="." to="." method="_on_file_selected"]

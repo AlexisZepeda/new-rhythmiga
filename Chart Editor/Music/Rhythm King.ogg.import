@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://c5i6fj343bl5t"
+path="res://.godot/imported/Rhythm King.ogg-b8153df6566e1c9657589ea2a35d6a06.oggvorbisstr"
+
+[deps]
+
+source_file="res://Chart Editor/Music/Rhythm King.ogg"
+dest_files=["res://.godot/imported/Rhythm King.ogg-b8153df6566e1c9657589ea2a35d6a06.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

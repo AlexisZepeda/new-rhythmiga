@@ -1,0 +1,82 @@
+[gd_scene format=3 uid="uid://8mdvy3y8e6tn"]
+
+[ext_resource type="Script" uid="uid://dh7fu8jvc3bfi" path="res://Scripts/Chart Editor/UI/TriggerContainer.gd" id="1_gtnif"]
+[ext_resource type="PackedScene" uid="uid://di6ps25qebi1u" path="res://Scenes/Chart Editor/UI/trigger_button.tscn" id="1_vuodm"]
+[ext_resource type="Texture2D" uid="uid://pvgd6eqi2m7t" path="res://Sprites/Embedded Game/Tap.png" id="2_gtnif"]
+[ext_resource type="Texture2D" uid="uid://devd53pdqarf7" path="res://Sprites/Chart Editor/Button Icons/Slide Button Icon.png" id="3_sufe5"]
+[ext_resource type="Texture2D" uid="uid://bhb805bloimt1" path="res://Sprites/Chart Editor/Button Icons/Double Slide Button Icon.png" id="4_7xh57"]
+[ext_resource type="Texture2D" uid="uid://ckx4ypvnbn3qd" path="res://Sprites/Embedded Game/Long Front.png" id="5_7yrfd"]
+[ext_resource type="Texture2D" uid="uid://cvwwb6eh14c26" path="res://Sprites/Chart Editor/Button Icons/Hold Double Slide Button Icon.png" id="6_xcfh2"]
+
+[sub_resource type="ButtonGroup" id="ButtonGroup_gtnif"]
+allow_unpress = true
+
+[sub_resource type="ButtonGroup" id="ButtonGroup_7xh57"]
+allow_unpress = true
+
+[sub_resource type="ButtonGroup" id="ButtonGroup_xcfh2"]
+allow_unpress = true
+
+[sub_resource type="ButtonGroup" id="ButtonGroup_sufe5"]
+allow_unpress = true
+
+[sub_resource type="ButtonGroup" id="ButtonGroup_7yrfd"]
+allow_unpress = true
+
+[sub_resource type="ButtonGroup" id="ButtonGroup_n1c2t"]
+allow_unpress = true
+
+[node name="Trigger Container" type="GridContainer" unique_id=258296530 node_paths=PackedStringArray("tap_trigger_button", "slide_trigger_button", "double_slide_trigger_button", "hold_trigger_button", "hold_slide_trigger_button", "hold_double_slide_trigger_button")]
+offset_right = 3050.0
+offset_bottom = 2164.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+columns = 3
+script = ExtResource("1_gtnif")
+tap_trigger_button = NodePath("Tap")
+slide_trigger_button = NodePath("Slide")
+double_slide_trigger_button = NodePath("Double Slide")
+hold_trigger_button = NodePath("Hold")
+hold_slide_trigger_button = NodePath("Hold Slide")
+hold_double_slide_trigger_button = NodePath("Hold Double Slide")
+
+[node name="Tap" parent="." unique_id=1762702933 instance=ExtResource("1_vuodm")]
+layout_mode = 2
+button_group = SubResource("ButtonGroup_gtnif")
+texture_normal = ExtResource("2_gtnif")
+texture_pressed = ExtResource("2_gtnif")
+
+[node name="Slide" parent="." unique_id=972612279 instance=ExtResource("1_vuodm")]
+layout_mode = 2
+button_group = SubResource("ButtonGroup_7xh57")
+texture_normal = ExtResource("3_sufe5")
+texture_pressed = ExtResource("3_sufe5")
+
+[node name="Double Slide" parent="." unique_id=1057287244 instance=ExtResource("1_vuodm")]
+layout_mode = 2
+button_group = SubResource("ButtonGroup_xcfh2")
+texture_normal = ExtResource("4_7xh57")
+texture_pressed = ExtResource("4_7xh57")
+
+[node name="Hold" parent="." unique_id=1188445769 instance=ExtResource("1_vuodm")]
+layout_mode = 2
+button_group = SubResource("ButtonGroup_sufe5")
+texture_normal = ExtResource("5_7yrfd")
+texture_pressed = ExtResource("5_7yrfd")
+
+[node name="Hold Slide" parent="." unique_id=2096715265 instance=ExtResource("1_vuodm")]
+layout_mode = 2
+button_group = SubResource("ButtonGroup_7yrfd")
+
+[node name="Hold Double Slide" parent="." unique_id=354322152 instance=ExtResource("1_vuodm")]
+layout_mode = 2
+button_group = SubResource("ButtonGroup_n1c2t")
+texture_normal = ExtResource("6_xcfh2")
+texture_pressed = ExtResource("6_xcfh2")
+
+[connection signal="toggled" from="Tap" to="." method="_on_tap_toggled"]
+[connection signal="toggled" from="Slide" to="." method="_on_slide_toggled"]
+[connection signal="toggled" from="Double Slide" to="." method="_on_double_slide_toggled"]
+[connection signal="toggled" from="Hold" to="." method="_on_hold_toggled"]
+[connection signal="toggled" from="Hold Slide" to="." method="_on_hold_slide_toggled"]
+[connection signal="toggled" from="Hold Double Slide" to="." method="_on_hold_double_slide_toggled"]

@@ -1,0 +1,5 @@
+[gd_scene format=3 uid="uid://b2uo2gsw2jxie"]
+
+[node name="Beat Map File Dialog" type="FileDialog" unique_id=1310568852]
+filters = PackedStringArray("*.dat")
+use_native_dialog = true

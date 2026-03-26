@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://crq11i4yx0gkd"]
+
+[ext_resource type="Script" uid="uid://d1rj05yro0klg" path="res://Scripts/Chart Editor/Waveform/AudioPreviewWaveform.gd" id="1_l47xd"]
+
+[node name="AudioPreviewWaveform" type="ColorRect" unique_id=655737838]
+offset_right = 40.0
+offset_bottom = 40.0
+color = Color(0, 0, 0.039215688, 1)
+script = ExtResource("1_l47xd")

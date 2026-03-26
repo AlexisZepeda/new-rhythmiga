@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://oaacvc53xke3"]
+
+[ext_resource type="Script" uid="uid://g2ahm73rnf1f" path="res://Scripts/Notes/Note.gd" id="1_v22gl"]
+[ext_resource type="Texture2D" uid="uid://bxauhy7int8a4" path="res://Sprites/Tap_trigger_V5.png" id="2_iathj"]
+
+[node name="Note" type="Node2D" node_paths=PackedStringArray("base_sprite")]
+script = ExtResource("1_v22gl")
+y_offset = 150.0
+base_sprite = NodePath("Sprite2D")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(2, 2)
+texture = ExtResource("2_iathj")

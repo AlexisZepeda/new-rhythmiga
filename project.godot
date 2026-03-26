@@ -25,6 +25,8 @@ Loader="*uid://cxk056jcwq3rr"
 GUI="*uid://da34lcq4lsk3c"
 KeyPersistence="*uid://b0awacm8hu8bn"
 GlobalBackground="*uid://cnf3osr40qit8"
+GlobalSettings="*uid://bf46474qbpv20"
+EmbeddedGlobalSettings="*uid://swsx10lp2d63"
 
 [display]
 

@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://dbahki5hl8uhe"]
+
+[ext_resource type="Script" uid="uid://clwyxrs5yibko" path="res://Scripts/UI/Utility/BeatLine.gd" id="1_m6hi3"]
+
+[node name="Beat Line" type="Line2D"]
+points = PackedVector2Array(0, 270, 0, 0)
+width = 1.0
+script = ExtResource("1_m6hi3")

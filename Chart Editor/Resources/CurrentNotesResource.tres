@@ -1,0 +1,6 @@
+[gd_resource type="Resource" format=3 uid="uid://byovroyvcdtjs"]
+
+[ext_resource type="Script" uid="uid://bm57eeots7oas" path="res://Scripts/Global/CurrentNotesResource.gd" id="1_kmtam"]
+
+[resource]
+script = ExtResource("1_kmtam")

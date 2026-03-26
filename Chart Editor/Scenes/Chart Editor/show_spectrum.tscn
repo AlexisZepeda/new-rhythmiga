@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://bejb6a6x82dar"]
+
+[ext_resource type="Script" uid="uid://3vi1dagne5os" path="res://Scripts/Chart Editor/show_spectrum.gd" id="1_oo5jq"]
+[ext_resource type="AudioStream" uid="uid://ds4lyebx17udj" path="res://Music/Who Brings Shadow.ogg" id="2_ndwqc"]
+[ext_resource type="Script" uid="uid://1bcgusmumeqv" path="res://Scripts/Chart Editor/Waveform/conductor.gd" id="3_6i4bh"]
+[ext_resource type="PackedScene" uid="uid://bhqqww8n7gj0j" path="res://Scenes/Chart Editor/chart_editor.tscn" id="4_wdwmp"]
+
+[node name="ShowSpectrum" type="Node2D" unique_id=1764638112]
+script = ExtResource("1_oo5jq")
+
+[node name="Player" type="AudioStreamPlayer" parent="." unique_id=834823232]
+stream = ExtResource("2_ndwqc")
+script = ExtResource("3_6i4bh")
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=2042926130]
+visible = false
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=41605257]
+
+[node name="Chart Editor" parent="CanvasLayer" unique_id=1425754862 node_paths=PackedStringArray("conductor") instance=ExtResource("4_wdwmp")]
+conductor = NodePath("../../Player")

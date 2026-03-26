@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://lbp4ntivasu1"]
+
+[ext_resource type="Script" uid="uid://c524uglhhtpjj" path="res://Scripts/Embedded Game/Notes/SlideNote.gd" id="1_vsf2o"]
+[ext_resource type="Texture2D" uid="uid://ckkqkvj223rob" path="res://Sprites/Embedded Game/Slide.png" id="2_vsf2o"]
+[ext_resource type="Texture2D" uid="uid://cgbnby07jnpi0" path="res://Sprites/Embedded Game/path31.png" id="3_kgolh"]
+
+[node name="SlideNote" type="Node2D" unique_id=1972380605 node_paths=PackedStringArray("arrow", "base_sprite")]
+scale = Vector2(0.1, 0.1)
+script = ExtResource("1_vsf2o")
+arrow = NodePath("Arrow")
+base_sprite = NodePath("Base")
+
+[node name="Base" type="Sprite2D" parent="." unique_id=1245830829]
+texture = ExtResource("2_vsf2o")
+
+[node name="Arrow" type="Sprite2D" parent="." unique_id=616727318]
+texture = ExtResource("3_kgolh")
+offset = Vector2(0, -360)

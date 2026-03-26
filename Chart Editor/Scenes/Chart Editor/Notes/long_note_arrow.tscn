@@ -1,0 +1,28 @@
+[gd_scene format=3 uid="uid://ditg4gdfaoijp"]
+
+[ext_resource type="Texture2D" uid="uid://ep7jm706dbm" path="res://Sprites/Chart Editor/Long Front Icon.png" id="1_3qt5s"]
+[ext_resource type="Script" uid="uid://bqm04ybnrbtq5" path="res://Scripts/Chart Editor/Notes/LongNoteArrowGrid.gd" id="2_28eoj"]
+[ext_resource type="Texture2D" uid="uid://b31vrhpvvqmii" path="res://Sprites/Chart Editor/Long Back Icon.png" id="3_lj7lu"]
+[ext_resource type="Texture2D" uid="uid://b5rx0sch85ule" path="res://Sprites/Chart Editor/Long Arrow Icon.png" id="4_3qt5s"]
+[ext_resource type="Texture2D" uid="uid://gmqm87ugsia5" path="res://Sprites/Chart Editor/Long_trigger_middle.png" id="4_yc32a"]
+
+[node name="Long Arrow" type="Sprite2D" unique_id=1699759142 node_paths=PackedStringArray("arrow", "back", "line")]
+texture = ExtResource("1_3qt5s")
+script = ExtResource("2_28eoj")
+arrow = NodePath("Back/Arrow")
+back = NodePath("Back")
+line = NodePath("Line2D")
+
+[node name="Back" type="Sprite2D" parent="." unique_id=1674516305]
+texture = ExtResource("3_lj7lu")
+
+[node name="Arrow" type="Sprite2D" parent="Back" unique_id=859064337]
+visible = false
+texture = ExtResource("4_3qt5s")
+offset = Vector2(0, -16)
+
+[node name="Line2D" type="Line2D" parent="." unique_id=1855386882]
+show_behind_parent = true
+width = 2.0
+default_color = Color(0, 1, 0, 1)
+texture = ExtResource("4_yc32a")

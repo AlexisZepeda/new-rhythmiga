@@ -1,0 +1,460 @@
+[gd_scene format=3 uid="uid://bhqqww8n7gj0j"]
+
+[ext_resource type="Script" uid="uid://b8nkn7v47a584" path="res://Scripts/Chart Editor/ChartEditor.gd" id="1_1xse5"]
+[ext_resource type="AudioStream" uid="uid://ds4lyebx17udj" path="res://Music/Who Brings Shadow.ogg" id="2_aj5v7"]
+[ext_resource type="Script" uid="uid://nr07bxjskn74" path="res://Scripts/Chart Editor/UI/ui_editor.gd" id="2_egk2k"]
+[ext_resource type="Script" uid="uid://c3fswcg1dbr26" path="res://Scripts/Chart Editor/UI/AudioSpectrum.gd" id="3_aj5v7"]
+[ext_resource type="Script" uid="uid://1bcgusmumeqv" path="res://Scripts/Chart Editor/conductor.gd" id="3_cvwhq"]
+[ext_resource type="Script" uid="uid://mylq68cj0xq2" path="res://Scripts/Chart Editor/lines.gd" id="4_cvwhq"]
+[ext_resource type="PackedScene" uid="uid://d3pjuoiblys3b" path="res://Scenes/Chart Editor/UI/audio_file_dialog.tscn" id="4_fixri"]
+[ext_resource type="PackedScene" uid="uid://v63sm7asm4l1" path="res://Scenes/Chart Editor/UI/beat_label.tscn" id="5_fixri"]
+[ext_resource type="PackedScene" uid="uid://b2uo2gsw2jxie" path="res://Scenes/Chart Editor/UI/beat_map_file_dialog.tscn" id="5_pbdhm"]
+[ext_resource type="Resource" uid="uid://cly1g0vof1dv3" path="res://Resources/grid.tres" id="6_pbdhm"]
+[ext_resource type="Script" uid="uid://bgrtpt510kg4o" path="res://Scripts/Chart Editor/cursor.gd" id="7_x6c6k"]
+[ext_resource type="Script" uid="uid://c03cosy1k4oyt" path="res://Scripts/Chart Editor/NoteGrid.gd" id="12_j45ph"]
+[ext_resource type="PackedScene" uid="uid://dyxfds618a6qr" path="res://Scenes/Chart Editor/Notes/long_note.tscn" id="13_3ln4m"]
+[ext_resource type="PackedScene" uid="uid://ditg4gdfaoijp" path="res://Scenes/Chart Editor/Notes/long_note_arrow.tscn" id="14_qqqjt"]
+[ext_resource type="PackedScene" uid="uid://hbscbqcylg8g" path="res://Scenes/Chart Editor/Notes/long_note_double_arrow.tscn" id="15_7b63s"]
+[ext_resource type="PackedScene" uid="uid://biw8mpkjadx1i" path="res://Scenes/Chart Editor/Notes/arrow_note.tscn" id="16_g5eq3"]
+[ext_resource type="PackedScene" uid="uid://bs6krm1xsekj2" path="res://Scenes/Chart Editor/Notes/double_arrow_note.tscn" id="17_62tbx"]
+[ext_resource type="Script" uid="uid://6a1ssxwav5ru" path="res://Scripts/Chart Editor/UI/note_check_boxes.gd" id="18_rm0g8"]
+[ext_resource type="ButtonGroup" uid="uid://b2rasyf2p4vl7" path="res://Resources/note_type_button_group.tres" id="19_vv6pc"]
+[ext_resource type="ButtonGroup" uid="uid://c23dpqbyyn6iq" path="res://Resources/long_note_type_button_group.tres" id="20_2alue"]
+[ext_resource type="PackedScene" uid="uid://bfguicx1m70d1" path="res://Scenes/Embedded Game/rhythm_game.tscn" id="22_sti4a"]
+[ext_resource type="Resource" uid="uid://byovroyvcdtjs" path="res://Resources/CurrentNotesResource.tres" id="23_ll1b4"]
+[ext_resource type="Script" uid="uid://dk6j2w1xuditd" path="res://Scripts/Chart Editor/UI/ControlsUI.gd" id="24_7kh8l"]
+[ext_resource type="Texture2D" uid="uid://ng76ijks21wg" path="res://Sprites/Chart Editor/Tap_Icon.png" id="25_jjviy"]
+[ext_resource type="Texture2D" uid="uid://bp0t03ho82kme" path="res://Sprites/Chart Editor/Slide_Icon.png" id="27_vi0dp"]
+[ext_resource type="Texture2D" uid="uid://ep7jm706dbm" path="res://Sprites/Chart Editor/Long Front Icon.png" id="28_i7pu8"]
+[ext_resource type="Texture2D" uid="uid://b31vrhpvvqmii" path="res://Sprites/Chart Editor/Long Back Icon.png" id="29_oui72"]
+
+[sub_resource type="Theme" id="Theme_50y0c"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_p4nwx"]
+bg_color = Color(0.6, 0.6, 0.6, 0.19607843)
+
+[node name="Chart Editor" type="Control" unique_id=1425754862 node_paths=PackedStringArray("controls_ui", "audio_spectrum_analyzer", "note_grid", "conductor", "audio_file_dialog", "beat_map_file_dialog", "load_map_file_dialog")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 1
+script = ExtResource("1_1xse5")
+save_directory = "res://Saves"
+controls_ui = NodePath("ControlsContainer")
+audio_spectrum_analyzer = NodePath("WaveformContainer/SubViewport/CanvasLayer/UI Editor/AudioSpectrum")
+note_grid = NodePath("WaveformContainer/SubViewport/CanvasLayer/UI Editor/AudioSpectrum/ScrollContainer/TextureRect/Lines/NoteGrid")
+conductor = NodePath("Conductor")
+audio_file_dialog = NodePath("Audio File Dialog")
+beat_map_file_dialog = NodePath("Beat Map File Dialog")
+load_map_file_dialog = NodePath("Load Beat Map File Dialog")
+
+[node name="Conductor" type="AudioStreamPlayer" parent="." unique_id=809467193]
+stream = ExtResource("2_aj5v7")
+bus = &"Music"
+script = ExtResource("3_cvwhq")
+note_duration = 4
+metadata/_custom_type_script = "uid://1bcgusmumeqv"
+
+[node name="Audio File Dialog" parent="." unique_id=2128614875 instance=ExtResource("4_fixri")]
+
+[node name="Beat Map File Dialog" parent="." unique_id=1310568852 instance=ExtResource("5_pbdhm")]
+access = 2
+
+[node name="Load Beat Map File Dialog" type="FileDialog" parent="." unique_id=190557563]
+title = "Open a File"
+file_mode = 0
+access = 2
+filters = PackedStringArray("*.dat")
+use_native_dialog = true
+
+[node name="WaveformContainer" type="SubViewportContainer" parent="." unique_id=638802155]
+custom_minimum_size = Vector2(480, 270)
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -270.0
+offset_right = 1280.0
+grow_vertical = 0
+stretch = true
+mouse_target = true
+
+[node name="SubViewport" type="SubViewport" parent="WaveformContainer" unique_id=481506082]
+handle_input_locally = false
+physics_object_picking = true
+size = Vector2i(1280, 270)
+render_target_update_mode = 4
+
+[node name="CanvasLayer" type="CanvasLayer" parent="WaveformContainer/SubViewport" unique_id=1757462409]
+
+[node name="UI Editor" type="Control" parent="WaveformContainer/SubViewport/CanvasLayer" unique_id=1984694775 node_paths=PackedStringArray("cursor", "lines", "notes", "audio_spectrum_analyzer")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+script = ExtResource("2_egk2k")
+cursor = NodePath("AudioSpectrum/ScrollContainer/TextureRect/Lines/Cursor")
+lines = NodePath("AudioSpectrum/ScrollContainer/TextureRect/Lines")
+notes = NodePath("AudioSpectrum/ScrollContainer/TextureRect/Lines/NoteGrid")
+audio_spectrum_analyzer = NodePath("AudioSpectrum")
+
+[node name="AudioSpectrum" type="MarginContainer" parent="WaveformContainer/SubViewport/CanvasLayer/UI Editor" unique_id=1263376185 node_paths=PackedStringArray("rhythm_game", "player", "subviewport", "timeline_texture", "option_menu", "spinbox_bpm", "offset_line_edit", "time_graph", "parent")]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("3_aj5v7")
+rhythm_game = NodePath("../../../../../EmbeddedGameContainer/SubViewport/Rhythm Game")
+player = NodePath("../../../../../Conductor")
+subviewport = NodePath("../../..")
+timeline_texture = NodePath("ScrollContainer/TextureRect")
+option_menu = NodePath("../../../../../ControlsContainer/Controls/Settings/VBoxContainer2/OptionButton")
+spinbox_bpm = NodePath("../../../../../ControlsContainer/Controls/Settings/VBoxContainer2/BPM")
+offset_line_edit = NodePath("../../../../../ControlsContainer/Controls/Settings/VBoxContainer2/Offset")
+time_graph = NodePath("ScrollContainer/TextureRect/TimeGraph")
+parent = NodePath("ScrollContainer/TextureRect/Lines")
+bpm = 110.0
+beat_duration = 4
+offset = "0.314"
+
+[node name="ScrollContainer" type="ScrollContainer" parent="WaveformContainer/SubViewport/CanvasLayer/UI Editor/AudioSpectrum" unique_id=1525824386]
+layout_mode = 2
+
+[node name="TextureRect" type="PHAudioStreamEditor" parent="WaveformContainer/SubViewport/CanvasLayer/UI Editor/AudioSpectrum/ScrollContainer" unique_id=1294288029]
+custom_minimum_size = Vector2(1152, 200)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0, 0, 0.078431375, 1)
+color = Color(0, 0, 0.078431375, 1)
+
+[node name="Lines" type="Control" parent="WaveformContainer/SubViewport/CanvasLayer/UI Editor/AudioSpectrum/ScrollContainer/TextureRect" unique_id=1615538012 node_paths=PackedStringArray("cursor")]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+script = ExtResource("4_cvwhq")
+lines_per_pixel = 56.391
+beats = 532
+quarter_beats = 532
+cursor = NodePath("Cursor")
+beat_label_prefab = ExtResource("5_fixri")
+grid = ExtResource("6_pbdhm")
+
+[node name="Cursor" type="PanelContainer" parent="WaveformContainer/SubViewport/CanvasLayer/UI Editor/AudioSpectrum/ScrollContainer/TextureRect/Lines" unique_id=1354587621]
+layout_mode = 0
+offset_top = 50.0
+offset_right = 25536.0
+offset_bottom = 150.0
+theme = SubResource("Theme_50y0c")
+theme_override_styles/panel = SubResource("StyleBoxFlat_p4nwx")
+script = ExtResource("7_x6c6k")
+grid = ExtResource("6_pbdhm")
+tap_texture = ExtResource("25_jjviy")
+arrow_base_texture = ExtResource("27_vi0dp")
+long_texture = ExtResource("28_i7pu8")
+long_back_texture = ExtResource("29_oui72")
+
+[node name="NoteGrid" type="Node2D" parent="WaveformContainer/SubViewport/CanvasLayer/UI Editor/AudioSpectrum/ScrollContainer/TextureRect/Lines" unique_id=1043046693 node_paths=PackedStringArray("scroll_containter")]
+script = ExtResource("12_j45ph")
+grid = ExtResource("6_pbdhm")
+current_notes = ExtResource("23_ll1b4")
+_tap_texture = ExtResource("25_jjviy")
+scroll_containter = NodePath("../../..")
+_long_note_grid_sprite_prefab = ExtResource("13_3ln4m")
+_long_note_arrow_grid_sprite_prefab = ExtResource("14_qqqjt")
+_long_note_double_arrow_grid_sprite_prefab = ExtResource("15_7b63s")
+_arrow_note_grid_sprite_prefab = ExtResource("16_g5eq3")
+_double_arrow_note_grid_sprite_prefab = ExtResource("17_62tbx")
+
+[node name="TimeGraph" type="Control" parent="WaveformContainer/SubViewport/CanvasLayer/UI Editor/AudioSpectrum/ScrollContainer/TextureRect" unique_id=1991569983]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="EmbeddedGameContainer" type="SubViewportContainer" parent="." unique_id=715243042]
+custom_minimum_size = Vector2(640, 360)
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -640.0
+offset_bottom = 360.0
+grow_horizontal = 0
+stretch = true
+
+[node name="SubViewport" type="SubViewport" parent="EmbeddedGameContainer" unique_id=775519110]
+handle_input_locally = false
+size = Vector2i(640, 360)
+size_2d_override = Vector2i(1280, 720)
+size_2d_override_stretch = true
+render_target_update_mode = 4
+
+[node name="ColorRect" type="ColorRect" parent="EmbeddedGameContainer/SubViewport" unique_id=1339575889]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0, 0, 0, 1)
+
+[node name="Rhythm Game" parent="EmbeddedGameContainer/SubViewport" unique_id=872145979 node_paths=PackedStringArray("conductor") instance=ExtResource("22_sti4a")]
+process_mode = 1
+current_notes = ExtResource("23_ll1b4")
+conductor = NodePath("../../../Conductor")
+
+[node name="ControlsContainer" type="PanelContainer" parent="." unique_id=1780716121 node_paths=PackedStringArray("file_label")]
+layout_mode = 1
+offset_right = 402.0
+offset_bottom = 450.0
+script = ExtResource("24_7kh8l")
+file_label = NodePath("Controls/Settings/VBoxContainer/File Name")
+
+[node name="Controls" type="VBoxContainer" parent="ControlsContainer" unique_id=1382730740]
+layout_mode = 2
+
+[node name="Settings" type="VBoxContainer" parent="ControlsContainer/Controls" unique_id=1807798334]
+layout_mode = 2
+
+[node name="VBoxContainer" type="HBoxContainer" parent="ControlsContainer/Controls/Settings" unique_id=731817385]
+layout_mode = 2
+
+[node name="Audio" type="Button" parent="ControlsContainer/Controls/Settings/VBoxContainer" unique_id=1276152382]
+layout_mode = 2
+text = "Import
+Audio File"
+
+[node name="Save" type="Button" parent="ControlsContainer/Controls/Settings/VBoxContainer" unique_id=908335657]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+text = "Save"
+
+[node name="Load" type="Button" parent="ControlsContainer/Controls/Settings/VBoxContainer" unique_id=2060315542]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+text = "Load"
+
+[node name="File Name" type="Label" parent="ControlsContainer/Controls/Settings/VBoxContainer" unique_id=1431802839]
+layout_mode = 2
+text = "New Chart File"
+
+[node name="VBoxContainer2" type="HBoxContainer" parent="ControlsContainer/Controls/Settings" unique_id=858937649]
+layout_mode = 2
+
+[node name="OptionButton" type="OptionButton" parent="ControlsContainer/Controls/Settings/VBoxContainer2" unique_id=1305007969]
+layout_mode = 2
+size_flags_vertical = 8
+selected = 0
+item_count = 4
+popup/item_0/text = "QUARTER"
+popup/item_0/id = 1
+popup/item_1/text = "TRIPLET"
+popup/item_1/id = 3
+popup/item_2/text = "EIGHTH"
+popup/item_2/id = 2
+popup/item_3/text = "SIXTEENTH"
+popup/item_3/id = 4
+
+[node name="Label" type="Label" parent="ControlsContainer/Controls/Settings/VBoxContainer2" unique_id=1985757899]
+layout_mode = 2
+size_flags_vertical = 8
+text = "BPM"
+
+[node name="BPM" type="SpinBox" parent="ControlsContainer/Controls/Settings/VBoxContainer2" unique_id=1836167881]
+layout_mode = 2
+size_flags_vertical = 8
+max_value = 522.0
+value = 110.0
+
+[node name="Offset Label" type="Label" parent="ControlsContainer/Controls/Settings/VBoxContainer2" unique_id=457478304]
+layout_mode = 2
+text = "Offset"
+
+[node name="Offset" type="LineEdit" parent="ControlsContainer/Controls/Settings/VBoxContainer2" unique_id=2137399715]
+layout_mode = 2
+text = "0.0"
+
+[node name="Export" type="Button" parent="ControlsContainer/Controls/Settings/VBoxContainer2" unique_id=832736463]
+layout_mode = 2
+text = "Export"
+
+[node name="Notes Menu" type="HBoxContainer" parent="ControlsContainer/Controls" unique_id=1609292739]
+layout_mode = 2
+
+[node name="Note Check Boxes" type="VBoxContainer" parent="ControlsContainer/Controls/Notes Menu" unique_id=1225382082 node_paths=PackedStringArray("arrows_option_menu", "arrows_2_option_menu", "long_arrow_checkbutton", "long_double_arrow_checkbutton")]
+layout_mode = 2
+size_flags_horizontal = 0
+script = ExtResource("18_rm0g8")
+arrows_option_menu = NodePath("../Arrows/Arrows/Arrows")
+arrows_2_option_menu = NodePath("../Arrows/Arrows2/Arrows2")
+long_arrow_checkbutton = NodePath("Long Arrow")
+long_double_arrow_checkbutton = NodePath("Long Double Arrow")
+
+[node name="Tap" type="CheckButton" parent="ControlsContainer/Controls/Notes Menu/Note Check Boxes" unique_id=2116960352]
+layout_mode = 2
+size_flags_horizontal = 5
+size_flags_vertical = 5
+theme_override_icons/icon = ExtResource("25_jjviy")
+button_group = ExtResource("19_vv6pc")
+text = "Tap"
+
+[node name="Arrow" type="CheckButton" parent="ControlsContainer/Controls/Notes Menu/Note Check Boxes" unique_id=1596901048]
+layout_mode = 2
+size_flags_horizontal = 5
+size_flags_vertical = 5
+theme_override_icons/icon = ExtResource("27_vi0dp")
+button_group = ExtResource("19_vv6pc")
+text = "Arrow"
+
+[node name="DoubleArrow" type="CheckButton" parent="ControlsContainer/Controls/Notes Menu/Note Check Boxes" unique_id=305981822]
+layout_mode = 2
+theme_override_icons/icon = ExtResource("27_vi0dp")
+button_group = ExtResource("19_vv6pc")
+text = "Double Arrow"
+
+[node name="Long" type="CheckButton" parent="ControlsContainer/Controls/Notes Menu/Note Check Boxes" unique_id=799279941]
+layout_mode = 2
+theme_override_icons/icon = ExtResource("28_i7pu8")
+button_group = ExtResource("19_vv6pc")
+text = "Long"
+
+[node name="Long Arrow" type="CheckButton" parent="ControlsContainer/Controls/Notes Menu/Note Check Boxes" unique_id=2065913397]
+layout_mode = 2
+theme_override_icons/icon = ExtResource("29_oui72")
+button_group = ExtResource("20_2alue")
+text = "Arrow"
+
+[node name="Long Double Arrow" type="CheckButton" parent="ControlsContainer/Controls/Notes Menu/Note Check Boxes" unique_id=30747361]
+layout_mode = 2
+theme_override_icons/icon = ExtResource("29_oui72")
+button_group = ExtResource("20_2alue")
+text = "Long Double Arrow"
+
+[node name="Arrows" type="VBoxContainer" parent="ControlsContainer/Controls/Notes Menu" unique_id=1006994399]
+layout_mode = 2
+
+[node name="Arrows" type="HBoxContainer" parent="ControlsContainer/Controls/Notes Menu/Arrows" unique_id=572134401]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="ControlsContainer/Controls/Notes Menu/Arrows/Arrows" unique_id=380307829]
+layout_mode = 2
+text = "First Arrow"
+
+[node name="Arrows" type="OptionButton" parent="ControlsContainer/Controls/Notes Menu/Arrows/Arrows" unique_id=1464018926]
+layout_mode = 2
+selected = 0
+item_count = 4
+popup/item_0/text = "Up"
+popup/item_0/id = 0
+popup/item_1/text = "Down"
+popup/item_1/id = 1
+popup/item_2/text = "Left"
+popup/item_2/id = 2
+popup/item_3/text = "Right"
+popup/item_3/id = 3
+
+[node name="Arrows2" type="HBoxContainer" parent="ControlsContainer/Controls/Notes Menu/Arrows" unique_id=1457426280]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="ControlsContainer/Controls/Notes Menu/Arrows/Arrows2" unique_id=771766198]
+layout_mode = 2
+text = "Second Arrow"
+
+[node name="Arrows2" type="OptionButton" parent="ControlsContainer/Controls/Notes Menu/Arrows/Arrows2" unique_id=68178035]
+layout_mode = 2
+selected = 0
+item_count = 4
+popup/item_0/text = "Up"
+popup/item_0/id = 0
+popup/item_1/text = "Down"
+popup/item_1/id = 1
+popup/item_2/text = "Left"
+popup/item_2/id = 2
+popup/item_3/text = "Right"
+popup/item_3/id = 3
+
+[node name="Playback Menu" type="HBoxContainer" parent="ControlsContainer" unique_id=924484907]
+layout_mode = 2
+size_flags_vertical = 8
+
+[node name="Play" type="Button" parent="ControlsContainer/Playback Menu" unique_id=636552941]
+layout_mode = 2
+size_flags_vertical = 8
+text = "Play"
+
+[node name="Pause" type="Button" parent="ControlsContainer/Playback Menu" unique_id=1422968549]
+layout_mode = 2
+text = "Pause"
+
+[node name="Stop" type="Button" parent="ControlsContainer/Playback Menu" unique_id=1783481164]
+layout_mode = 2
+size_flags_vertical = 8
+text = "Stop"
+
+[connection signal="loaded_new_stream" from="Conductor" to="WaveformContainer/SubViewport/CanvasLayer/UI Editor/AudioSpectrum" method="_on_conductor_loaded_new_stream"]
+[connection signal="file_selected" from="Audio File Dialog" to="." method="_on_audio_file_dialog_file_selected"]
+[connection signal="file_selected" from="Beat Map File Dialog" to="." method="_on_beat_map_file_dialog_file_selected"]
+[connection signal="file_selected" from="Load Beat Map File Dialog" to="." method="_on_load_beat_map_file_dialog_file_selected"]
+[connection signal="ADD_ARROW_NOTE" from="WaveformContainer/SubViewport/CanvasLayer/UI Editor" to="WaveformContainer/SubViewport/CanvasLayer/UI Editor/AudioSpectrum/ScrollContainer/TextureRect/Lines/NoteGrid" method="_on_ui_editor_add_arrow_note"]
+[connection signal="ADD_DOUBLE_ARROW_NOTE" from="WaveformContainer/SubViewport/CanvasLayer/UI Editor" to="WaveformContainer/SubViewport/CanvasLayer/UI Editor/AudioSpectrum/ScrollContainer/TextureRect/Lines/NoteGrid" method="_on_ui_editor_add_double_arrow_note"]
+[connection signal="ADD_LONG_ARROW_NOTE" from="WaveformContainer/SubViewport/CanvasLayer/UI Editor" to="WaveformContainer/SubViewport/CanvasLayer/UI Editor/AudioSpectrum/ScrollContainer/TextureRect/Lines/NoteGrid" method="_on_ui_editor_add_long_arrow_note"]
+[connection signal="ADD_LONG_DOUBLE_ARROW_NOTE" from="WaveformContainer/SubViewport/CanvasLayer/UI Editor" to="WaveformContainer/SubViewport/CanvasLayer/UI Editor/AudioSpectrum/ScrollContainer/TextureRect/Lines/NoteGrid" method="_on_ui_editor_add_long_double_arrow_note"]
+[connection signal="ADD_LONG_NOTE" from="WaveformContainer/SubViewport/CanvasLayer/UI Editor" to="WaveformContainer/SubViewport/CanvasLayer/UI Editor/AudioSpectrum/ScrollContainer/TextureRect/Lines/NoteGrid" method="_on_ui_editor_add_long_note"]
+[connection signal="ADD_TAP_NOTE" from="WaveformContainer/SubViewport/CanvasLayer/UI Editor" to="WaveformContainer/SubViewport/CanvasLayer/UI Editor/AudioSpectrum/ScrollContainer/TextureRect/Lines/NoteGrid" method="_on_ui_editor_add_tap_note"]
+[connection signal="DROP_TAP_NOTE" from="WaveformContainer/SubViewport/CanvasLayer/UI Editor" to="WaveformContainer/SubViewport/CanvasLayer/UI Editor/AudioSpectrum/ScrollContainer/TextureRect/Lines/NoteGrid" method="_on_ui_editor_drop_tap_note"]
+[connection signal="HOVER_LONG_NOTE" from="WaveformContainer/SubViewport/CanvasLayer/UI Editor" to="WaveformContainer/SubViewport/CanvasLayer/UI Editor/AudioSpectrum/ScrollContainer/TextureRect/Lines/NoteGrid" method="_on_ui_editor_hover_long_note"]
+[connection signal="REMOVE_NOTE" from="WaveformContainer/SubViewport/CanvasLayer/UI Editor" to="WaveformContainer/SubViewport/CanvasLayer/UI Editor/AudioSpectrum/ScrollContainer/TextureRect/Lines/NoteGrid" method="_on_ui_editor_remove_note"]
+[connection signal="IMAGE_LENGTH_CHANGED" from="WaveformContainer/SubViewport/CanvasLayer/UI Editor/AudioSpectrum/ScrollContainer/TextureRect/Lines" to="WaveformContainer/SubViewport/CanvasLayer/UI Editor/AudioSpectrum" method="_on_lines_image_length_changed"]
+[connection signal="IMAGE_LENGTH_CHANGED" from="WaveformContainer/SubViewport/CanvasLayer/UI Editor/AudioSpectrum/ScrollContainer/TextureRect/Lines" to="WaveformContainer/SubViewport/CanvasLayer/UI Editor/AudioSpectrum/ScrollContainer/TextureRect/Lines/Cursor" method="_on_lines_image_length_changed"]
+[connection signal="resized" from="WaveformContainer/SubViewport/CanvasLayer/UI Editor/AudioSpectrum/ScrollContainer/TextureRect/Lines" to="WaveformContainer/SubViewport/CanvasLayer/UI Editor/AudioSpectrum/ScrollContainer/TextureRect/Lines" method="_on_resized"]
+[connection signal="MOUSE_HOVER" from="WaveformContainer/SubViewport/CanvasLayer/UI Editor/AudioSpectrum/ScrollContainer/TextureRect/Lines/Cursor" to="WaveformContainer/SubViewport/CanvasLayer/UI Editor" method="_on_cursor_mouse_hover"]
+[connection signal="MOUSE_LEFT_CLICK" from="WaveformContainer/SubViewport/CanvasLayer/UI Editor/AudioSpectrum/ScrollContainer/TextureRect/Lines/Cursor" to="WaveformContainer/SubViewport/CanvasLayer/UI Editor" method="_on_cursor_mouse_left_click"]
+[connection signal="MOUSE_LEFT_RELEASE" from="WaveformContainer/SubViewport/CanvasLayer/UI Editor/AudioSpectrum/ScrollContainer/TextureRect/Lines/Cursor" to="WaveformContainer/SubViewport/CanvasLayer/UI Editor" method="_on_cursor_mouse_left_release"]
+[connection signal="MOUSE_RIGHT_CLICK" from="WaveformContainer/SubViewport/CanvasLayer/UI Editor/AudioSpectrum/ScrollContainer/TextureRect/Lines/Cursor" to="WaveformContainer/SubViewport/CanvasLayer/UI Editor" method="_on_cursor_mouse_right_click"]
+[connection signal="draw" from="WaveformContainer/SubViewport/CanvasLayer/UI Editor/AudioSpectrum/ScrollContainer/TextureRect/TimeGraph" to="WaveformContainer/SubViewport/CanvasLayer/UI Editor/AudioSpectrum" method="_on_time_graph_draw"]
+[connection signal="pressed" from="ControlsContainer/Controls/Settings/VBoxContainer/Audio" to="." method="_on_import_audio_file_pressed"]
+[connection signal="pressed" from="ControlsContainer/Controls/Settings/VBoxContainer/Save" to="." method="_on_save_pressed"]
+[connection signal="pressed" from="ControlsContainer/Controls/Settings/VBoxContainer/Load" to="." method="_on_load_pressed"]
+[connection signal="item_selected" from="ControlsContainer/Controls/Settings/VBoxContainer2/OptionButton" to="WaveformContainer/SubViewport/CanvasLayer/UI Editor/AudioSpectrum" method="_on_option_button_item_selected"]
+[connection signal="value_changed" from="ControlsContainer/Controls/Settings/VBoxContainer2/BPM" to="WaveformContainer/SubViewport/CanvasLayer/UI Editor/AudioSpectrum" method="_on_spin_box_value_changed"]
+[connection signal="text_submitted" from="ControlsContainer/Controls/Settings/VBoxContainer2/Offset" to="WaveformContainer/SubViewport/CanvasLayer/UI Editor/AudioSpectrum" method="_on_offset_value_changed"]
+[connection signal="pressed" from="ControlsContainer/Controls/Settings/VBoxContainer2/Export" to="WaveformContainer/SubViewport/CanvasLayer/UI Editor" method="_on_export_pressed"]
+[connection signal="ARROW_2_DIRECTION_SELECTION" from="ControlsContainer/Controls/Notes Menu/Note Check Boxes" to="WaveformContainer/SubViewport/CanvasLayer/UI Editor" method="_on_note_check_boxes_arrow_2_direction_selection"]
+[connection signal="ARROW_DIRECTION_SELECTION" from="ControlsContainer/Controls/Notes Menu/Note Check Boxes" to="WaveformContainer/SubViewport/CanvasLayer/UI Editor" method="_on_note_check_boxes_arrow_direction_selection"]
+[connection signal="LONG_RELEASE_SELECTION" from="ControlsContainer/Controls/Notes Menu/Note Check Boxes" to="WaveformContainer/SubViewport/CanvasLayer/UI Editor" method="_on_note_check_boxes_long_release_selection"]
+[connection signal="toggled" from="ControlsContainer/Controls/Notes Menu/Note Check Boxes/Tap" to="WaveformContainer/SubViewport/CanvasLayer/UI Editor" method="_on_tap_toggled"]
+[connection signal="toggled" from="ControlsContainer/Controls/Notes Menu/Note Check Boxes/Arrow" to="WaveformContainer/SubViewport/CanvasLayer/UI Editor" method="_on_arrow_toggled"]
+[connection signal="toggled" from="ControlsContainer/Controls/Notes Menu/Note Check Boxes/Arrow" to="ControlsContainer/Controls/Notes Menu/Note Check Boxes" method="_on_arrow_toggled"]
+[connection signal="toggled" from="ControlsContainer/Controls/Notes Menu/Note Check Boxes/DoubleArrow" to="WaveformContainer/SubViewport/CanvasLayer/UI Editor" method="_on_double_arrow_toggled"]
+[connection signal="toggled" from="ControlsContainer/Controls/Notes Menu/Note Check Boxes/DoubleArrow" to="ControlsContainer/Controls/Notes Menu/Note Check Boxes" method="_on_double_arrow_toggled"]
+[connection signal="toggled" from="ControlsContainer/Controls/Notes Menu/Note Check Boxes/Long" to="WaveformContainer/SubViewport/CanvasLayer/UI Editor" method="_on_long_toggled"]
+[connection signal="toggled" from="ControlsContainer/Controls/Notes Menu/Note Check Boxes/Long" to="ControlsContainer/Controls/Notes Menu/Note Check Boxes" method="_on_long_toggled"]
+[connection signal="toggled" from="ControlsContainer/Controls/Notes Menu/Note Check Boxes/Long Arrow" to="WaveformContainer/SubViewport/CanvasLayer/UI Editor" method="_on_long_arrow_toggled"]
+[connection signal="toggled" from="ControlsContainer/Controls/Notes Menu/Note Check Boxes/Long Arrow" to="ControlsContainer/Controls/Notes Menu/Note Check Boxes" method="_on_long_arrow_toggled"]
+[connection signal="toggled" from="ControlsContainer/Controls/Notes Menu/Note Check Boxes/Long Double Arrow" to="WaveformContainer/SubViewport/CanvasLayer/UI Editor" method="_on_long_double_arrow_toggled"]
+[connection signal="toggled" from="ControlsContainer/Controls/Notes Menu/Note Check Boxes/Long Double Arrow" to="ControlsContainer/Controls/Notes Menu/Note Check Boxes" method="_on_long_double_arrow_toggled"]
+[connection signal="item_selected" from="ControlsContainer/Controls/Notes Menu/Arrows/Arrows/Arrows" to="ControlsContainer/Controls/Notes Menu/Note Check Boxes" method="_on_arrows_item_selected"]
+[connection signal="item_selected" from="ControlsContainer/Controls/Notes Menu/Arrows/Arrows2/Arrows2" to="ControlsContainer/Controls/Notes Menu/Note Check Boxes" method="_on_arrows_2_item_selected"]
+[connection signal="pressed" from="ControlsContainer/Playback Menu/Play" to="WaveformContainer/SubViewport/CanvasLayer/UI Editor/AudioSpectrum" method="_on_play_pressed"]
+[connection signal="pressed" from="ControlsContainer/Playback Menu/Pause" to="WaveformContainer/SubViewport/CanvasLayer/UI Editor/AudioSpectrum" method="_on_pause_pressed"]
+[connection signal="pressed" from="ControlsContainer/Playback Menu/Stop" to="WaveformContainer/SubViewport/CanvasLayer/UI Editor/AudioSpectrum" method="_on_stop_pressed"]

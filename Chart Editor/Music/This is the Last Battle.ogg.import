@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://d26732fawnen7"
+path="res://.godot/imported/This is the Last Battle.ogg-6cc8f16507a26eac93f54e461e656156.oggvorbisstr"
+
+[deps]
+
+source_file="res://Chart Editor/Music/This is the Last Battle.ogg"
+dest_files=["res://.godot/imported/This is the Last Battle.ogg-6cc8f16507a26eac93f54e461e656156.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

@@ -1,0 +1,6 @@
+[gd_resource type="Resource" format=3 uid="uid://ddp2l2krneyko"]
+
+[ext_resource type="Script" uid="uid://brgbtys2icm2i" path="res://Scripts/Input/InputToCommandManager.gd" id="1_awv5s"]
+
+[resource]
+script = ExtResource("1_awv5s")

@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://c2nii8ncii3bl"
+path="res://.godot/imported/Judgement.wav-01bb97cadc2e7d41c472478ee99b9686.sample"
+
+[deps]
+
+source_file="res://Chart Editor/Music/Judgement.wav"
+dest_files=["res://.godot/imported/Judgement.wav-01bb97cadc2e7d41c472478ee99b9686.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

@@ -1,0 +1,63 @@
+[gd_scene load_steps=3 format=3 uid="uid://bwevgsvt5nerw"]
+
+[sub_resource type="GDScript" id="GDScript_2fkdm"]
+script/source = "extends Area2D
+
+@export var label: Label
+@export var line: Line2D
+@export var collision_shape: CollisionShape2D
+
+const TILE_SIZE: int = 2
+
+
+func _ready() -> void:
+	collision_shape.shape.size.y = 512
+
+#func _physics_process(_delta: float) -> void:
+	#if abs(get_global_mouse_position().x - line.points[0].x) <= TILE_SIZE:
+		#print(\"RED\")
+		#self.line.default_color = Color.RED
+	#else:
+		#self.line.default_color = Color.WHITE
+
+
+func _on_mouse_entered() -> void:
+	self.line.default_color = Color.RED
+	print(\"Enter\")
+
+
+func _on_mouse_exited() -> void:
+	self.line.default_color = Color.WHITE
+	print(\"Exit\")
+"
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_e5nl0"]
+size = Vector2(6, 512)
+
+[node name="BeatLine" type="Line2D" node_paths=PackedStringArray("label")]
+points = PackedVector2Array(0, 0, 0, 512)
+width = 1.0
+script = SubResource("GDScript_2fkdm")
+label = NodePath("Control/Label")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+size_flags_horizontal = 4
+mouse_filter = 2
+
+[node name="Label" type="Label" parent="Control"]
+layout_mode = 1
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(0, 256)
+shape = SubResource("RectangleShape2D_e5nl0")
+
+[connection signal="mouse_entered" from="Area2D" to="." method="_on_area_2d_mouse_entered"]
+[connection signal="mouse_exited" from="Area2D" to="." method="_on_area_2d_mouse_exited"]

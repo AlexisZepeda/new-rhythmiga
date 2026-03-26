@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://tcpf46tiihqj"]
+
+[ext_resource type="Script" uid="uid://b1783angorvil" path="res://Scripts/Embedded Game/Notes/LongSlide.gd" id="1_n8ree"]
+[ext_resource type="Texture2D" uid="uid://2bfay36h3sv7" path="res://Sprites/Embedded Game/Long Back.png" id="2_uqy2y"]
+[ext_resource type="Texture2D" uid="uid://kxo24fnvgb6d" path="res://Sprites/Embedded Game/Long Arrow.png" id="3_uqy2y"]
+
+[node name="Long Slide" type="Node2D" unique_id=1722815838 node_paths=PackedStringArray("arrow", "base_sprite")]
+scale = Vector2(0.1, 0.1)
+script = ExtResource("1_n8ree")
+arrow = NodePath("Arrow")
+base_sprite = NodePath("Back")
+
+[node name="Back" type="Sprite2D" parent="." unique_id=2143914616]
+texture = ExtResource("2_uqy2y")
+
+[node name="Arrow" type="Sprite2D" parent="." unique_id=496700927]
+texture = ExtResource("3_uqy2y")
+offset = Vector2(0, -360)

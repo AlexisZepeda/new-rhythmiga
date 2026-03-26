@@ -1,0 +1,33 @@
+[gd_scene format=3 uid="uid://bgwii7bk7xd1h"]
+
+[ext_resource type="Script" uid="uid://16s75jnemgvs" path="res://Scripts/Chart Editor/UI/ArrowPanelButton.gd" id="1_4gj2h"]
+[ext_resource type="Texture2D" uid="uid://b5rx0sch85ule" path="res://Sprites/Chart Editor/Long Arrow Icon.png" id="1_lv6fx"]
+[ext_resource type="Texture2D" uid="uid://dc1xr7q4r7agx" path="res://Sprites/Chart Editor/Slide Arrow.png" id="2_c8ycc"]
+
+[node name="Arrow Panel Button" type="Button" unique_id=1412152122 node_paths=PackedStringArray("arrow_texture")]
+custom_minimum_size = Vector2(40, 40)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -7.5
+offset_top = -16.0
+offset_right = 7.5
+offset_bottom = 16.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 6
+size_flags_vertical = 6
+script = ExtResource("1_4gj2h")
+arrow_texture = NodePath("TextureRect")
+slide_texture = ExtResource("2_c8ycc")
+long_slide_texture = ExtResource("1_lv6fx")
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=1789393946]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 5.0
+offset_right = 30.0
+offset_bottom = 37.0
+texture = ExtResource("2_c8ycc")

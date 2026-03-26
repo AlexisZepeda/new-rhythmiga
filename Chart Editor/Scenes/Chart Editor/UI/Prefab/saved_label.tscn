@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://bdet0eqdi3n51"]
+
+[ext_resource type="Theme" uid="uid://b4b4ir2ym8hlr" path="res://Themes/label.tres" id="1_225p0"]
+[ext_resource type="Script" uid="uid://thintk3xyidy" path="res://Scripts/Chart Editor/UI/SavedLabel.gd" id="3_k7hbw"]
+
+[node name="Saved Label" type="Label" unique_id=1805318625]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -70.0
+offset_top = -26.0
+grow_horizontal = 0
+grow_vertical = 0
+theme = ExtResource("1_225p0")
+text = "Saved"
+script = ExtResource("3_k7hbw")

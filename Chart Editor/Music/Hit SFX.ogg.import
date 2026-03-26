@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://l0h3coe170pp"
+path="res://.godot/imported/Hit SFX.ogg-074c53f916d18d41b03f142eb3fe0e62.oggvorbisstr"
+
+[deps]
+
+source_file="res://Chart Editor/Music/Hit SFX.ogg"
+dest_files=["res://.godot/imported/Hit SFX.ogg-074c53f916d18d41b03f142eb3fe0e62.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

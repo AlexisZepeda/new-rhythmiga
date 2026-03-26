@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://d3h2yuh2dpjbx"]
+
+[ext_resource type="Script" uid="uid://bkh0546r2qq2m" path="res://Scripts/Notes/LongNoteLine.gd" id="1_qqpg2"]
+
+[node name="LongNoteLine" type="Line2D"]
+width = 20.0
+default_color = Color(0, 0.898039, 0, 1)
+script = ExtResource("1_qqpg2")
