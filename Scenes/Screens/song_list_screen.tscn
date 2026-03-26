@@ -1,22 +1,26 @@
 [gd_scene format=3 uid="uid://bjiqcp65vhx4v"]
 
+[ext_resource type="Theme" uid="uid://kwgoi4r6jr0i" path="res://Resources/Themes/Global.tres" id="1_5jhed"]
 [ext_resource type="PackedScene" uid="uid://blt2xfgped1n8" path="res://Scenes/UI Prefabs/outer_side_panel.tscn" id="1_b4ta6"]
 [ext_resource type="Script" uid="uid://dntbd573urdfy" path="res://Scripts/Screens/SongListScreen.gd" id="1_esvqc"]
 [ext_resource type="PackedScene" uid="uid://d3tcsll630mrm" path="res://Scenes/UI Prefabs/inner_side_panel.tscn" id="2_esvqc"]
-[ext_resource type="PackedScene" uid="uid://bgtp8sp0engm3" path="res://Scenes/UI Prefabs/song_button.tscn" id="2_h0nqk"]
+[ext_resource type="PackedScene" uid="uid://dnmngvc88hvjb" path="res://Scenes/UI Prefabs/new_song_button.tscn" id="2_h0nqk"]
+[ext_resource type="PackedScene" uid="uid://d2im1lieant15" path="res://Scenes/UI Prefabs/song_info_container.tscn" id="6_1wg0l"]
 
-[node name="Song List Screen" type="Control" unique_id=289960780 node_paths=PackedStringArray("back_button", "vbox", "player")]
+[node name="Song List Screen" type="Control" unique_id=289960780 node_paths=PackedStringArray("back_button", "song_button_list", "song_info_container", "player")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("1_5jhed")
 script = ExtResource("1_esvqc")
 main_menu_path = "res://Scenes/Screens/main_menu_screen.tscn"
 song_button_prefab = ExtResource("2_h0nqk")
 back_button = NodePath("Panel/AspectRatioContainer/Panel/Back Button")
-vbox = NodePath("Panel/AspectRatioContainer/Panel/MarginContainer/VBoxContainer")
+song_button_list = NodePath("Panel/AspectRatioContainer/Panel/MarginContainer/HBoxContainer/ScrollContainer/SongListContainer")
+song_info_container = NodePath("Panel/AspectRatioContainer/Panel/MarginContainer/HBoxContainer/SongInfoContainer")
 player = NodePath("AudioStreamPlayer")
 
 [node name="Panel" parent="." unique_id=469996951 instance=ExtResource("1_b4ta6")]
@@ -45,7 +49,19 @@ theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Panel/AspectRatioContainer/Panel/MarginContainer" unique_id=2105667062]
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel/AspectRatioContainer/Panel/MarginContainer" unique_id=2043307933]
+layout_mode = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Panel/AspectRatioContainer/Panel/MarginContainer/HBoxContainer" unique_id=2111588205]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="SongListContainer" type="VBoxContainer" parent="Panel/AspectRatioContainer/Panel/MarginContainer/HBoxContainer/ScrollContainer" unique_id=2105667062]
+custom_minimum_size = Vector2(200, 500)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="SongInfoContainer" parent="Panel/AspectRatioContainer/Panel/MarginContainer/HBoxContainer" unique_id=1470138478 instance=ExtResource("6_1wg0l")]
 layout_mode = 2
 
 [node name="Back Button" type="Button" parent="Panel/AspectRatioContainer/Panel" unique_id=521325276]

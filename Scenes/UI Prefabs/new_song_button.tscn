@@ -1,0 +1,64 @@
+[gd_scene format=3 uid="uid://dnmngvc88hvjb"]
+
+[ext_resource type="Script" uid="uid://cmnfl20g7f44" path="res://Scripts/UI Prefabs/NewSongButton.gd" id="1_p7uh8"]
+
+[node name="NewSongButton" type="MarginContainer" unique_id=936495087 node_paths=PackedStringArray("button", "song_title", "artist", "album", "cover_art", "score", "difficulty")]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_p7uh8")
+button = NodePath("Button")
+song_title = NodePath("HBoxContainer/VBoxContainer/Song Title")
+artist = NodePath("HBoxContainer/VBoxContainer/Artist Name")
+album = NodePath("HBoxContainer/VBoxContainer/Album")
+cover_art = NodePath("HBoxContainer/Art")
+score = NodePath("HBoxContainer/VBoxContainer/HBoxContainer/Score")
+difficulty = NodePath("HBoxContainer/VBoxContainer/HBoxContainer/Difficulty")
+
+[node name="Button" type="Button" parent="." unique_id=215609905]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=820285109]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="Art" type="TextureRect" parent="HBoxContainer" unique_id=1014544199]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer" unique_id=1992144534]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Song Title" type="Label" parent="HBoxContainer/VBoxContainer" unique_id=1930965621]
+layout_mode = 2
+size_flags_vertical = 3
+text = "Title"
+
+[node name="Artist Name" type="Label" parent="HBoxContainer/VBoxContainer" unique_id=1736515144]
+layout_mode = 2
+size_flags_vertical = 6
+text = "Artist Name"
+
+[node name="Album" type="Label" parent="HBoxContainer/VBoxContainer" unique_id=518823815]
+layout_mode = 2
+size_flags_vertical = 6
+text = "Album"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/VBoxContainer" unique_id=1033967817]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Score" type="Label" parent="HBoxContainer/VBoxContainer/HBoxContainer" unique_id=53445577]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+text = "Score"
+
+[node name="Difficulty" type="Label" parent="HBoxContainer/VBoxContainer/HBoxContainer" unique_id=1797462790]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+text = "Difficulty"

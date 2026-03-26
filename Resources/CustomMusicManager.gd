@@ -70,8 +70,6 @@ static func open_folder(folder_name: String) -> void:
 			print("")
 	else:
 		print("Folder contains no music")
-	
-	print(library)
 
 
 static func check_valid_folder(folder_name: String) -> bool:
@@ -106,3 +104,17 @@ static func get_song_path(id: String) -> String:
 			return library[key][Library_Keys.SONG_PATH]
 	
 	return ""
+
+
+static func load_audio(song_name: String) -> AudioStream:
+	var file = get_song_path(song_name)
+	
+	var stream: AudioStream
+	
+	match file.get_extension():
+		CustomMusicManager.WAV_EXTENSION:
+			stream = AudioStreamWAV.load_from_file(file)
+		CustomMusicManager.OGG_EXTENSION:
+			stream = AudioStreamOggVorbis.load_from_file(file)
+	
+	return stream

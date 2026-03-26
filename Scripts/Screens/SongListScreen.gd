@@ -7,7 +7,8 @@ signal CHANGING_SCENE(header_position: Vector2, new_title: String)
 
 @export var song_button_prefab: PackedScene
 @export var back_button: Button
-@export var vbox: VBoxContainer
+@export var song_button_list: VBoxContainer
+@export var song_info_container: SongInfoContainer
 @export var player: AudioStreamPlayer
 
 var scale_factor := 1.0
@@ -38,18 +39,24 @@ func _on_back_pressed() -> void:
 	CHANGING_SCENE.emit(Vector2.ZERO, "")
 
 
-func _on_mouse_entered(btn: Button) -> void:
-	var file = CustomMusicManager.get_song_path(btn.id)
+func _on_mouse_entered(btn: NewSongButton) -> void:
+	#if stream.tags.has("metadata_block_picture"):
+		#var data: PackedByteArray = Marshalls.base64_to_raw(stream.tags["metadata_block_picture"])
+		#
+		#print("First 16 bytes (hex) %s" % [data.slice(0, 4).hex_encode()])
+		#var streambuffer: StreamPeerBuffer = StreamPeerBuffer.new()
+		#streambuffer.big_endian = true
+		#streambuffer.data_array = data.slice(0, 4)
+		#var text = streambuffer.get_u32()
+		#
+		#streambuffer.data_array = data.slice(4, 8)
+		#
+		#print("Text Preview")
+		#print(text)
+	print(btn.song_title_str)
+	song_info_container.set_info(btn.song_title_str, btn.artist_str, btn.score_str, btn.cover_art_texture)
 	
-	var stream: AudioStream
-	
-	match file.get_extension():
-		CustomMusicManager.WAV_EXTENSION:
-			stream = AudioStreamWAV.load_from_file(file)
-		CustomMusicManager.OGG_EXTENSION:
-			stream = AudioStreamOggVorbis.load_from_file(file)
-	
-	player.stream = stream
+	player.stream = btn.audio_stream
 	
 	player.play()
 
@@ -58,14 +65,16 @@ func load_songs() -> void:
 	for key: String in CustomMusicManager.library:
 		var song_name: String = CustomMusicManager.library[key][CustomMusicManager.Library_Keys.SONG_NAME]
 		if song_name != "":
-			var btn: Button = song_button_prefab.instantiate()
-			btn.set_text(song_name)
+			var btn: NewSongButton = song_button_prefab.instantiate()
+			btn.audio_stream = CustomMusicManager.load_audio(song_name)
+			btn.set_song_title(song_name)
 			btn.id = song_name
 			
 			var entered = Callable(self, "_on_mouse_entered").bind(btn)
 			btn.mouse_entered.connect(entered)
 			
-			vbox.add_child(btn)
+			
+			song_button_list.add_child(btn)
 
 
 func change_scene() -> void:
