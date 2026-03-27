@@ -7,11 +7,11 @@
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_1pj1r"]
 shader = ExtResource("1_vpjpc")
 shader_parameter/first_color = Color(0, 0, 0, 1)
-shader_parameter/second_color = Color(0, 0, 0.19607843, 1)
+shader_parameter/second_color = Color(0, 0, 0.196, 1)
 shader_parameter/position = 0.25000003562499995
-shader_parameter/size = 1.5000000475
+shader_parameter/size = 1.5
 shader_parameter/angle = 270.000012825
-shader_parameter/background_color = Color(0.5176471, 0.38431373, 0, 1)
+shader_parameter/background_color = Color(0.518, 0.384, 0, 1)
 shader_parameter/GWM = 1.5
 shader_parameter/TM = 0.25
 shader_parameter/wave_speed = 0.6

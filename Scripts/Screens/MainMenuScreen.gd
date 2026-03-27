@@ -1,33 +1,22 @@
-extends Control
+extends BaseUIScreen
 
-signal CHANGING_SCENE(header_position: Vector2, new_title: String)
 
 @export_file_path var settings_menu_path: String
 @export_file_path var song_list_menu_path: String
 @export_file_path var chart_editor_menu_path: String
-@export var title: String = "Main Menu"
 
 @export var button_vbox: VBoxContainer
 
-var scale_factor := 1.0
-var gui_aspect_ratio:float = -1.0
-var gui_margin := 0.0
-
 var all_buttons: Array
 
-var scene_path: String
+@onready var inner_panel: Panel = $Panel/AspectRatioContainer/Panel
 
-@onready var panel: Panel = $Panel
-@onready var arc: AspectRatioContainer = $Panel/AspectRatioContainer
 
 func _ready() -> void:
-	# The `resized` signal will be emitted when the window size changes, as the root Control node
-	# is resized whenever the window size changes. This is because the root Control node
-	# uses a Full Rect anchor, so its size will always be equal to the window size.
-	gui_aspect_ratio = GUI.get_aspect_ratio()
-	resized.connect(_on_resized)
-	GUIUtils.update_container.call_deferred(panel, arc, gui_aspect_ratio, gui_margin)
+	super._ready()
 	
+	title = "Main Menu"
+	state = MainUIScreen.UI_Screens.MAIN_MENU
 	
 	all_buttons = GUIUtils.get_all_buttons(button_vbox)
 	
@@ -44,22 +33,19 @@ func _ready() -> void:
 		btn.connect_signals()
 
 
-func _on_resized() -> void:
-	GUIUtils.update_container.call_deferred(panel, arc, gui_aspect_ratio, gui_margin)
-
-
 func _on_pressed(button: MenuButtonPrefab) -> void:
-	var button_position: Vector2 = button.position + button_vbox.position + arc.position
-	
+	var button_position: Vector2 = button.position + button_vbox.position + inner_panel.position
 	match button.screen:
 		MainUIScreen.UI_Screens.SONG_LIST:
-			CHANGING_SCENE.emit(button_position, "Song List")
+			print("Pressed")
+			CHANGING_SCENE.emit(button_position, "Song List", button.screen)
 			scene_path = song_list_menu_path
 		MainUIScreen.UI_Screens.CHART_EDITOR:
-			CHANGING_SCENE.emit(button_position, "Editor")
+			CHANGING_SCENE.emit(button_position, "Editor", button.screen)
 			scene_path = chart_editor_menu_path
+			GlobalBackground.disappear_shader()
 		MainUIScreen.UI_Screens.SETTINGS:
-			CHANGING_SCENE.emit(button_position, "Settings")
+			CHANGING_SCENE.emit(button_position, "Settings", button.screen)
 			scene_path = settings_menu_path
 
 

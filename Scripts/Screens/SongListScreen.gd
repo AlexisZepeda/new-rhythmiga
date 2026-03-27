@@ -1,9 +1,6 @@
-extends Control
-
-signal CHANGING_SCENE(header_position: Vector2, new_title: String)
+extends BaseUIScreen
 
 @export_file_path var main_menu_path: String
-@export var title: String = "Song List"
 
 @export var song_button_prefab: PackedScene
 @export var back_button: Button
@@ -11,32 +8,24 @@ signal CHANGING_SCENE(header_position: Vector2, new_title: String)
 @export var song_info_container: SongInfoContainer
 @export var player: AudioStreamPlayer
 
-var scale_factor := 1.0
-var gui_aspect_ratio := -1.0
-var gui_margin := 0.0
 
-@onready var panel: Panel = $Panel
-@onready var arc: AspectRatioContainer = $Panel/AspectRatioContainer
 @onready var margin: MarginContainer = $"Panel/AspectRatioContainer/Panel/MarginContainer"
 
 
 func _ready() -> void:
-	gui_aspect_ratio = GUI.get_aspect_ratio()
-	resized.connect(_on_resized)
-	GUIUtils.update_container.call_deferred(panel, arc, gui_aspect_ratio, gui_margin)
+	super._ready()
 	GUIUtils.update_margin_container.call_deferred(margin, 67)
+	
+	title = "Song List"
+	state = MainUIScreen.UI_Screens.SONG_LIST
 	
 	back_button.pressed.connect(_on_back_pressed)
 	
 	load_songs()
 
 
-func _on_resized() -> void:
-	GUIUtils.update_container.call_deferred(panel, arc, gui_aspect_ratio, gui_margin)
-
-
 func _on_back_pressed() -> void:
-	CHANGING_SCENE.emit(Vector2.ZERO, "")
+	CHANGING_SCENE.emit(Vector2.ZERO, "", MainUIScreen.UI_Screens.MAIN_MENU)
 
 
 func _on_mouse_entered(btn: NewSongButton) -> void:

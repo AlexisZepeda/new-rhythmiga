@@ -36,7 +36,6 @@ func load_config() -> void:
 		return
 	
 	for section in config_file.get_sections():
-		print(section)
 		match section:
 			VIDEO_SECTION:
 				resolution = config_file.get_value(section, "resolution", GUI.Base_Resolutions.WXGA_1280x720)
@@ -111,6 +110,9 @@ static func set_video_pref(res: GUI.Base_Resolutions, window: GUI.Window_Modes, 
 	resolution = res
 	window_mode = window
 	gui_aspect_ratio = aspect_ratio
+	
+	print("SETTING VIDEO PREFERENCES")
+	print_user_pref()
 
 
 static func print_user_pref() -> void:

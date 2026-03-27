@@ -1,15 +1,15 @@
 shader_type canvas_item;
 
 group_uniforms Background;
-uniform vec4 first_color: source_color = vec4(1.0);
-uniform vec4 second_color: source_color = vec4(0.0, 0.0, 0.0, 1.0);
-uniform float position: hint_range(-0.5, 0.5) = 0.0;
-uniform float size: hint_range(0.5, 2) = 0.5;
-uniform float angle: hint_range(0.0, 360.0) = 0.0;
+uniform vec4 first_color: source_color = vec4(0.0, 0.0, 0.0, 1.0);
+uniform vec4 second_color: source_color = vec4(0.0, 0.0, 0.196, 1.0);
+uniform float position: hint_range(-0.5, 0.5) = 0.25;
+uniform float size: hint_range(0.5, 2) = 1.5;
+uniform float angle: hint_range(0.0, 360.0) = 270.0;
 
 group_uniforms Waves;
-uniform vec4 background_color : source_color = vec4(0.25, 0.0, 0.2, 1.0);
-uniform float GWM = 2.05;
+uniform vec4 background_color : source_color = vec4(0.518, 0.384, 0.0, 1.0);
+uniform float GWM = 1.5;
 uniform float TM = 0.25;
 uniform float wave_speed = 0.6;
 uniform sampler2D tex;

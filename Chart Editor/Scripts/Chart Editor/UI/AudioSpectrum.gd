@@ -119,6 +119,7 @@ func _on_spin_box_value_changed(value: float) -> void:
 
 
 func _on_offset_value_changed(new_text: String) -> void:
+	print(new_text)
 	offset = new_text
 
 

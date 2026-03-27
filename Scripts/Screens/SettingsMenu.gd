@@ -1,9 +1,7 @@
-extends Control
+extends BaseUIScreen
 
-signal CHANGING_SCENE(header_position: Vector2, new_title: String)
 
 @export_file var main_menu_path: String
-@export var title: String = "Settings"
 @export var user_config: UserConfig
 @export var sfx_player: AudioStreamPlayer
 
@@ -14,25 +12,12 @@ signal CHANGING_SCENE(header_position: Vector2, new_title: String)
 
 var _last_sfx_value: float = 1.0
 
-var scale_factor := 1.0
-var gui_aspect_ratio := -1.0
-var gui_margin := 0.0
-
-@onready var panel: Panel = $Panel
-@onready var arc: AspectRatioContainer = $Panel/AspectRatioContainer
-
 
 func _ready() -> void:
-	# The `resized` signal will be emitted when the window size changes, as the root Control node
-	# is resized whenever the window size changes. This is because the root Control node
-	# uses a Full Rect anchor, so its size will always be equal to the window size.
-	gui_aspect_ratio = GUI.get_aspect_ratio()
-	resized.connect(_on_resized)
-	GUIUtils.update_container.call_deferred(panel, arc, gui_aspect_ratio, gui_margin)
-
-
-func _on_resized() -> void:
-	GUIUtils.update_container.call_deferred(panel, arc, gui_aspect_ratio, gui_margin)
+	super._ready()
+	
+	title = "Settings"
+	state = MainUIScreen.UI_Screens.SETTINGS
 
 
 func _on_back_button_pressed() -> void:
@@ -43,7 +28,7 @@ func _on_back_button_pressed() -> void:
 	
 	user_config.save_config()
 	
-	CHANGING_SCENE.emit(Vector2.ZERO, "")
+	CHANGING_SCENE.emit(Vector2.ZERO, "", MainUIScreen.UI_Screens.MAIN_MENU)
 
 
 func _on_sfx_volume_slider_value_changed(value: float) -> void:

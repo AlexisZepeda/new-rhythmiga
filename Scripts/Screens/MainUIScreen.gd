@@ -9,7 +9,10 @@ extends Control
 @export var header: HeaderPrefab
 @export var header_prefab: PackedScene
 
+# Changing the order of values will require reloading the project.
+# Components which export UI_Screens need to update.
 enum UI_Screens {
+	MAIN_MENU,
 	SONG_LIST,
 	CHART_EDITOR,
 	SETTINGS,
@@ -19,7 +22,8 @@ enum UI_Screens {
 var panel: PanelContainer
 var first_scene_loaded: bool = true
 
-var child_scene: Node
+var child_scene: BaseUIScreen
+var state: UI_Screens
 
 
 func _ready() -> void:
@@ -40,6 +44,7 @@ func _on_loaded_scene(node: Node) -> void:
 		node.CHANGING_SCENE.connect(_on_changing_scene)
 		
 		header.set_label_text(node.title)
+		state = child_scene.state
 		
 		if first_scene_loaded:
 			
@@ -47,7 +52,9 @@ func _on_loaded_scene(node: Node) -> void:
 			first_scene_loaded = false
 
 
-func _on_changing_scene(new_position: Vector2, title: String) -> void:
+func _on_changing_scene(new_position: Vector2, title: String, incoming_state: UI_Screens) -> void:
+	print(UI_Screens.keys()[incoming_state])
+	
 	var prev_position: Vector2 = header.position + Vector2(100.0, 0.0)
 	
 	await header.disappear_anim()
@@ -62,10 +69,14 @@ func _on_changing_scene(new_position: Vector2, title: String) -> void:
 	header.set_label_text(title)
 	header.position = new_position
 	
-	if new_position == Vector2.ZERO:
-		first_scene_loaded = true
-	else:
-		var tween: Tween = create_tween()
-		tween.tween_property(header, "position", prev_position, 0.5)
-	
+	match incoming_state:
+		UI_Screens.CHART_EDITOR:
+			header.visible = false
+		_:
+			if new_position == Vector2.ZERO:
+				first_scene_loaded = true
+			else:
+				var tween: Tween = create_tween()
+				tween.tween_property(header, "position", prev_position, 0.5)
+		
 	child_scene.change_scene()

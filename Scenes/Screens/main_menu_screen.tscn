@@ -17,8 +17,8 @@ theme = ExtResource("1_lalg0")
 script = ExtResource("1_81gx0")
 settings_menu_path = "res://Scenes/Screens/settings_menu.tscn"
 song_list_menu_path = "res://Scenes/Screens/song_list_screen.tscn"
-chart_editor_menu_path = "res://Scenes/Screens/chart_editor_screen.tscn"
-button_vbox = NodePath("Panel/AspectRatioContainer/Inner Side Panel/MarginContainer/ButtonVbox")
+chart_editor_menu_path = "res://Chart Editor/Scenes/Chart Editor/chart_editor.tscn"
+button_vbox = NodePath("Panel/AspectRatioContainer/Panel/MarginContainer/ButtonVbox")
 
 [node name="Panel" parent="." unique_id=469996951 instance=ExtResource("2_3ehj6")]
 layout_mode = 1
@@ -31,10 +31,10 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Inner Side Panel" parent="Panel/AspectRatioContainer" unique_id=585441006 instance=ExtResource("3_lalg0")]
+[node name="Panel" parent="Panel/AspectRatioContainer" unique_id=585441006 instance=ExtResource("3_lalg0")]
 layout_mode = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="Panel/AspectRatioContainer/Inner Side Panel" unique_id=370299505]
+[node name="MarginContainer" type="MarginContainer" parent="Panel/AspectRatioContainer/Panel" unique_id=370299505]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -46,31 +46,30 @@ theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="ButtonVbox" type="VBoxContainer" parent="Panel/AspectRatioContainer/Inner Side Panel/MarginContainer" unique_id=54110029]
+[node name="ButtonVbox" type="VBoxContainer" parent="Panel/AspectRatioContainer/Panel/MarginContainer" unique_id=54110029]
 layout_mode = 2
 size_flags_vertical = 4
 theme_override_constants/separation = 20
 
-[node name="Song List Button" parent="Panel/AspectRatioContainer/Inner Side Panel/MarginContainer/ButtonVbox" unique_id=1617453365 instance=ExtResource("6_o4xna")]
+[node name="Song List Button" parent="Panel/AspectRatioContainer/Panel/MarginContainer/ButtonVbox" unique_id=1617453365 instance=ExtResource("6_o4xna")]
 custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
 size_flags_horizontal = 0
 text = "Song List"
 alignment = 0
-screen = 0
+screen = 1
 
-[node name="Chart Editor Button" parent="Panel/AspectRatioContainer/Inner Side Panel/MarginContainer/ButtonVbox" unique_id=80889928 instance=ExtResource("6_o4xna")]
+[node name="Chart Editor Button" parent="Panel/AspectRatioContainer/Panel/MarginContainer/ButtonVbox" unique_id=80889928 instance=ExtResource("6_o4xna")]
 custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
 size_flags_horizontal = 0
 text = "Editor"
 alignment = 0
-screen = 1
+screen = 2
 
-[node name="Settings Button" parent="Panel/AspectRatioContainer/Inner Side Panel/MarginContainer/ButtonVbox" unique_id=395866316 instance=ExtResource("6_o4xna")]
+[node name="Settings Button" parent="Panel/AspectRatioContainer/Panel/MarginContainer/ButtonVbox" unique_id=395866316 instance=ExtResource("6_o4xna")]
 custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
 size_flags_horizontal = 0
 text = "Settings"
 alignment = 0
-screen = 2

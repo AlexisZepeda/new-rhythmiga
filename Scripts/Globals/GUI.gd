@@ -61,13 +61,10 @@ const DEFAULT_WINDOW_MODE: Window_Modes = Window_Modes.WINDOWED
 const DEFAULT_GUI_ASPECT_RATIO: Aspect_Ratios = Aspect_Ratios.Fit_To_Window
 
 
-var current_resolution: Base_Resolutions = Base_Resolutions.WXGA_1280x720:
-	set(value):
-		print("Global Resolution %s" % current_resolution)
-var current_window_mode: Window_Modes = Window_Modes.WINDOWED:
-	set(value):
-		print("Global Window Mode %s" % current_window_mode)
+var current_resolution: Base_Resolutions = Base_Resolutions.WXGA_1280x720
+var current_window_mode: Window_Modes = Window_Modes.WINDOWED
 var current_gui_aspect_ratio: Aspect_Ratios = Aspect_Ratios.Fit_To_Window
+
 
 
 
@@ -76,9 +73,20 @@ func get_resolution(resolution: Base_Resolutions) -> Vector2i:
 
 
 func set_resolution(index: Base_Resolutions=current_resolution) -> void:
+	current_resolution = index
 	var vector_resolution = get_resolution(index)
 	get_window().set_size(vector_resolution)
 	center_window()
+
+
+func set_window_mode(mode: Window_Modes=current_window_mode) -> void:
+	current_window_mode = mode
+	var window_mode: DisplayServer.WindowMode = WINDOW_MODES[mode]
+	DisplayServer.window_set_mode(window_mode)
+
+
+func set_aspect_ratio(aspect_ratio: Aspect_Ratios) -> void:
+	current_gui_aspect_ratio = aspect_ratio
 
 
 func get_aspect_ratio(aspect_ratio: Aspect_Ratios=current_gui_aspect_ratio) -> float:
@@ -91,12 +99,11 @@ func reset() -> void:
 	current_gui_aspect_ratio = DEFAULT_GUI_ASPECT_RATIO
 
 
-func set_window_mode(mode: Window_Modes=current_window_mode) -> void:
-	var window_mode: DisplayServer.WindowMode = WINDOW_MODES[mode]
-	DisplayServer.window_set_mode(window_mode)
-
-
 func center_window() -> void:
 	var screen_center: Vector2 = Vector2(DisplayServer.screen_get_position()) + (DisplayServer.screen_get_size() / 2.0)
 	var window_size = get_window().get_size_with_decorations()
 	get_window().set_position(screen_center - window_size / 2.0)
+
+
+func is_fullscreen() -> bool:
+	return current_window_mode == Window_Modes.FULLSCREEN or current_window_mode == Window_Modes.EXCLUSIVE_FULLSCREEN

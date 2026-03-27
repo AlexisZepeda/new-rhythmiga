@@ -1,9 +1,11 @@
 class_name ChartEditor
-extends Control
+extends BaseUIScreen
 
 const FILE_EXTENSION: String = ".dat"
 
 @export_dir var save_directory: String
+@export_file_path var main_menu_path: String
+
 @export_category("Dependencies")
 @export_group("Nodes")
 @export var controls_ui: ControlsUI
@@ -38,10 +40,11 @@ var audio_name: String = "":
 #var import_audio_file_dialog: FileAccessWeb = FileAccessWeb.new()
 
 
-
 func _ready() -> void:
 	#import_audio_file_dialog.loaded.connect(_on_import_audio_file_loaded)
 	#import_audio_file_dialog.error.connect(_file_error)
+	title = "Editor"
+	state = MainUIScreen.UI_Screens.CHART_EDITOR
 	
 	var resource_path: String = ""
 	
@@ -304,3 +307,7 @@ func unpause() -> void:
 	ChartEditorInputManager.is_paused = false
 	cursor.unpause()
 	loading_screen.hide()
+
+
+func change_scene() -> void:
+	Loader.load_scene(self, main_menu_path, get_parent())

@@ -77,3 +77,4 @@ grow_vertical = 0
 text = "Back"
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1202427037]
+bus = &"Music"
