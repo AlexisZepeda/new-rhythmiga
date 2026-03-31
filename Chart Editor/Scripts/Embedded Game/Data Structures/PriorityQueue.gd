@@ -44,8 +44,25 @@ func has_held_key(key: Key) -> LinkedNode:
 		
 		if node == null:
 			break
-		
 	
+	return null
+
+
+func has_previous_key(key: Key) -> LinkedNode:
+	var node: LinkedNode = front
+	if node == null:
+		return null
+	
+	while node:
+		var note_manager: NoteManager = node.value
+		
+		if note_manager.previous_key == key:
+			return node
+			
+		node = node.next
+		
+		if node == null:
+			break
 	return null
 
 
@@ -68,6 +85,43 @@ func get_linked_node(value: Node) -> LinkedNode:
 ## Return front on the queue.
 func get_front() -> LinkedNode:
 	return front
+
+
+## Remove [param search_node] from the queue.
+func remove(node_to_remove: LinkedNode) -> void:
+	if is_empty():
+		return
+	
+	print("Remove %s" % node_to_remove.value)
+	
+	var node: LinkedNode = front
+	
+	# Remove from the front
+	if node_to_remove == front:
+		print("Front %s" % front)
+		front = front.next
+		
+		if front == null:
+			return
+		else:
+			front.prev = null
+		
+		return
+	
+	prev = null
+	
+	while node.next != null:
+		temp = node.next
+		# Remove from a specific point
+		if temp == node_to_remove:
+			prev = node
+			prev.next = temp.next
+		# Remove from the end
+		elif temp == null:
+			prev = node
+			prev.next = null
+		else:
+			node = node.next
 
 
 func size() -> int:

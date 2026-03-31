@@ -56,7 +56,7 @@ func _replace_command_in_input_buffer(command: Command, new_command: Command) ->
 
 ## Process the first command in the input buffer. Returns true if the command successfully executed.
 func process_input(command: Command, lane: LinkedNode) -> bool:
-	print("			START PROCESS INPUT %s" % OS.get_keycode_string(command.key))
+	print("			START PROCESS INPUT %s" % [OS.get_keycode_string(command.key)])
 	if command is SlideCommand:
 		print("			DIRECTION %s" % Enums.Direction.keys()[command.direction])
 	elif command is DoubleSlideCommand:
@@ -117,15 +117,23 @@ func process_input(command: Command, lane: LinkedNode) -> bool:
 				if _note_manager.is_closest_note_long():
 					_note_manager.held_key = command.key
 	
+	if command is ReleaseCommand:
+		var _lane: LinkedNode = lane_queue.has_previous_key(command.key)
+		if _lane != null:
+			print("		PROCESS RELEASECOMMAND")
+			print("		Note manager %s" % _lane.value)
+			lane = _lane
+	
+	
 	if lane == null:
 		return false
 	
 	note_manager = lane.value
 	
-	print("Note Manager %s" % note_manager)
+	print("		PROCESS WITH %s" % note_manager)
 	
 	if command.execute(note_manager):
-		lane_queue.pop()
+		lane_queue.remove(lane)
 		return true
 	else:
 		return false

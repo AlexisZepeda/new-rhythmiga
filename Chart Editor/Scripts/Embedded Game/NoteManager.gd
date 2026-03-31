@@ -39,13 +39,14 @@ var held_key: Key = KEY_NONE:
 
 var previous_key: Key = KEY_NONE:
 	set(value):
-		if held_key != KEY_NONE:
-			previous_key = KEY_NONE
-		else:
-			previous_key = value
+		match front_note_type:
+			Enums.Note_Type.TAP:
+				previous_key = KEY_NONE
+			_:
+				previous_key = value
 		previous_note_type.emit(self, front_note_type)
 
-var front_note_type: Enums.Note_Type
+var front_note_type: Enums.Note_Type = Enums.Note_Type.NONE
 
 
 func _ready() -> void:
@@ -425,13 +426,21 @@ func handle_release(key: Key) -> bool:
 
 
 func handle_empty_release(key: Key) -> bool:
-	print("	HANDLE EMPTY RELEASE")
-	if key == previous_key:
+	print("	HANDLE EMPTY RELEASE %s NOTE MANAGER %s" % [OS.get_keycode_string(key), self])
+	print("EMPTY RELEASE Previous Key %s" % OS.get_keycode_string(previous_key))
+	if previous_key == key:
+		print("Previous key == key %s" % OS.get_keycode_string(previous_key))
+		front_note_type = Enums.Note_Type.NONE
 		previous_key = KEY_NONE
-		return false
+		
+		array_change.emit()
+		return true
+	
 	elif previous_key == KEY_NONE:
+		print("Previous key == KEY_NONE %s" % OS.get_keycode_string(previous_key))
 		return false
 	
+	print("End of empty release Previous key %s" % OS.get_keycode_string(previous_key))
 	return false
 
 
