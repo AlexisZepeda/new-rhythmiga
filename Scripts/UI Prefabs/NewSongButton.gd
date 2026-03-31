@@ -13,12 +13,11 @@ extends MarginContainer
 var song_title_str: String = "Title": set=set_song_title
 var artist_str: String = "Artist": set=set_artist
 var album_str: String = "Album": set=set_album
-var cover_art_texture: Texture2D = null: set=set_cover_art
+var cover_art_texture: String = "": set=set_cover_art
 var score_str: String = "Score": set=set_score
 var difficulty_str: String = "Difficulty": set=set_difficulty
 
 var audio_stream: AudioStream = null
-
 
 var id: String = "": set=_set_id
 
@@ -42,9 +41,17 @@ func set_album(value: String) -> void:
 	album.set_text(value)
 
 
-func set_cover_art(value: Texture2D) -> void:
+func set_cover_art(value: String) -> void:
 	cover_art_texture = value
-	cover_art.set_texture(value)
+	
+	if value == "" :
+		return
+	
+	var texture: ImageTexture = ImageTexture.new()
+	var image: Image = Image.load_from_file(value)
+	texture.set_image(image)
+	
+	cover_art.set_texture(texture)
 
 
 func set_score(value: String) -> void:

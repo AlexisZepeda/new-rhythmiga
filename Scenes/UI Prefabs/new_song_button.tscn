@@ -13,7 +13,7 @@ button = NodePath("Button")
 song_title = NodePath("HBoxContainer/VBoxContainer/Song Title")
 artist = NodePath("HBoxContainer/VBoxContainer/Artist Name")
 album = NodePath("HBoxContainer/VBoxContainer/Album")
-cover_art = NodePath("HBoxContainer/Art")
+cover_art = NodePath("HBoxContainer/CenterContainer/Art")
 score = NodePath("HBoxContainer/VBoxContainer/HBoxContainer/Score")
 difficulty = NodePath("HBoxContainer/VBoxContainer/HBoxContainer/Difficulty")
 
@@ -24,9 +24,15 @@ layout_mode = 2
 layout_mode = 2
 mouse_filter = 2
 
-[node name="Art" type="TextureRect" parent="HBoxContainer" unique_id=1014544199]
+[node name="CenterContainer" type="CenterContainer" parent="HBoxContainer" unique_id=1935725830]
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="Art" type="TextureRect" parent="HBoxContainer/CenterContainer" unique_id=1014544199]
+custom_minimum_size = Vector2(160, 160)
 layout_mode = 2
 size_flags_horizontal = 3
+expand_mode = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer" unique_id=1992144534]
 layout_mode = 2

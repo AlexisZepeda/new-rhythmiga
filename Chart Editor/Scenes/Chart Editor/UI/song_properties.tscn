@@ -1,0 +1,146 @@
+[gd_scene format=3 uid="uid://cwt0d2bmk1hax"]
+
+[ext_resource type="Script" uid="uid://bof53iwnmonun" path="res://Chart Editor/Scripts/Chart Editor/UI/SongProperties.gd" id="1_4fjeo"]
+
+[node name="SongProperties" type="MarginContainer" unique_id=923973604 node_paths=PackedStringArray("title_edit", "artist_edit", "credit_edit", "start_preview_edit", "end_preview_edit", "set_preview_btn", "cover_btn", "difficulty_btn", "cover_file_dialog", "cover_path", "cover_art")]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+script = ExtResource("1_4fjeo")
+title_edit = NodePath("ScrollContainer/VBoxContainer/GridContainer/TitleLineEdit")
+artist_edit = NodePath("ScrollContainer/VBoxContainer/GridContainer/ArtistLineEdit")
+credit_edit = NodePath("ScrollContainer/VBoxContainer/GridContainer/CreditLineEdit")
+start_preview_edit = NodePath("ScrollContainer/VBoxContainer/Song Preview/Start")
+end_preview_edit = NodePath("ScrollContainer/VBoxContainer/Song Preview/End")
+set_preview_btn = NodePath("ScrollContainer/VBoxContainer/Song Preview/Set")
+cover_btn = NodePath("ScrollContainer/VBoxContainer/Cover/Button")
+difficulty_btn = NodePath("ScrollContainer/VBoxContainer/Difficulty/DifficultyButton")
+cover_file_dialog = NodePath("FileDialog")
+cover_path = NodePath("ScrollContainer/VBoxContainer/Cover/Path")
+cover_art = NodePath("ScrollContainer/VBoxContainer/CoverPanel/CoverContainer/Cover Art")
+
+[node name="ScrollContainer" type="ScrollContainer" parent="." unique_id=1215624586]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer" unique_id=997205527]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="CoverPanel" type="PanelContainer" parent="ScrollContainer/VBoxContainer" unique_id=94662703]
+custom_minimum_size = Vector2(200, 200)
+layout_mode = 2
+
+[node name="CoverContainer" type="CenterContainer" parent="ScrollContainer/VBoxContainer/CoverPanel" unique_id=1188804518]
+custom_minimum_size = Vector2(200, 200)
+layout_mode = 2
+
+[node name="Cover Art" type="TextureRect" parent="ScrollContainer/VBoxContainer/CoverPanel/CoverContainer" unique_id=307256450]
+custom_minimum_size = Vector2(200, 200)
+layout_mode = 2
+expand_mode = 2
+
+[node name="GridContainer" type="GridContainer" parent="ScrollContainer/VBoxContainer" unique_id=2089221033]
+layout_mode = 2
+columns = 2
+
+[node name="Title" type="Label" parent="ScrollContainer/VBoxContainer/GridContainer" unique_id=1754579199]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Title"
+
+[node name="TitleLineEdit" type="LineEdit" parent="ScrollContainer/VBoxContainer/GridContainer" unique_id=1199019230]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Artist" type="Label" parent="ScrollContainer/VBoxContainer/GridContainer" unique_id=408054851]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Artist"
+
+[node name="ArtistLineEdit" type="LineEdit" parent="ScrollContainer/VBoxContainer/GridContainer" unique_id=755911163]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Credit" type="Label" parent="ScrollContainer/VBoxContainer/GridContainer" unique_id=7423397]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Credit"
+
+[node name="CreditLineEdit" type="LineEdit" parent="ScrollContainer/VBoxContainer/GridContainer" unique_id=166398973]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="HSeparator" type="HSeparator" parent="ScrollContainer/VBoxContainer" unique_id=1745558528]
+layout_mode = 2
+
+[node name="Cover" type="HBoxContainer" parent="ScrollContainer/VBoxContainer" unique_id=1882668406]
+layout_mode = 2
+
+[node name="Cover Art" type="Label" parent="ScrollContainer/VBoxContainer/Cover" unique_id=1390050660]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Cover Art"
+
+[node name="Path" type="Label" parent="ScrollContainer/VBoxContainer/Cover" unique_id=2042136445]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Path"
+
+[node name="Button" type="Button" parent="ScrollContainer/VBoxContainer/Cover" unique_id=1264851801]
+layout_mode = 2
+text = "Search"
+
+[node name="HSeparator2" type="HSeparator" parent="ScrollContainer/VBoxContainer" unique_id=2104019491]
+layout_mode = 2
+
+[node name="Song Preview" type="HBoxContainer" parent="ScrollContainer/VBoxContainer" unique_id=688764974]
+layout_mode = 2
+
+[node name="Preview" type="Label" parent="ScrollContainer/VBoxContainer/Song Preview" unique_id=1200189327]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Preview"
+
+[node name="Start" type="LineEdit" parent="ScrollContainer/VBoxContainer/Song Preview" unique_id=117955091]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="To" type="Label" parent="ScrollContainer/VBoxContainer/Song Preview" unique_id=1801665064]
+layout_mode = 2
+text = "to"
+
+[node name="End" type="LineEdit" parent="ScrollContainer/VBoxContainer/Song Preview" unique_id=1680366443]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Set" type="Button" parent="ScrollContainer/VBoxContainer/Song Preview" unique_id=843846521]
+layout_mode = 2
+text = "Set"
+
+[node name="HSeparator3" type="HSeparator" parent="ScrollContainer/VBoxContainer" unique_id=928943136]
+layout_mode = 2
+
+[node name="Difficulty" type="HBoxContainer" parent="ScrollContainer/VBoxContainer" unique_id=1379468125]
+layout_mode = 2
+
+[node name="Difficulty" type="Label" parent="ScrollContainer/VBoxContainer/Difficulty" unique_id=1050878702]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Difficulty"
+
+[node name="DifficultyButton" type="OptionButton" parent="ScrollContainer/VBoxContainer/Difficulty" unique_id=2111894781]
+layout_mode = 2
+
+[node name="FileDialog" type="FileDialog" parent="." unique_id=820437761]
+title = "Open a File"
+file_mode = 0
+access = 1
+filters = PackedStringArray("*.png", "*.jpg")
+use_native_dialog = true

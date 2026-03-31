@@ -49,3 +49,9 @@ enum Duration {
 	TRIPLET = 3,
 	SIXTEENTH = 4,
 }
+
+enum Difficulty {
+	EASY,
+	MEDIUM,
+	HARD,
+}

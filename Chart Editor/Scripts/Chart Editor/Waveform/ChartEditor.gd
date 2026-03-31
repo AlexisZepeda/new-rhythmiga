@@ -8,6 +8,7 @@ const FILE_EXTENSION: String = ".dat"
 
 @export_category("Dependencies")
 @export_group("Nodes")
+@export var file_menu_bar: FileMenuBar
 @export var controls_ui: ControlsUI
 @export var audio_spectrum_analyzer: AudioSpectrumAnalyzer
 @export var scroll_container: ScrollContainer
@@ -18,6 +19,7 @@ const FILE_EXTENSION: String = ".dat"
 @export var audio_file_dialog: FileDialog
 @export var beat_map_file_dialog: FileDialog
 @export var load_map_file_dialog: FileDialog
+@export var export_file_dialog: FileDialog
 @export var accept_dialog: AcceptDialog
 @export_group("")
 @export_group("Prefab")
@@ -37,6 +39,8 @@ var audio_name: String = "":
 		audio_name = value
 		controls_ui.set_audio_name(audio_name)
 
+var default_info_name: String = "Info"
+
 #var import_audio_file_dialog: FileAccessWeb = FileAccessWeb.new()
 
 
@@ -45,6 +49,13 @@ func _ready() -> void:
 	#import_audio_file_dialog.error.connect(_file_error)
 	title = "Editor"
 	state = MainUIScreen.UI_Screens.CHART_EDITOR
+	
+	file_menu_bar.import_audio_file_pressed.connect(_on_import_audio_file_pressed)
+	file_menu_bar.load_pressed.connect(_on_load_pressed)
+	file_menu_bar.save_pressed.connect(_on_save_pressed)
+	file_menu_bar.save_as_pressed.connect(_on_save_as_pressed)
+	file_menu_bar.quit_pressed.connect(_on_quit_pressed)
+	file_menu_bar.export_pressed.connect(_on_export_pressed)
 	
 	var resource_path: String = ""
 	
@@ -80,6 +91,10 @@ func _on_load_pressed() -> void:
 	load_map_file_dialog.show()
 
 
+func _on_quit_pressed() -> void:
+	CHANGING_SCENE.emit(Vector2.ZERO, "", MainUIScreen.UI_Screens.MAIN_MENU)
+
+
 func _on_import_audio_file_pressed() -> void:
 	print("Open file system")
 	#import_audio_file_dialog.open(".wav, .ogg")
@@ -110,6 +125,12 @@ func _on_beat_map_file_dialog_file_selected(path: String) -> void:
 func _on_load_beat_map_file_dialog_file_selected(path: String) -> void:
 	var file: FileAccess = FileAccess.open(path, FileAccess.READ)
 	
+	#var info_file_path: String = path.get_base_dir() + "/" + "info.dat"
+	#
+	#print(info_file_path)
+	#
+	#var info_file: FileAccess = FileAccess.open(info_file_path, FileAccess.READ)
+	
 	if FileAccess.get_open_error() != OK:
 		print("Could not file %s" % FileAccess.get_open_error())
 		return
@@ -118,6 +139,19 @@ func _on_load_beat_map_file_dialog_file_selected(path: String) -> void:
 	file_name = Utils.get_file_name(path, ".dat")
 	
 	loading_file(file)
+
+
+func _on_export_file_dialog_file_selected(path: String) -> void:
+	var base_path: String = path.get_base_dir()
+	
+	var info_file: FileAccess = FileAccess.open(path, FileAccess.WRITE)
+	
+	if FileAccess.get_open_error() == OK:
+		print("Save file created at %s" % [path])
+	else:
+		print(FileAccess.get_open_error())
+	
+	export(info_file, base_path)
 
 
 func _on_accept_dialog_confirmed() -> void:
@@ -155,14 +189,74 @@ func _on_import_audio_file_loaded(imported_file_name: String, file_type: String,
 	#conductor.load_stream(audio_stream)
 
 
+func _on_export_pressed() -> void:
+	export_file_dialog.current_file = "info"
+	export_file_dialog.show()
+
+
 func _file_error() -> void:
 	push_error("Error!")
+
+
+func export(info_file: FileAccess, path: String) -> void:
+	print("EXPORT INFO DATA")
+	
+	pause()
+	
+	var controls_info: Dictionary = controls_ui.export()
+	print(controls_info)
+	info_file.store_var(controls_info)
+	
+	print("EXPORT BEATMAP")
+	
+	print(path)
+	
+	var beatmap_file_name: String = controls_info[CustomMusicManager.Library_Keys.DIFFICULTY]
+	
+	print(beatmap_file_name)
+	
+	var result: Array = note_grid.get_all_notes()
+	
+	var file: FileAccess = FileAccess.open(path + "/" + beatmap_file_name + ".txt", FileAccess.WRITE)
+	
+	var exported_bpm: float = audio_spectrum_analyzer.bpm
+	var exported_offset: float = audio_spectrum_analyzer.song_offset
+	
+	file.store_float(exported_bpm)
+	file.store_float(exported_offset)
+	
+	for note: ChartNote in result:
+		var format: String = "%s:%s%s%s%s\n" % [note.beat, note.type, note.lane, note.direction, note.direction_2]
+		print(format)
+		
+		file.store_string(format)
+	
+	unpause()
 
 
 func save(save_file: FileAccess) -> void:
 	print("BEGIN SAVING DATA")
 	
 	pause()
+	
+	print("SAVE INFO DATA")
+	var song_properties: Dictionary = controls_ui.export()
+	
+	var song_name: String = song_properties[CustomMusicManager.Library_Keys.SONG_NAME]
+	var artist: String = song_properties[CustomMusicManager.Library_Keys.ARTIST]
+	var credit: String = song_properties[CustomMusicManager.Library_Keys.CREDIT]
+	var cover_path: String = song_properties[CustomMusicManager.Library_Keys.COVER_PATH]
+	var difficulty: String = song_properties[CustomMusicManager.Library_Keys.DIFFICULTY]
+	var song_start_preview: float = song_properties[CustomMusicManager.Library_Keys.SONG_PREVIEW_START]
+	var song_end_preview: float = song_properties[CustomMusicManager.Library_Keys.SONG_PREVIEW_END]
+	
+	save_file.store_pascal_string(song_name)
+	save_file.store_pascal_string(artist)
+	save_file.store_pascal_string(credit)
+	save_file.store_pascal_string(cover_path)
+	save_file.store_pascal_string(difficulty)
+	save_file.store_float(song_start_preview)
+	save_file.store_float(song_end_preview)
 	
 	var _audio_path: String = ""
 	
@@ -234,7 +328,27 @@ func loading_file(load_file: FileAccess) -> void:
 	note_grid.clear_grid()
 	
 	await get_tree().create_timer(1.0).timeout
+
+	var song_name: String = load_file.get_pascal_string()
+	var artist: String = load_file.get_pascal_string()
+	var credit: String = load_file.get_pascal_string()
+	var cover_path: String = load_file.get_pascal_string()
+	var difficulty: String = load_file.get_pascal_string()
+	var song_start_preview: float = load_file.get_float()
+	var song_end_preview: float = load_file.get_float()
 	
+	var dictionary: Dictionary = {
+		CustomMusicManager.Library_Keys.SONG_NAME: song_name,
+		CustomMusicManager.Library_Keys.ARTIST: artist,
+		CustomMusicManager.Library_Keys.CREDIT: credit,
+		CustomMusicManager.Library_Keys.COVER_PATH: cover_path,
+		CustomMusicManager.Library_Keys.DIFFICULTY: difficulty,
+		CustomMusicManager.Library_Keys.SONG_PREVIEW_START: song_start_preview,
+		CustomMusicManager.Library_Keys.SONG_PREVIEW_END: song_end_preview,
+	}
+	
+	controls_ui.set_song_properties(dictionary)
+
 	var _audio_path: String = load_file.get_pascal_string()
 	
 	if not _audio_path.is_empty():

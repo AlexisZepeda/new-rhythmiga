@@ -15,6 +15,7 @@ extends BaseUIScreen
 func _ready() -> void:
 	super._ready()
 	GUIUtils.update_margin_container.call_deferred(margin, 67)
+	CustomMusicManager.load_custom_music_directory()
 	
 	title = "Song List"
 	state = MainUIScreen.UI_Screens.SONG_LIST
@@ -43,7 +44,7 @@ func _on_mouse_entered(btn: NewSongButton) -> void:
 		#print("Text Preview")
 		#print(text)
 	print(btn.song_title_str)
-	song_info_container.set_info(btn.song_title_str, btn.artist_str, btn.score_str, btn.cover_art_texture)
+	song_info_container.set_info(btn.song_title_str, btn.artist_str, btn.score_str, btn.cover_art.texture)
 	
 	player.stream = btn.audio_stream
 	
@@ -53,10 +54,16 @@ func _on_mouse_entered(btn: NewSongButton) -> void:
 func load_songs() -> void:
 	for key: String in CustomMusicManager.library:
 		var song_name: String = CustomMusicManager.library[key][CustomMusicManager.Library_Keys.SONG_NAME]
+		var artist: String = CustomMusicManager.library[key][CustomMusicManager.Library_Keys.ARTIST]
+		var cover_path: String = CustomMusicManager.library[key][CustomMusicManager.Library_Keys.COVER_PATH]
+		
+		
 		if song_name != "":
 			var btn: NewSongButton = song_button_prefab.instantiate()
 			btn.audio_stream = CustomMusicManager.load_audio(song_name)
 			btn.set_song_title(song_name)
+			btn.set_artist(artist)
+			btn.set_cover_art(cover_path)
 			btn.id = song_name
 			
 			var entered = Callable(self, "_on_mouse_entered").bind(btn)

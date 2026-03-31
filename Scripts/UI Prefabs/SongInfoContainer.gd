@@ -10,3 +10,5 @@ extends MarginContainer
 
 func set_info(_name: String, _artist: String, _score: String, _art: Texture2D) -> void:
 	song_title.set_text(_name)
+	song_artist.set_text(_artist)
+	album_art.set_texture(_art)

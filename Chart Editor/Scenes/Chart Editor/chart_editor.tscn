@@ -14,9 +14,11 @@
 [ext_resource type="PackedScene" uid="uid://b2uo2gsw2jxie" path="res://Chart Editor/Scenes/Chart Editor/UI/beat_map_file_dialog.tscn" id="5_pbdhm"]
 [ext_resource type="Resource" uid="uid://cly1g0vof1dv3" path="res://Chart Editor/Resources/grid.tres" id="6_pbdhm"]
 [ext_resource type="Script" uid="uid://bgrtpt510kg4o" path="res://Chart Editor/Scripts/Chart Editor/Waveform/cursor.gd" id="7_x6c6k"]
+[ext_resource type="Script" uid="uid://olqylgkybpjn" path="res://Chart Editor/Scripts/Chart Editor/UI/ChartEditorMenuBar.gd" id="9_l8sww"]
 [ext_resource type="Script" uid="uid://c03cosy1k4oyt" path="res://Chart Editor/Scripts/Chart Editor/Waveform/NoteGrid.gd" id="12_j45ph"]
 [ext_resource type="PackedScene" uid="uid://dyxfds618a6qr" path="res://Chart Editor/Scenes/Chart Editor/Notes/long_note.tscn" id="13_3ln4m"]
 [ext_resource type="PackedScene" uid="uid://ditg4gdfaoijp" path="res://Chart Editor/Scenes/Chart Editor/Notes/long_note_arrow.tscn" id="14_qqqjt"]
+[ext_resource type="PackedScene" uid="uid://cwt0d2bmk1hax" path="res://Chart Editor/Scenes/Chart Editor/UI/song_properties.tscn" id="14_u48ea"]
 [ext_resource type="PackedScene" uid="uid://hbscbqcylg8g" path="res://Chart Editor/Scenes/Chart Editor/Notes/long_note_double_arrow.tscn" id="15_7b63s"]
 [ext_resource type="PackedScene" uid="uid://biw8mpkjadx1i" path="res://Chart Editor/Scenes/Chart Editor/Notes/arrow_note.tscn" id="16_g5eq3"]
 [ext_resource type="Script" uid="uid://d1rj05yro0klg" path="res://Chart Editor/Scripts/Chart Editor/Waveform/AudioPreviewWaveform.gd" id="16_i7pu8"]
@@ -37,7 +39,7 @@
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_p4nwx"]
 bg_color = Color(0.6, 0.6, 0.6, 0.19607843)
 
-[node name="Chart Editor" type="Control" unique_id=1425754862 node_paths=PackedStringArray("controls_ui", "audio_spectrum_analyzer", "scroll_container", "cursor", "loading_screen", "note_grid", "conductor", "audio_file_dialog", "beat_map_file_dialog", "load_map_file_dialog", "accept_dialog")]
+[node name="Chart Editor" type="Control" unique_id=1425754862 node_paths=PackedStringArray("file_menu_bar", "controls_ui", "audio_spectrum_analyzer", "scroll_container", "cursor", "loading_screen", "note_grid", "conductor", "audio_file_dialog", "beat_map_file_dialog", "load_map_file_dialog", "export_file_dialog", "accept_dialog")]
 process_mode = 3
 layout_mode = 3
 anchors_preset = 15
@@ -51,6 +53,7 @@ mouse_filter = 1
 script = ExtResource("1_1xse5")
 save_directory = "res://Saves"
 main_menu_path = "res://Scenes/Screens/main_menu_screen.tscn"
+file_menu_bar = NodePath("VBoxContainer/HBoxContainer2/MenuBar")
 controls_ui = NodePath("VBoxContainer/HBoxContainer/ControlsContainer")
 audio_spectrum_analyzer = NodePath("VBoxContainer/WaveformContainer/SubViewport/CanvasLayer/UI Editor/AudioSpectrum")
 scroll_container = NodePath("VBoxContainer/WaveformContainer/SubViewport/CanvasLayer/UI Editor/AudioSpectrum/ScrollContainer")
@@ -61,6 +64,7 @@ conductor = NodePath("Conductor")
 audio_file_dialog = NodePath("Audio File Dialog")
 beat_map_file_dialog = NodePath("Beat Map File Dialog")
 load_map_file_dialog = NodePath("Load Beat Map File Dialog")
+export_file_dialog = NodePath("Export File Dialog")
 accept_dialog = NodePath("AcceptDialog")
 saved_label_prefab = ExtResource("2_1gapo")
 
@@ -93,6 +97,11 @@ access = 2
 filters = PackedStringArray("*.dat")
 use_native_dialog = true
 
+[node name="Export File Dialog" type="FileDialog" parent="." unique_id=1961337969]
+access = 1
+filters = PackedStringArray("*.dat")
+use_native_dialog = true
+
 [node name="AcceptDialog" type="AcceptDialog" parent="." unique_id=1866929157]
 initial_position = 2
 dialog_text = "No audio file found. Reimport audio file."
@@ -105,81 +114,89 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="FoldableContainer" type="FoldableContainer" parent="VBoxContainer" unique_id=463720355]
-z_index = 1
+[node name="File Name" type="Label" parent="VBoxContainer" unique_id=1431802839]
 layout_mode = 2
-folded = true
+text = "New Chart File"
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer" unique_id=1783103271]
+layout_mode = 2
+
+[node name="MenuBar" type="MenuBar" parent="VBoxContainer/HBoxContainer2" unique_id=1137805146 node_paths=PackedStringArray("file_popup_menu")]
+layout_mode = 2
+size_flags_vertical = 3
+script = ExtResource("9_l8sww")
+file_popup_menu = NodePath("PopupMenu")
+
+[node name="PopupMenu" type="PopupMenu" parent="VBoxContainer/HBoxContainer2/MenuBar" unique_id=1715483173]
 title = "File"
 
-[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/FoldableContainer" unique_id=1184351960]
-visible = false
+[node name="Playback Menu" type="HBoxContainer" parent="VBoxContainer/HBoxContainer2" unique_id=924484907]
 layout_mode = 2
 
-[node name="Audio" type="Button" parent="VBoxContainer/FoldableContainer/VBoxContainer" unique_id=1276152382]
+[node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer/HBoxContainer2/Playback Menu" unique_id=232648336]
 layout_mode = 2
-size_flags_horizontal = 3
-text = "Import
-Audio File"
 
-[node name="Save" type="Button" parent="VBoxContainer/FoldableContainer/VBoxContainer" unique_id=1282853836]
+[node name="Enable Metronome" type="CheckBox" parent="VBoxContainer/HBoxContainer2/Playback Menu/HBoxContainer2" unique_id=1371823794]
 layout_mode = 2
-size_flags_horizontal = 3
-text = "Save"
+text = "Metronome"
 
-[node name="Save As" type="Button" parent="VBoxContainer/FoldableContainer/VBoxContainer" unique_id=908335657]
+[node name="Enable Auto" type="CheckBox" parent="VBoxContainer/HBoxContainer2/Playback Menu/HBoxContainer2" unique_id=104472166]
 layout_mode = 2
-size_flags_horizontal = 3
-text = "Save As"
+text = "Auto Input"
 
-[node name="Load" type="Button" parent="VBoxContainer/FoldableContainer/VBoxContainer" unique_id=2060315542]
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/HBoxContainer2/Playback Menu" unique_id=1983338018]
 layout_mode = 2
-size_flags_horizontal = 3
-text = "Load File"
 
-[node name="Export" type="Button" parent="VBoxContainer/FoldableContainer/VBoxContainer" unique_id=832736463]
+[node name="Audio File" type="Label" parent="VBoxContainer/HBoxContainer2/Playback Menu/HBoxContainer" unique_id=1344551137]
 layout_mode = 2
-size_flags_horizontal = 3
-text = "Export Chart"
+text = "Audio File Name"
 
-[node name="File" type="HBoxContainer" parent="VBoxContainer" unique_id=731817385]
+[node name="Play" type="Button" parent="VBoxContainer/HBoxContainer2/Playback Menu/HBoxContainer" unique_id=636552941]
 layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 0
+size_flags_vertical = 8
+text = "Play"
+
+[node name="Pause" type="Button" parent="VBoxContainer/HBoxContainer2/Playback Menu/HBoxContainer" unique_id=1422968549]
+layout_mode = 2
+text = "Pause"
+
+[node name="Stop" type="Button" parent="VBoxContainer/HBoxContainer2/Playback Menu/HBoxContainer" unique_id=1783481164]
+layout_mode = 2
+size_flags_vertical = 8
+text = "Stop"
 
 [node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer" unique_id=781055450]
 process_mode = 1
 layout_mode = 2
 
-[node name="ControlsContainer" type="MarginContainer" parent="VBoxContainer/HBoxContainer" unique_id=1514026552 node_paths=PackedStringArray("file_label", "audio_label", "bpm_spinbox", "offset_line", "save_button", "save_as_button")]
+[node name="ControlsContainer" type="MarginContainer" parent="VBoxContainer/HBoxContainer" unique_id=1514026552 node_paths=PackedStringArray("file_label", "audio_label", "bpm_spinbox", "offset_line", "song_properties")]
+custom_minimum_size = Vector2(200, 350)
 layout_mode = 2
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 script = ExtResource("24_7kh8l")
-file_label = NodePath("Controls/TabContainer/Settings/File Name")
-audio_label = NodePath("Controls/Playback Menu/VBoxContainer/Audio File")
+file_label = NodePath("../../File Name")
+audio_label = NodePath("../../HBoxContainer2/Playback Menu/HBoxContainer/Audio File")
 bpm_spinbox = NodePath("Controls/TabContainer/Settings/Chart Settings/BPM")
 offset_line = NodePath("Controls/TabContainer/Settings/Chart Settings/Offset")
-save_button = NodePath("../../FoldableContainer/VBoxContainer/Save")
-save_as_button = NodePath("../../FoldableContainer/VBoxContainer/Save As")
+song_properties = NodePath("Controls/TabContainer/Properties")
 
 [node name="Controls" type="VBoxContainer" parent="VBoxContainer/HBoxContainer/ControlsContainer" unique_id=1382730740]
 layout_mode = 2
 
 [node name="TabContainer" type="TabContainer" parent="VBoxContainer/HBoxContainer/ControlsContainer/Controls" unique_id=1180400634]
+custom_minimum_size = Vector2(300, 0)
 layout_mode = 2
 size_flags_vertical = 3
-current_tab = 0
+current_tab = 1
 
 [node name="Settings" type="VBoxContainer" parent="VBoxContainer/HBoxContainer/ControlsContainer/Controls/TabContainer" unique_id=1807798334]
+visible = false
 layout_mode = 2
 metadata/_tab_index = 0
 
-[node name="File Name" type="Label" parent="VBoxContainer/HBoxContainer/ControlsContainer/Controls/TabContainer/Settings" unique_id=1431802839]
-layout_mode = 2
-text = "New Chart File"
-
-[node name="Chart Settings" type="HBoxContainer" parent="VBoxContainer/HBoxContainer/ControlsContainer/Controls/TabContainer/Settings" unique_id=858937649]
+[node name="Chart Settings" type="VBoxContainer" parent="VBoxContainer/HBoxContainer/ControlsContainer/Controls/TabContainer/Settings" unique_id=1082843526]
 layout_mode = 2
 
 [node name="Label2" type="Label" parent="VBoxContainer/HBoxContainer/ControlsContainer/Controls/TabContainer/Settings/Chart Settings" unique_id=1761830486]
@@ -213,67 +230,52 @@ text = "Offset (s)"
 layout_mode = 2
 text = "0.0"
 
-[node name="Notes Menu" type="HBoxContainer" parent="VBoxContainer/HBoxContainer/ControlsContainer/Controls/TabContainer" unique_id=544756160]
-visible = false
+[node name="Notes" type="HBoxContainer" parent="VBoxContainer/HBoxContainer/ControlsContainer/Controls/TabContainer" unique_id=544756160]
 layout_mode = 2
 metadata/_tab_index = 1
 
-[node name="Note Check Boxes" type="CenterContainer" parent="VBoxContainer/HBoxContainer/ControlsContainer/Controls/TabContainer/Notes Menu" unique_id=2143512366 node_paths=PackedStringArray("arrows_panel", "arrows_panel_2")]
+[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer/HBoxContainer/ControlsContainer/Controls/TabContainer/Notes" unique_id=1031769603]
 layout_mode = 2
-size_flags_horizontal = 6
-size_flags_vertical = 4
+size_flags_horizontal = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/HBoxContainer/ControlsContainer/Controls/TabContainer/Notes/ScrollContainer" unique_id=416709682]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Note Check Boxes" type="CenterContainer" parent="VBoxContainer/HBoxContainer/ControlsContainer/Controls/TabContainer/Notes/ScrollContainer/VBoxContainer" unique_id=2143512366 node_paths=PackedStringArray("arrows_panel", "arrows_panel_2")]
+layout_mode = 2
+size_flags_horizontal = 3
 script = ExtResource("18_rm0g8")
 arrows_panel = NodePath("../CenterContainer/Arrows/Arrows Panel")
 arrows_panel_2 = NodePath("../CenterContainer/Arrows/Arrows Panel2")
 
-[node name="Trigger Container" parent="VBoxContainer/HBoxContainer/ControlsContainer/Controls/TabContainer/Notes Menu/Note Check Boxes" unique_id=258296530 instance=ExtResource("30_oui72")]
+[node name="Trigger Container" parent="VBoxContainer/HBoxContainer/ControlsContainer/Controls/TabContainer/Notes/ScrollContainer/VBoxContainer/Note Check Boxes" unique_id=258296530 instance=ExtResource("30_oui72")]
 layout_mode = 2
 
-[node name="CenterContainer" type="CenterContainer" parent="VBoxContainer/HBoxContainer/ControlsContainer/Controls/TabContainer/Notes Menu" unique_id=1260448698]
+[node name="CenterContainer" type="CenterContainer" parent="VBoxContainer/HBoxContainer/ControlsContainer/Controls/TabContainer/Notes/ScrollContainer/VBoxContainer" unique_id=1260448698]
 layout_mode = 2
 size_flags_horizontal = 3
-size_flags_vertical = 4
+size_flags_vertical = 6
 
-[node name="Arrows" type="VBoxContainer" parent="VBoxContainer/HBoxContainer/ControlsContainer/Controls/TabContainer/Notes Menu/CenterContainer" unique_id=1594681375]
+[node name="Arrows" type="VBoxContainer" parent="VBoxContainer/HBoxContainer/ControlsContainer/Controls/TabContainer/Notes/ScrollContainer/VBoxContainer/CenterContainer" unique_id=767452470]
 layout_mode = 2
 
-[node name="Arrows Panel" parent="VBoxContainer/HBoxContainer/ControlsContainer/Controls/TabContainer/Notes Menu/CenterContainer/Arrows" unique_id=142435741 instance=ExtResource("30_i7pu8")]
+[node name="Arrows Panel" parent="VBoxContainer/HBoxContainer/ControlsContainer/Controls/TabContainer/Notes/ScrollContainer/VBoxContainer/CenterContainer/Arrows" unique_id=142435741 instance=ExtResource("30_i7pu8")]
 layout_mode = 2
 size_flags_horizontal = 4
 
-[node name="Arrows Panel2" parent="VBoxContainer/HBoxContainer/ControlsContainer/Controls/TabContainer/Notes Menu/CenterContainer/Arrows" unique_id=992205625 instance=ExtResource("30_i7pu8")]
+[node name="Arrows Panel2" parent="VBoxContainer/HBoxContainer/ControlsContainer/Controls/TabContainer/Notes/ScrollContainer/VBoxContainer/CenterContainer/Arrows" unique_id=992205625 instance=ExtResource("30_i7pu8")]
 layout_mode = 2
 
-[node name="Playback Menu" type="HBoxContainer" parent="VBoxContainer/HBoxContainer/ControlsContainer/Controls" unique_id=924484907]
+[node name="Properties" parent="VBoxContainer/HBoxContainer/ControlsContainer/Controls/TabContainer" unique_id=923973604 instance=ExtResource("14_u48ea")]
+visible = false
 layout_mode = 2
+metadata/_tab_index = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/HBoxContainer/ControlsContainer/Controls/Playback Menu" unique_id=953427895]
+[node name="EmbeddedGameCenterContainer" type="MarginContainer" parent="VBoxContainer/HBoxContainer" unique_id=1406594123]
 layout_mode = 2
-
-[node name="Audio File" type="Label" parent="VBoxContainer/HBoxContainer/ControlsContainer/Controls/Playback Menu/VBoxContainer" unique_id=1344551137]
-layout_mode = 2
-text = "Audio File Name"
-
-[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/HBoxContainer/ControlsContainer/Controls/Playback Menu/VBoxContainer" unique_id=1983338018]
-layout_mode = 2
-
-[node name="Play" type="Button" parent="VBoxContainer/HBoxContainer/ControlsContainer/Controls/Playback Menu/VBoxContainer/HBoxContainer" unique_id=636552941]
-layout_mode = 2
-size_flags_vertical = 8
-text = "Play"
-
-[node name="Pause" type="Button" parent="VBoxContainer/HBoxContainer/ControlsContainer/Controls/Playback Menu/VBoxContainer/HBoxContainer" unique_id=1422968549]
-layout_mode = 2
-text = "Pause"
-
-[node name="Stop" type="Button" parent="VBoxContainer/HBoxContainer/ControlsContainer/Controls/Playback Menu/VBoxContainer/HBoxContainer" unique_id=1783481164]
-layout_mode = 2
-size_flags_vertical = 8
-text = "Stop"
-
-[node name="EmbeddedGameCenterContainer" type="CenterContainer" parent="VBoxContainer/HBoxContainer" unique_id=1320340835]
-layout_mode = 2
-size_flags_horizontal = 3
+size_flags_horizontal = 4
 
 [node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/HBoxContainer/EmbeddedGameCenterContainer" unique_id=964664394]
 layout_mode = 2
@@ -305,19 +307,8 @@ process_mode = 1
 current_notes = ExtResource("23_ll1b4")
 conductor = NodePath("../../../../../../../Conductor")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/HBoxContainer/EmbeddedGameCenterContainer/VBoxContainer" unique_id=232648336]
-layout_mode = 2
-
-[node name="Enable Metronome" type="CheckBox" parent="VBoxContainer/HBoxContainer/EmbeddedGameCenterContainer/VBoxContainer/HBoxContainer" unique_id=1371823794]
-layout_mode = 2
-text = "Metronome"
-
-[node name="Enable Auto" type="CheckBox" parent="VBoxContainer/HBoxContainer/EmbeddedGameCenterContainer/VBoxContainer/HBoxContainer" unique_id=104472166]
-layout_mode = 2
-text = "Auto Input"
-
 [node name="WaveformContainer" type="SubViewportContainer" parent="VBoxContainer" unique_id=638802155]
-custom_minimum_size = Vector2(480, 240)
+custom_minimum_size = Vector2(480, 200)
 layout_mode = 2
 size_flags_vertical = 3
 stretch = true
@@ -326,7 +317,7 @@ mouse_target = true
 [node name="SubViewport" type="SubViewport" parent="VBoxContainer/WaveformContainer" unique_id=481506082]
 handle_input_locally = false
 physics_object_picking = true
-size = Vector2i(1080, 240)
+size = Vector2i(964, 222)
 render_target_update_mode = 4
 
 [node name="CanvasLayer" type="CanvasLayer" parent="VBoxContainer/WaveformContainer/SubViewport" unique_id=1757462409]
@@ -469,38 +460,34 @@ offset_bottom = 40.0
 [connection signal="file_selected" from="Audio File Dialog" to="." method="_on_audio_file_dialog_file_selected"]
 [connection signal="file_selected" from="Beat Map File Dialog" to="." method="_on_beat_map_file_dialog_file_selected"]
 [connection signal="file_selected" from="Load Beat Map File Dialog" to="." method="_on_load_beat_map_file_dialog_file_selected"]
+[connection signal="file_selected" from="Export File Dialog" to="." method="_on_export_file_dialog_file_selected"]
 [connection signal="confirmed" from="AcceptDialog" to="." method="_on_accept_dialog_confirmed"]
-[connection signal="pressed" from="VBoxContainer/FoldableContainer/VBoxContainer/Audio" to="." method="_on_import_audio_file_pressed"]
-[connection signal="pressed" from="VBoxContainer/FoldableContainer/VBoxContainer/Save" to="." method="_on_save_pressed"]
-[connection signal="pressed" from="VBoxContainer/FoldableContainer/VBoxContainer/Save As" to="." method="_on_save_as_pressed"]
-[connection signal="pressed" from="VBoxContainer/FoldableContainer/VBoxContainer/Load" to="." method="_on_load_pressed"]
-[connection signal="pressed" from="VBoxContainer/FoldableContainer/VBoxContainer/Export" to="VBoxContainer/WaveformContainer/SubViewport/CanvasLayer/UI Editor" method="_on_export_pressed"]
+[connection signal="toggled" from="VBoxContainer/HBoxContainer2/Playback Menu/HBoxContainer2/Enable Metronome" to="VBoxContainer/HBoxContainer/ControlsContainer" method="_on_enable_metronome_toggled"]
+[connection signal="toggled" from="VBoxContainer/HBoxContainer2/Playback Menu/HBoxContainer2/Enable Auto" to="VBoxContainer/HBoxContainer/ControlsContainer" method="_on_enable_auto_toggled"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer2/Playback Menu/HBoxContainer/Play" to="VBoxContainer/WaveformContainer/SubViewport/CanvasLayer/UI Editor/AudioSpectrum" method="_on_play_pressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer2/Playback Menu/HBoxContainer/Pause" to="VBoxContainer/WaveformContainer/SubViewport/CanvasLayer/UI Editor/AudioSpectrum" method="_on_pause_pressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer2/Playback Menu/HBoxContainer/Stop" to="VBoxContainer/WaveformContainer/SubViewport/CanvasLayer/UI Editor/AudioSpectrum" method="_on_stop_pressed"]
 [connection signal="item_selected" from="VBoxContainer/HBoxContainer/ControlsContainer/Controls/TabContainer/Settings/Chart Settings/Beat Snap" to="VBoxContainer/WaveformContainer/SubViewport/CanvasLayer/UI Editor/AudioSpectrum" method="_on_option_button_item_selected"]
 [connection signal="value_changed" from="VBoxContainer/HBoxContainer/ControlsContainer/Controls/TabContainer/Settings/Chart Settings/BPM" to="VBoxContainer/WaveformContainer/SubViewport/CanvasLayer/UI Editor/AudioSpectrum" method="_on_spin_box_value_changed"]
 [connection signal="text_submitted" from="VBoxContainer/HBoxContainer/ControlsContainer/Controls/TabContainer/Settings/Chart Settings/Offset" to="VBoxContainer/WaveformContainer/SubViewport/CanvasLayer/UI Editor/AudioSpectrum" method="_on_offset_value_changed"]
-[connection signal="ARROW_2_DIRECTION_SELECTION" from="VBoxContainer/HBoxContainer/ControlsContainer/Controls/TabContainer/Notes Menu/Note Check Boxes" to="VBoxContainer/WaveformContainer/SubViewport/CanvasLayer/UI Editor" method="_on_note_check_boxes_arrow_2_direction_selection"]
-[connection signal="ARROW_DIRECTION_SELECTION" from="VBoxContainer/HBoxContainer/ControlsContainer/Controls/TabContainer/Notes Menu/Note Check Boxes" to="VBoxContainer/WaveformContainer/SubViewport/CanvasLayer/UI Editor" method="_on_note_check_boxes_arrow_direction_selection"]
-[connection signal="LONG_RELEASE_SELECTION" from="VBoxContainer/HBoxContainer/ControlsContainer/Controls/TabContainer/Notes Menu/Note Check Boxes" to="VBoxContainer/WaveformContainer/SubViewport/CanvasLayer/UI Editor" method="_on_note_check_boxes_long_release_selection"]
-[connection signal="arrow_toggled" from="VBoxContainer/HBoxContainer/ControlsContainer/Controls/TabContainer/Notes Menu/Note Check Boxes/Trigger Container" to="VBoxContainer/HBoxContainer/ControlsContainer/Controls/TabContainer/Notes Menu/Note Check Boxes" method="_on_arrow_toggled"]
-[connection signal="arrow_toggled" from="VBoxContainer/HBoxContainer/ControlsContainer/Controls/TabContainer/Notes Menu/Note Check Boxes/Trigger Container" to="VBoxContainer/WaveformContainer/SubViewport/CanvasLayer/UI Editor" method="_on_arrow_toggled"]
-[connection signal="double_arrow_toggled" from="VBoxContainer/HBoxContainer/ControlsContainer/Controls/TabContainer/Notes Menu/Note Check Boxes/Trigger Container" to="VBoxContainer/HBoxContainer/ControlsContainer/Controls/TabContainer/Notes Menu/Note Check Boxes" method="_on_double_arrow_toggled"]
-[connection signal="double_arrow_toggled" from="VBoxContainer/HBoxContainer/ControlsContainer/Controls/TabContainer/Notes Menu/Note Check Boxes/Trigger Container" to="VBoxContainer/WaveformContainer/SubViewport/CanvasLayer/UI Editor" method="_on_double_arrow_toggled"]
-[connection signal="long_arrow_toggled" from="VBoxContainer/HBoxContainer/ControlsContainer/Controls/TabContainer/Notes Menu/Note Check Boxes/Trigger Container" to="VBoxContainer/HBoxContainer/ControlsContainer/Controls/TabContainer/Notes Menu/Note Check Boxes" method="_on_long_arrow_toggled"]
-[connection signal="long_arrow_toggled" from="VBoxContainer/HBoxContainer/ControlsContainer/Controls/TabContainer/Notes Menu/Note Check Boxes/Trigger Container" to="VBoxContainer/WaveformContainer/SubViewport/CanvasLayer/UI Editor" method="_on_long_arrow_toggled"]
-[connection signal="long_double_arrow_toggled" from="VBoxContainer/HBoxContainer/ControlsContainer/Controls/TabContainer/Notes Menu/Note Check Boxes/Trigger Container" to="VBoxContainer/HBoxContainer/ControlsContainer/Controls/TabContainer/Notes Menu/Note Check Boxes" method="_on_long_double_arrow_toggled"]
-[connection signal="long_double_arrow_toggled" from="VBoxContainer/HBoxContainer/ControlsContainer/Controls/TabContainer/Notes Menu/Note Check Boxes/Trigger Container" to="VBoxContainer/WaveformContainer/SubViewport/CanvasLayer/UI Editor" method="_on_long_double_arrow_toggled"]
-[connection signal="long_toggled" from="VBoxContainer/HBoxContainer/ControlsContainer/Controls/TabContainer/Notes Menu/Note Check Boxes/Trigger Container" to="VBoxContainer/HBoxContainer/ControlsContainer/Controls/TabContainer/Notes Menu/Note Check Boxes" method="_on_long_toggled"]
-[connection signal="long_toggled" from="VBoxContainer/HBoxContainer/ControlsContainer/Controls/TabContainer/Notes Menu/Note Check Boxes/Trigger Container" to="VBoxContainer/WaveformContainer/SubViewport/CanvasLayer/UI Editor" method="_on_long_toggled"]
-[connection signal="tap_toggled" from="VBoxContainer/HBoxContainer/ControlsContainer/Controls/TabContainer/Notes Menu/Note Check Boxes/Trigger Container" to="VBoxContainer/WaveformContainer/SubViewport/CanvasLayer/UI Editor" method="_on_tap_toggled"]
-[connection signal="Toggled" from="VBoxContainer/HBoxContainer/ControlsContainer/Controls/TabContainer/Notes Menu/CenterContainer/Arrows/Arrows Panel" to="VBoxContainer/HBoxContainer/ControlsContainer/Controls/TabContainer/Notes Menu/Note Check Boxes" method="_on_arrows_panel_toggled"]
-[connection signal="Untoggled" from="VBoxContainer/HBoxContainer/ControlsContainer/Controls/TabContainer/Notes Menu/CenterContainer/Arrows/Arrows Panel" to="VBoxContainer/HBoxContainer/ControlsContainer/Controls/TabContainer/Notes Menu/Note Check Boxes" method="_on_arrows_panel_untoggled"]
-[connection signal="Toggled" from="VBoxContainer/HBoxContainer/ControlsContainer/Controls/TabContainer/Notes Menu/CenterContainer/Arrows/Arrows Panel2" to="VBoxContainer/HBoxContainer/ControlsContainer/Controls/TabContainer/Notes Menu/Note Check Boxes" method="_on_arrows_panel_2_toggled"]
-[connection signal="Untoggled" from="VBoxContainer/HBoxContainer/ControlsContainer/Controls/TabContainer/Notes Menu/CenterContainer/Arrows/Arrows Panel2" to="VBoxContainer/HBoxContainer/ControlsContainer/Controls/TabContainer/Notes Menu/Note Check Boxes" method="_on_arrows_panel_2_untoggled"]
-[connection signal="pressed" from="VBoxContainer/HBoxContainer/ControlsContainer/Controls/Playback Menu/VBoxContainer/HBoxContainer/Play" to="VBoxContainer/WaveformContainer/SubViewport/CanvasLayer/UI Editor/AudioSpectrum" method="_on_play_pressed"]
-[connection signal="pressed" from="VBoxContainer/HBoxContainer/ControlsContainer/Controls/Playback Menu/VBoxContainer/HBoxContainer/Pause" to="VBoxContainer/WaveformContainer/SubViewport/CanvasLayer/UI Editor/AudioSpectrum" method="_on_pause_pressed"]
-[connection signal="pressed" from="VBoxContainer/HBoxContainer/ControlsContainer/Controls/Playback Menu/VBoxContainer/HBoxContainer/Stop" to="VBoxContainer/WaveformContainer/SubViewport/CanvasLayer/UI Editor/AudioSpectrum" method="_on_stop_pressed"]
-[connection signal="toggled" from="VBoxContainer/HBoxContainer/EmbeddedGameCenterContainer/VBoxContainer/HBoxContainer/Enable Metronome" to="VBoxContainer/HBoxContainer/ControlsContainer" method="_on_enable_metronome_toggled"]
-[connection signal="toggled" from="VBoxContainer/HBoxContainer/EmbeddedGameCenterContainer/VBoxContainer/HBoxContainer/Enable Auto" to="VBoxContainer/HBoxContainer/ControlsContainer" method="_on_enable_auto_toggled"]
+[connection signal="ARROW_2_DIRECTION_SELECTION" from="VBoxContainer/HBoxContainer/ControlsContainer/Controls/TabContainer/Notes/ScrollContainer/VBoxContainer/Note Check Boxes" to="VBoxContainer/WaveformContainer/SubViewport/CanvasLayer/UI Editor" method="_on_note_check_boxes_arrow_2_direction_selection"]
+[connection signal="ARROW_DIRECTION_SELECTION" from="VBoxContainer/HBoxContainer/ControlsContainer/Controls/TabContainer/Notes/ScrollContainer/VBoxContainer/Note Check Boxes" to="VBoxContainer/WaveformContainer/SubViewport/CanvasLayer/UI Editor" method="_on_note_check_boxes_arrow_direction_selection"]
+[connection signal="LONG_RELEASE_SELECTION" from="VBoxContainer/HBoxContainer/ControlsContainer/Controls/TabContainer/Notes/ScrollContainer/VBoxContainer/Note Check Boxes" to="VBoxContainer/WaveformContainer/SubViewport/CanvasLayer/UI Editor" method="_on_note_check_boxes_long_release_selection"]
+[connection signal="arrow_toggled" from="VBoxContainer/HBoxContainer/ControlsContainer/Controls/TabContainer/Notes/ScrollContainer/VBoxContainer/Note Check Boxes/Trigger Container" to="VBoxContainer/HBoxContainer/ControlsContainer/Controls/TabContainer/Notes/ScrollContainer/VBoxContainer/Note Check Boxes" method="_on_arrow_toggled"]
+[connection signal="arrow_toggled" from="VBoxContainer/HBoxContainer/ControlsContainer/Controls/TabContainer/Notes/ScrollContainer/VBoxContainer/Note Check Boxes/Trigger Container" to="VBoxContainer/WaveformContainer/SubViewport/CanvasLayer/UI Editor" method="_on_arrow_toggled"]
+[connection signal="double_arrow_toggled" from="VBoxContainer/HBoxContainer/ControlsContainer/Controls/TabContainer/Notes/ScrollContainer/VBoxContainer/Note Check Boxes/Trigger Container" to="VBoxContainer/HBoxContainer/ControlsContainer/Controls/TabContainer/Notes/ScrollContainer/VBoxContainer/Note Check Boxes" method="_on_double_arrow_toggled"]
+[connection signal="double_arrow_toggled" from="VBoxContainer/HBoxContainer/ControlsContainer/Controls/TabContainer/Notes/ScrollContainer/VBoxContainer/Note Check Boxes/Trigger Container" to="VBoxContainer/WaveformContainer/SubViewport/CanvasLayer/UI Editor" method="_on_double_arrow_toggled"]
+[connection signal="long_arrow_toggled" from="VBoxContainer/HBoxContainer/ControlsContainer/Controls/TabContainer/Notes/ScrollContainer/VBoxContainer/Note Check Boxes/Trigger Container" to="VBoxContainer/HBoxContainer/ControlsContainer/Controls/TabContainer/Notes/ScrollContainer/VBoxContainer/Note Check Boxes" method="_on_long_arrow_toggled"]
+[connection signal="long_arrow_toggled" from="VBoxContainer/HBoxContainer/ControlsContainer/Controls/TabContainer/Notes/ScrollContainer/VBoxContainer/Note Check Boxes/Trigger Container" to="VBoxContainer/WaveformContainer/SubViewport/CanvasLayer/UI Editor" method="_on_long_arrow_toggled"]
+[connection signal="long_double_arrow_toggled" from="VBoxContainer/HBoxContainer/ControlsContainer/Controls/TabContainer/Notes/ScrollContainer/VBoxContainer/Note Check Boxes/Trigger Container" to="VBoxContainer/HBoxContainer/ControlsContainer/Controls/TabContainer/Notes/ScrollContainer/VBoxContainer/Note Check Boxes" method="_on_long_double_arrow_toggled"]
+[connection signal="long_double_arrow_toggled" from="VBoxContainer/HBoxContainer/ControlsContainer/Controls/TabContainer/Notes/ScrollContainer/VBoxContainer/Note Check Boxes/Trigger Container" to="VBoxContainer/WaveformContainer/SubViewport/CanvasLayer/UI Editor" method="_on_long_double_arrow_toggled"]
+[connection signal="long_toggled" from="VBoxContainer/HBoxContainer/ControlsContainer/Controls/TabContainer/Notes/ScrollContainer/VBoxContainer/Note Check Boxes/Trigger Container" to="VBoxContainer/HBoxContainer/ControlsContainer/Controls/TabContainer/Notes/ScrollContainer/VBoxContainer/Note Check Boxes" method="_on_long_toggled"]
+[connection signal="long_toggled" from="VBoxContainer/HBoxContainer/ControlsContainer/Controls/TabContainer/Notes/ScrollContainer/VBoxContainer/Note Check Boxes/Trigger Container" to="VBoxContainer/WaveformContainer/SubViewport/CanvasLayer/UI Editor" method="_on_long_toggled"]
+[connection signal="tap_toggled" from="VBoxContainer/HBoxContainer/ControlsContainer/Controls/TabContainer/Notes/ScrollContainer/VBoxContainer/Note Check Boxes/Trigger Container" to="VBoxContainer/WaveformContainer/SubViewport/CanvasLayer/UI Editor" method="_on_tap_toggled"]
+[connection signal="Toggled" from="VBoxContainer/HBoxContainer/ControlsContainer/Controls/TabContainer/Notes/ScrollContainer/VBoxContainer/CenterContainer/Arrows/Arrows Panel" to="VBoxContainer/HBoxContainer/ControlsContainer/Controls/TabContainer/Notes/ScrollContainer/VBoxContainer/Note Check Boxes" method="_on_arrows_panel_toggled"]
+[connection signal="Untoggled" from="VBoxContainer/HBoxContainer/ControlsContainer/Controls/TabContainer/Notes/ScrollContainer/VBoxContainer/CenterContainer/Arrows/Arrows Panel" to="VBoxContainer/HBoxContainer/ControlsContainer/Controls/TabContainer/Notes/ScrollContainer/VBoxContainer/Note Check Boxes" method="_on_arrows_panel_untoggled"]
+[connection signal="Toggled" from="VBoxContainer/HBoxContainer/ControlsContainer/Controls/TabContainer/Notes/ScrollContainer/VBoxContainer/CenterContainer/Arrows/Arrows Panel2" to="VBoxContainer/HBoxContainer/ControlsContainer/Controls/TabContainer/Notes/ScrollContainer/VBoxContainer/Note Check Boxes" method="_on_arrows_panel_2_toggled"]
+[connection signal="Untoggled" from="VBoxContainer/HBoxContainer/ControlsContainer/Controls/TabContainer/Notes/ScrollContainer/VBoxContainer/CenterContainer/Arrows/Arrows Panel2" to="VBoxContainer/HBoxContainer/ControlsContainer/Controls/TabContainer/Notes/ScrollContainer/VBoxContainer/Note Check Boxes" method="_on_arrows_panel_2_untoggled"]
 [connection signal="ADD_ARROW_NOTE" from="VBoxContainer/WaveformContainer/SubViewport/CanvasLayer/UI Editor" to="VBoxContainer/WaveformContainer/SubViewport/CanvasLayer/UI Editor/AudioSpectrum/ScrollContainer/TextureRect/Lines/NoteGrid" method="_on_ui_editor_add_arrow_note"]
 [connection signal="ADD_DOUBLE_ARROW_NOTE" from="VBoxContainer/WaveformContainer/SubViewport/CanvasLayer/UI Editor" to="VBoxContainer/WaveformContainer/SubViewport/CanvasLayer/UI Editor/AudioSpectrum/ScrollContainer/TextureRect/Lines/NoteGrid" method="_on_ui_editor_add_double_arrow_note"]
 [connection signal="ADD_LONG_ARROW_NOTE" from="VBoxContainer/WaveformContainer/SubViewport/CanvasLayer/UI Editor" to="VBoxContainer/WaveformContainer/SubViewport/CanvasLayer/UI Editor/AudioSpectrum/ScrollContainer/TextureRect/Lines/NoteGrid" method="_on_ui_editor_add_long_arrow_note"]

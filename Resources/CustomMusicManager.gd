@@ -6,9 +6,15 @@ const OGG_EXTENSION: String = "ogg"
 enum Library_Keys {
 	SONG_PATH,
 	SONG_NAME,
+	ARTIST,
+	COVER_PATH,
 	EASY_CHART_PATH,
 	MEDIUM_CHART_PATH,
 	HARD_CHART_PATH,
+	CREDIT,
+	DIFFICULTY,
+	SONG_PREVIEW_START,
+	SONG_PREVIEW_END,
 }
 
 static var music_folder: String = "user://CustomMusic/"
@@ -49,11 +55,14 @@ static func open_folder(folder_name: String) -> void:
 	
 	var files: PackedStringArray = folder.get_files()
 	var valid_files: PackedStringArray = check_valid_music_files(files)
+	var info_dat: String = check_valid_info_dat(files)
 	
 	if not library.has(folder_name):
 		library[folder_name] = {
 			Library_Keys.SONG_PATH: "",
 			Library_Keys.SONG_NAME: "",
+			Library_Keys.ARTIST: "",
+			Library_Keys.COVER_PATH: "",
 			Library_Keys.EASY_CHART_PATH: "",
 			Library_Keys.MEDIUM_CHART_PATH: "",
 			Library_Keys.HARD_CHART_PATH: "",
@@ -70,7 +79,24 @@ static func open_folder(folder_name: String) -> void:
 			print("")
 	else:
 		print("Folder contains no music")
-
+	
+	## Get info.dat
+	if info_dat != "":
+		var file: FileAccess = FileAccess.open(path + "/" + info_dat, FileAccess.READ)
+		
+		if FileAccess.get_open_error() != OK:
+			print(FileAccess.get_open_error())
+			return
+		else:
+			print("Opened %s" % [info_dat])
+		
+		var dictionary: Dictionary = file.get_var()
+		
+		library[folder_name][Library_Keys.SONG_NAME] = dictionary[Library_Keys.SONG_NAME]
+		library[folder_name][Library_Keys.ARTIST] = dictionary[Library_Keys.ARTIST]
+		library[folder_name][Library_Keys.COVER_PATH] = dictionary[Library_Keys.COVER_PATH]
+		
+		
 
 static func check_valid_folder(folder_name: String) -> bool:
 	var path: String = music_folder + folder_name
@@ -96,6 +122,14 @@ static func check_valid_chart_files(array: PackedStringArray) -> void:
 			pass
 		elif file.begins_with("HARD"):
 			pass
+
+
+static func check_valid_info_dat(array: PackedStringArray) -> String:
+	for file: String in array:
+		if file == "info.dat":
+			return file
+	
+	return ""
 
 
 static func get_song_path(id: String) -> String:

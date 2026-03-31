@@ -151,21 +151,3 @@ func _on_note_check_boxes_arrow_direction_selection(direction: int) -> void:
 func _on_note_check_boxes_arrow_2_direction_selection(direction: int) -> void:
 	print(GlobalSettings.Directions.keys()[direction])
 	arrow_2_direction = direction as GlobalSettings.Directions
-
-
-func _on_export_pressed() -> void:
-	var result: Array = notes.get_all_notes()
-	
-	var file = FileAccess.open("data.txt", FileAccess.WRITE)
-	
-	var exported_bpm: float = audio_spectrum_analyzer.bpm
-	var exported_offset: float = audio_spectrum_analyzer.song_offset
-	
-	file.store_float(exported_bpm)
-	file.store_float(exported_offset)
-	
-	for note: ChartNote in result:
-		var format: String = "%s:%s%s%s%s\n" % [note.beat, note.type, note.lane, note.direction, note.direction_2]
-		print(format)
-		
-		file.store_string(format)

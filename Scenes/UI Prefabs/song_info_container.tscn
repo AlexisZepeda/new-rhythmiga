@@ -11,7 +11,7 @@ grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource("1_2iu0v")
-album_art = NodePath("VBoxContainer/Album Art")
+album_art = NodePath("VBoxContainer/CenterContainer/Album Art")
 song_artist = NodePath("VBoxContainer/Song Artist")
 song_title = NodePath("VBoxContainer/Song Title")
 score = NodePath("VBoxContainer/Score")
@@ -19,8 +19,14 @@ score = NodePath("VBoxContainer/Score")
 [node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=2041115408]
 layout_mode = 2
 
-[node name="Album Art" type="TextureRect" parent="VBoxContainer" unique_id=1497457854]
+[node name="CenterContainer" type="CenterContainer" parent="VBoxContainer" unique_id=1585812630]
+custom_minimum_size = Vector2(400, 400)
 layout_mode = 2
+
+[node name="Album Art" type="TextureRect" parent="VBoxContainer/CenterContainer" unique_id=1497457854]
+custom_minimum_size = Vector2(320, 320)
+layout_mode = 2
+expand_mode = 2
 
 [node name="Song Artist" type="Label" parent="VBoxContainer" unique_id=1402653891]
 layout_mode = 2
