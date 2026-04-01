@@ -33,11 +33,13 @@ func disappear_shader() -> void:
 	if background.material is ShaderMaterial:
 		_material = background.material
 		
-		var wave_tween: Tween = create_tween()
+		var wave_tween: Tween = create_tween().set_parallel()
+		var gwm_tween: Tween = create_tween().set_parallel()
+		var tm_tween: Tween = create_tween().set_parallel()
 		
-		wave_tween.tween_property(_material, "shader_parameter/wave_speed", 0.0, 0.5)
-		wave_tween.tween_property(_material, "shader_parameter/GWM", 0.0, 0.5)
-		wave_tween.tween_property(_material, "shader_parameter/TM", 0.0, 0.5)
+		wave_tween.tween_property(_material, "shader_parameter/wave_speed", 0.0, 0.75).set_trans(Tween.TRANS_LINEAR)
+		gwm_tween.tween_property(_material, "shader_parameter/GWM", 0.0, 0.5).set_trans(Tween.TRANS_LINEAR)
+		tm_tween.tween_property(_material, "shader_parameter/TM", 0.0, 0.75).set_trans(Tween.TRANS_LINEAR)
 
 
 func appear_shader() -> void:
@@ -46,7 +48,10 @@ func appear_shader() -> void:
 	if background.material is ShaderMaterial:
 		_material = background.material
 		
-		var wave_tween: Tween = create_tween()
-		wave_tween.tween_property(_material, "shader_parameter/wave_speed", DEFAULT_WAVE_SPEED, 1.0)
-		wave_tween.tween_property(_material, "shader_parameter/GWM", DEFAULT_GWM, 1.0)
-		wave_tween.tween_property(_material, "shader_parameter/TM", DEFAULT_TM, 1.0)
+		var wave_tween: Tween = create_tween().set_parallel()
+		var gwm_tween: Tween = create_tween().set_parallel()
+		var tm_tween: Tween = create_tween().set_parallel()
+		
+		wave_tween.tween_property(_material, "shader_parameter/wave_speed", DEFAULT_WAVE_SPEED, 1.0).set_trans(Tween.TRANS_LINEAR)
+		gwm_tween.tween_property(_material, "shader_parameter/GWM", DEFAULT_GWM, 1.0).set_trans(Tween.TRANS_LINEAR)
+		tm_tween.tween_property(_material, "shader_parameter/TM", DEFAULT_TM, 1.0).set_trans(Tween.TRANS_LINEAR)

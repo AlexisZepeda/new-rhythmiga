@@ -1,13 +1,16 @@
 extends BaseUIScreen
 
 @export_file_path var main_menu_path: String
+@export_file_path var main_rhythm_game_path: String
 
 @export var song_button_prefab: PackedScene
 @export var back_button: Button
+@export var play_button: Button
 @export var song_button_list: VBoxContainer
 @export var song_info_container: SongInfoContainer
 @export var player: AudioStreamPlayer
 
+var hovered_btn: NewSongButton
 
 @onready var margin: MarginContainer = $"Panel/AspectRatioContainer/Panel/MarginContainer"
 
@@ -21,29 +24,38 @@ func _ready() -> void:
 	state = MainUIScreen.UI_Screens.SONG_LIST
 	
 	back_button.pressed.connect(_on_back_pressed)
+	play_button.pressed.connect(_on_play_pressed)
 	
 	load_songs()
+	
+	_on_mouse_entered(song_button_list.get_children()[0])
 
 
 func _on_back_pressed() -> void:
 	CHANGING_SCENE.emit(Vector2.ZERO, "", MainUIScreen.UI_Screens.MAIN_MENU)
+	scene_path = main_menu_path
+
+
+func _on_play_pressed() -> void:
+	CHANGING_SCENE.emit(Vector2.ZERO, "", MainUIScreen.UI_Screens.RHYTHM_GAME)
+	scene_path = main_rhythm_game_path
+	GlobalBackground.disappear_shader()
+	Loader.loaded_stream = player.stream
+	
+	print("Difficulty %s" % song_info_container.difficulty)
+	
+	match song_info_container.difficulty:
+		Enums.Difficulty.EASY:
+			Loader.beat_map_path = CustomMusicManager.library[hovered_btn.id][CustomMusicManager.Library_Keys.EASY_CHART_PATH]
+		Enums.Difficulty.MEDIUM:
+			Loader.beat_map_path = CustomMusicManager.library[hovered_btn.id][CustomMusicManager.Library_Keys.MEDIUM_CHART_PATH]
+		Enums.Difficulty.HARD:
+			Loader.beat_map_path = CustomMusicManager.library[hovered_btn.id][CustomMusicManager.Library_Keys.HARD_CHART_PATH]
 
 
 func _on_mouse_entered(btn: NewSongButton) -> void:
-	#if stream.tags.has("metadata_block_picture"):
-		#var data: PackedByteArray = Marshalls.base64_to_raw(stream.tags["metadata_block_picture"])
-		#
-		#print("First 16 bytes (hex) %s" % [data.slice(0, 4).hex_encode()])
-		#var streambuffer: StreamPeerBuffer = StreamPeerBuffer.new()
-		#streambuffer.big_endian = true
-		#streambuffer.data_array = data.slice(0, 4)
-		#var text = streambuffer.get_u32()
-		#
-		#streambuffer.data_array = data.slice(4, 8)
-		#
-		#print("Text Preview")
-		#print(text)
-	print(btn.song_title_str)
+	print("Mouse entered %s" % btn.song_title_str)
+	hovered_btn = btn
 	song_info_container.set_info(btn.song_title_str, btn.artist_str, btn.score_str, btn.cover_art.texture)
 	
 	player.stream = btn.audio_stream
@@ -52,6 +64,7 @@ func _on_mouse_entered(btn: NewSongButton) -> void:
 
 
 func load_songs() -> void:
+	
 	for key: String in CustomMusicManager.library:
 		var song_name: String = CustomMusicManager.library[key][CustomMusicManager.Library_Keys.SONG_NAME]
 		var artist: String = CustomMusicManager.library[key][CustomMusicManager.Library_Keys.ARTIST]
@@ -64,14 +77,14 @@ func load_songs() -> void:
 			btn.set_song_title(song_name)
 			btn.set_artist(artist)
 			btn.set_cover_art(cover_path)
-			btn.id = song_name
+			btn.id = key
 			
 			var entered = Callable(self, "_on_mouse_entered").bind(btn)
-			btn.mouse_entered.connect(entered)
+			btn.button.mouse_entered.connect(entered)
 			
 			
 			song_button_list.add_child(btn)
 
 
 func change_scene() -> void:
-	Loader.load_scene(self, main_menu_path, get_parent())
+	Loader.load_scene(self, scene_path, get_parent())

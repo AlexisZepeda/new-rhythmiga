@@ -112,6 +112,7 @@ step = 0.0
 show_percentage = false
 
 [node name="Debug" type="Control" parent="CanvasLayer" unique_id=69946722 node_paths=PackedStringArray("label_1", "label_2", "label_3", "label_4", "label_5", "label_beat", "queue_front", "queue_2", "queue_3", "queue_end", "label_e", "label_f", "label_i", "label_j", "perfect", "critical", "great", "good", "bad", "miss")]
+visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -141,7 +142,6 @@ bad = NodePath("Hit Count/Bad")
 miss = NodePath("Hit Count/Miss")
 
 [node name="Note Deltas" type="VBoxContainer" parent="CanvasLayer/Debug" unique_id=613648715]
-visible = false
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
@@ -165,7 +165,6 @@ layout_mode = 2
 layout_mode = 2
 
 [node name="Lane Queue" type="VBoxContainer" parent="CanvasLayer/Debug" unique_id=1084049655]
-visible = false
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0

@@ -146,24 +146,38 @@ func handle_input(event: InputEvent) -> Command:
 	
 	#if event is InputEventKey:
 	if event.is_pressed():
+		# Is event a Tap Action
+		if InputMap.event_is_action(event, "Tap Right 1"):
+			if not _button_is_pressed(event.keycode):
+				return _create_tap_command(event.keycode)
+		elif InputMap.event_is_action(event, "Tap Right 2"):
+			if not _button_is_pressed(event.keycode):
+				return _create_tap_command(event.keycode)
+		elif InputMap.event_is_action(event, "Tap Left 1"):
+			if not _button_is_pressed(event.keycode):
+				return _create_tap_command(event.keycode)
+		elif InputMap.event_is_action(event, "Tap Left 2"):
+			if not _button_is_pressed(event.keycode):
+				return _create_tap_command(event.keycode)
+		
 		match event.keycode:
-			# Tap Buttons
-			KEY_E:
-				if not _button_is_pressed(KEY_E):
-					return _create_tap_command(KEY_E)
-				#return button_e
-			KEY_F:
-				if not _button_is_pressed(KEY_F):
-					return _create_tap_command(KEY_F)
-				#return button_f
-			KEY_I:
-				if not _button_is_pressed(KEY_I):
-					return _create_tap_command(KEY_I)
-				#return button_i
-			KEY_J:
-				if not _button_is_pressed(KEY_J):
-					return _create_tap_command(KEY_J)
-				#return button_j
+			## Tap Buttons
+			#KEY_E:
+				#if not _button_is_pressed(KEY_E):
+					#return _create_tap_command(KEY_E)
+				##return button_e
+			#KEY_F:
+				#if not _button_is_pressed(KEY_F):
+					#return _create_tap_command(KEY_F)
+				##return button_f
+			#KEY_I:
+				#if not _button_is_pressed(KEY_I):
+					#return _create_tap_command(KEY_I)
+				##return button_i
+			#KEY_J:
+				#if not _button_is_pressed(KEY_J):
+					#return _create_tap_command(KEY_J)
+				##return button_j
 			# Slide Buttons
 			# AXIS LEFT
 			KEY_W:
@@ -208,23 +222,37 @@ func handle_input(event: InputEvent) -> Command:
 					return SlideCommand.new((Time.get_ticks_usec() / 1000000.0), Enums.Direction.RIGHT)
 					#return button_semi_colon
 	else:
+		if InputMap.event_is_action(event, "Tap Right 1"):
+				held_time_e = BUTTONS_LONG_PRESSED[event.keycode][Buttons_Label.RELEASED] - BUTTONS_LONG_PRESSED[event.keycode][Buttons_Label.PRESSED]
+				return _create_tap_release_command(event.keycode)
+		elif InputMap.event_is_action(event, "Tap Right 2"):
+				held_time_e = BUTTONS_LONG_PRESSED[event.keycode][Buttons_Label.RELEASED] - BUTTONS_LONG_PRESSED[event.keycode][Buttons_Label.PRESSED]
+				return _create_tap_release_command(event.keycode)
+		elif InputMap.event_is_action(event, "Tap Left 1"):
+				held_time_e = BUTTONS_LONG_PRESSED[event.keycode][Buttons_Label.RELEASED] - BUTTONS_LONG_PRESSED[event.keycode][Buttons_Label.PRESSED]
+				return _create_tap_release_command(event.keycode)
+		elif InputMap.event_is_action(event, "Tap Left 2"):
+				held_time_e = BUTTONS_LONG_PRESSED[event.keycode][Buttons_Label.RELEASED] - BUTTONS_LONG_PRESSED[event.keycode][Buttons_Label.PRESSED]
+				return _create_tap_release_command(event.keycode)
+		
+		
 		match event.keycode:
-			KEY_E:
-				held_time_e = BUTTONS_LONG_PRESSED[KEY_E][Buttons_Label.RELEASED] - BUTTONS_LONG_PRESSED[KEY_E][Buttons_Label.PRESSED]
-				return _create_tap_release_command(KEY_E)
-				#return button_e_release
-			KEY_F:
-				held_time_f = BUTTONS_LONG_PRESSED[KEY_F][Buttons_Label.RELEASED] - BUTTONS_LONG_PRESSED[KEY_F][Buttons_Label.PRESSED]
-				return _create_tap_release_command(KEY_F)
-				#return button_f_release
-			KEY_I:
-				held_time_i = BUTTONS_LONG_PRESSED[KEY_I][Buttons_Label.RELEASED] - BUTTONS_LONG_PRESSED[KEY_I][Buttons_Label.PRESSED]
-				return _create_tap_release_command(KEY_I)
-				#return button_i_release
-			KEY_J:
-				held_time_j = BUTTONS_LONG_PRESSED[KEY_J][Buttons_Label.RELEASED] - BUTTONS_LONG_PRESSED[KEY_J][Buttons_Label.PRESSED]
-				return _create_tap_release_command(KEY_J)
-				#return button_j_release
+			#KEY_E:
+				#held_time_e = BUTTONS_LONG_PRESSED[KEY_E][Buttons_Label.RELEASED] - BUTTONS_LONG_PRESSED[KEY_E][Buttons_Label.PRESSED]
+				#return _create_tap_release_command(KEY_E)
+				##return button_e_release
+			#KEY_F:
+				#held_time_f = BUTTONS_LONG_PRESSED[KEY_F][Buttons_Label.RELEASED] - BUTTONS_LONG_PRESSED[KEY_F][Buttons_Label.PRESSED]
+				#return _create_tap_release_command(KEY_F)
+				##return button_f_release
+			#KEY_I:
+				#held_time_i = BUTTONS_LONG_PRESSED[KEY_I][Buttons_Label.RELEASED] - BUTTONS_LONG_PRESSED[KEY_I][Buttons_Label.PRESSED]
+				#return _create_tap_release_command(KEY_I)
+				##return button_i_release
+			#KEY_J:
+				#held_time_j = BUTTONS_LONG_PRESSED[KEY_J][Buttons_Label.RELEASED] - BUTTONS_LONG_PRESSED[KEY_J][Buttons_Label.PRESSED]
+				#return _create_tap_release_command(KEY_J)
+				##return button_j_release
 			# Slide Buttons
 			# AXIS LEFT
 			KEY_W:

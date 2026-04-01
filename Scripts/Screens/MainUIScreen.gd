@@ -16,6 +16,7 @@ enum UI_Screens {
 	SONG_LIST,
 	CHART_EDITOR,
 	SETTINGS,
+	RHYTHM_GAME,
 	NONE,
 }
 
@@ -53,8 +54,6 @@ func _on_loaded_scene(node: Node) -> void:
 
 
 func _on_changing_scene(new_position: Vector2, title: String, incoming_state: UI_Screens) -> void:
-	print(UI_Screens.keys()[incoming_state])
-	
 	var prev_position: Vector2 = header.position + Vector2(100.0, 0.0)
 	
 	await header.disappear_anim()
@@ -70,7 +69,7 @@ func _on_changing_scene(new_position: Vector2, title: String, incoming_state: UI
 	header.position = new_position
 	
 	match incoming_state:
-		UI_Screens.CHART_EDITOR:
+		UI_Screens.CHART_EDITOR, UI_Screens.RHYTHM_GAME:
 			header.visible = false
 		_:
 			if new_position == Vector2.ZERO:

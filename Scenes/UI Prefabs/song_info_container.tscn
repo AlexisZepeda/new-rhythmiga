@@ -1,8 +1,9 @@
 [gd_scene format=3 uid="uid://d2im1lieant15"]
 
 [ext_resource type="Script" uid="uid://b3s78w7mtnr73" path="res://Scripts/UI Prefabs/SongInfoContainer.gd" id="1_2iu0v"]
+[ext_resource type="ButtonGroup" uid="uid://dyjlxm4fcuv1m" path="res://Resources/difficulty_button_group.tres" id="2_12puj"]
 
-[node name="SongInfoContainer" type="MarginContainer" unique_id=1470138478 node_paths=PackedStringArray("album_art", "song_artist", "song_title", "score")]
+[node name="SongInfoContainer" type="MarginContainer" unique_id=1470138478 node_paths=PackedStringArray("album_art", "song_artist", "song_title", "score", "easy_btn", "medium_btn", "hard_btn")]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -15,6 +16,9 @@ album_art = NodePath("VBoxContainer/CenterContainer/Album Art")
 song_artist = NodePath("VBoxContainer/Song Artist")
 song_title = NodePath("VBoxContainer/Song Title")
 score = NodePath("VBoxContainer/Score")
+easy_btn = NodePath("VBoxContainer/HBoxContainer/Easy Btn")
+medium_btn = NodePath("VBoxContainer/HBoxContainer/Medium Btn")
+hard_btn = NodePath("VBoxContainer/HBoxContainer/Hard Btn")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=2041115408]
 layout_mode = 2
@@ -39,3 +43,25 @@ text = "Song Title"
 [node name="Score" type="Label" parent="VBoxContainer" unique_id=2033297498]
 layout_mode = 2
 text = "Score"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer" unique_id=2031794417]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="Easy Btn" type="Button" parent="VBoxContainer/HBoxContainer" unique_id=1734957909]
+layout_mode = 2
+toggle_mode = true
+button_group = ExtResource("2_12puj")
+text = "Easy"
+
+[node name="Medium Btn" type="Button" parent="VBoxContainer/HBoxContainer" unique_id=641867424]
+layout_mode = 2
+toggle_mode = true
+button_group = ExtResource("2_12puj")
+text = "Medium"
+
+[node name="Hard Btn" type="Button" parent="VBoxContainer/HBoxContainer" unique_id=90516523]
+layout_mode = 2
+toggle_mode = true
+button_group = ExtResource("2_12puj")
+text = "Hard"

@@ -425,3 +425,4 @@ func unpause() -> void:
 
 func change_scene() -> void:
 	Loader.load_scene(self, main_menu_path, get_parent())
+	GlobalBackground.appear_shader()

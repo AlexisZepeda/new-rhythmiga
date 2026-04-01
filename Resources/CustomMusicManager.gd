@@ -56,6 +56,7 @@ static func open_folder(folder_name: String) -> void:
 	var files: PackedStringArray = folder.get_files()
 	var valid_files: PackedStringArray = check_valid_music_files(files)
 	var info_dat: String = check_valid_info_dat(files)
+	var beatmaps: PackedStringArray = check_valid_chart_files(files)
 	
 	if not library.has(folder_name):
 		library[folder_name] = {
@@ -73,7 +74,6 @@ static func open_folder(folder_name: String) -> void:
 		var music_file_path: String = "%s/%s" % [path, valid_files.get(0)]
 		
 		if library[folder_name][Library_Keys.SONG_PATH] != music_file_path:
-			library[folder_name][Library_Keys.SONG_NAME] = (music_file_path.get_basename()).get_file()
 			library[folder_name][Library_Keys.SONG_PATH] = music_file_path
 		else:
 			print("")
@@ -96,7 +96,23 @@ static func open_folder(folder_name: String) -> void:
 		library[folder_name][Library_Keys.ARTIST] = dictionary[Library_Keys.ARTIST]
 		library[folder_name][Library_Keys.COVER_PATH] = dictionary[Library_Keys.COVER_PATH]
 		
-		
+	
+	## Get beatmap paths
+	if not beatmaps.is_empty():
+		for file: String in beatmaps:
+			if file.begins_with("EASY"):
+				var beatmap_file_path: String = "%s/%s" % [path, file]
+				print(beatmap_file_path)
+				library[folder_name][Library_Keys.EASY_CHART_PATH] = beatmap_file_path
+			elif file.begins_with("MEDIUM"):
+				var beatmap_file_path: String = "%s/%s" % [path, file]
+				print(beatmap_file_path)
+				library[folder_name][Library_Keys.MEDIUM_CHART_PATH] = file
+			elif file.begins_with("HARD"):
+				var beatmap_file_path: String = "%s/%s" % [path, file]
+				print(beatmap_file_path)
+				library[folder_name][Library_Keys.HARD_CHART_PATH] = file
+
 
 static func check_valid_folder(folder_name: String) -> bool:
 	var path: String = music_folder + folder_name
@@ -114,14 +130,18 @@ static func check_valid_music_files(array: PackedStringArray) -> PackedStringArr
 	return result
 
 
-static func check_valid_chart_files(array: PackedStringArray) -> void:
+static func check_valid_chart_files(array: PackedStringArray) -> PackedStringArray:
+	var result: PackedStringArray = []
+	
 	for file: String in array:
 		if file.begins_with("EASY"):
-			pass
+			result.append(file)
 		elif file.begins_with("MEDIUM"):
-			pass
+			result.append(file)
 		elif file.begins_with("HARD"):
-			pass
+			result.append(file)
+	
+	return result
 
 
 static func check_valid_info_dat(array: PackedStringArray) -> String:

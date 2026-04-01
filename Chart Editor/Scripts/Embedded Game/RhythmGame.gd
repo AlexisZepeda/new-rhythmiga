@@ -29,6 +29,11 @@ extends Node2D
 @export var game_ui: Control
 @export var debug_ui: Control
 
+enum Game_Version {
+	CHART_EDITOR,
+	MAIN_GAME,
+}
+
 const QUEUE_SIZE: int = 4
 #const BAR_LINE_SCENE = preload("res://Scenes/UI/Utility/Beat_Line.tscn")
 
@@ -39,28 +44,38 @@ var bpm: float = 0.0
 var song_offset_sec: float = 0.0
 var judgement_line: float = 0.0
 
+var state: Game_Version = Game_Version.MAIN_GAME
+
+var notes: Array = []
+
 
 func _ready() -> void:
-	#var notes: Array = _parse_data_text(data)
-	_init_game_window()
-	#_init_text_notes(notes)
-	_init_game_ui()
-	#
-	#await get_tree().create_timer(0.5).timeout
-	#
-	#conductor.bpm = bpm
-	#conductor.first_beat_offset_ms = int(song_offset_sec * 1000)
-	#conductor.conductor_play()
-	#metronome.start()
-	#
-	#queue.push(note_manager, note_manager.get_note_delta_of_first_note())
-	#queue.push(note_manager_2, note_manager_2.get_note_delta_of_first_note())
-	#queue.push(note_manager_3, note_manager_3.get_note_delta_of_first_note())
-	#queue.push(note_manager_4, note_manager_4.get_note_delta_of_first_note())
-	#
-	#debug_ui.print_queue(queue)
-	
-	current_notes.changed.connect(_on_current_notes_changed)
+	match state:
+		Game_Version.CHART_EDITOR:
+			
+			#var notes: Array = _parse_data_text(data)
+			_init_game_window()
+			#_init_text_notes(notes)
+			_init_game_ui()
+			#
+			#await get_tree().create_timer(0.5).timeout
+			#
+			#conductor.bpm = bpm
+			#conductor.first_beat_offset_ms = int(song_offset_sec * 1000)
+			#conductor.conductor_play()
+			#metronome.start()
+			#
+			#queue.push(note_manager, note_manager.get_note_delta_of_first_note())
+			#queue.push(note_manager_2, note_manager_2.get_note_delta_of_first_note())
+			#queue.push(note_manager_3, note_manager_3.get_note_delta_of_first_note())
+			#queue.push(note_manager_4, note_manager_4.get_note_delta_of_first_note())
+			#
+			#debug_ui.print_queue(queue)
+			
+			current_notes.changed.connect(_on_current_notes_changed)
+		Game_Version.MAIN_GAME:
+			_init_game_window()
+			_init_game_ui()
 
 
 func _process(_delta: float) -> void:
@@ -216,6 +231,23 @@ func _on_current_notes_changed() -> void:
 					note_manager_4.set_notes(beat, note_type, direction, direction_2)
 	
 	_init_text_notes([])
+
+
+func init_beatmap(file: String) -> void:
+	print(file)
+	
+	notes = _parse_data_text(file)
+	_init_text_notes(notes)
+	
+	print("BPM %s" % bpm)
+	print("First beat offset %s" % int(song_offset_sec * 1000))
+	
+	conductor.bpm = bpm
+	conductor.first_beat_offset_ms = int(song_offset_sec * 1000)
+	
+	await get_tree().create_timer(0.5).timeout
+	
+	conductor.play_conductor(0.0)
 
 
 func init_game() -> void:

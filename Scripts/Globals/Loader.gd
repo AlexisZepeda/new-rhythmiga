@@ -8,6 +8,10 @@ signal LOADED_SCENE(node: Node)
 var scene_path
 var parent: Node
 
+var loaded_stream: AudioStream = null
+var beat_map_path: String = ""
+
+
 func load_scene(caller: Node, path: String, new_parent: Node):
 	# AWAIT FOR TESTING LOADING PURPOSE
 	#await GlobalBackground.change_wave_speed()

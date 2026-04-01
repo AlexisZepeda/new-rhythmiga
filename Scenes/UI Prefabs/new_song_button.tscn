@@ -8,6 +8,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 script = ExtResource("1_p7uh8")
 button = NodePath("Button")
 song_title = NodePath("HBoxContainer/VBoxContainer/Song Title")
@@ -16,9 +17,6 @@ album = NodePath("HBoxContainer/VBoxContainer/Album")
 cover_art = NodePath("HBoxContainer/CenterContainer/Art")
 score = NodePath("HBoxContainer/VBoxContainer/HBoxContainer/Score")
 difficulty = NodePath("HBoxContainer/VBoxContainer/HBoxContainer/Difficulty")
-
-[node name="Button" type="Button" parent="." unique_id=215609905]
-layout_mode = 2
 
 [node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=820285109]
 layout_mode = 2
@@ -68,3 +66,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
 text = "Difficulty"
+
+[node name="Button" type="Button" parent="." unique_id=215609905]
+show_behind_parent = true
+layout_mode = 2
