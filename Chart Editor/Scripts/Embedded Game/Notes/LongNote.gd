@@ -36,7 +36,7 @@ func miss(stop_movement: bool = true) -> void:
 
 func evaluate_long(param_delta: float, key: Key, current_key: Key) -> bool:
 	if key != current_key:
-		print("Not correct key %s %s" % [OS.get_keycode_string(key), OS.get_keycode_string(current_key)])
+		print("Not correct pressed key %s held key %s" % [OS.get_keycode_string(key), OS.get_keycode_string(current_key)])
 		hit_bad()
 		return false
 	

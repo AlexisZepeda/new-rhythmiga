@@ -29,22 +29,25 @@ var _beats: Dictionary = {}
 var note_final_position: Vector2 = Vector2(0, 0)
 var _last_long_note: LongNote = null
 
-var held_key: Key = KEY_NONE:
-	set(value):
-		if previous_key != KEY_NONE:
-			held_key = KEY_NONE
-		else:
-			held_key = value
-		previous_note_type.emit(self, front_note_type)
+var held_key: Key = KEY_NONE
+	#set(value):
+		#print("Changing held key %s previous key %s" % [OS.get_keycode_string(held_key), OS.get_keycode_string(previous_key)])
+		#
+		#if previous_key != KEY_NONE:
+			#held_key = KEY_NONE
+		#else:
+			#held_key = value
+		#previous_note_type.emit(self, front_note_type)
 
-var previous_key: Key = KEY_NONE:
-	set(value):
-		match front_note_type:
-			Enums.Note_Type.TAP:
-				previous_key = KEY_NONE
-			_:
-				previous_key = value
-		previous_note_type.emit(self, front_note_type)
+var previous_key: Key = KEY_NONE
+	#set(value):
+		#print("Changing previous key %s" % Enums.Note_Type.keys()[front_note_type])
+		#match front_note_type:
+			#Enums.Note_Type.TAP:
+				#previous_key = KEY_NONE
+			#_:
+				#previous_key = value
+		#previous_note_type.emit(self, front_note_type)
 
 var front_note_type: Enums.Note_Type = Enums.Note_Type.NONE
 
@@ -331,7 +334,7 @@ func pop_back() -> void:
 
 ## Handles the note when a key has been pressed.
 func handle_press(key: Key) -> bool:
-	print("	HANDLE PRESS")
+	print("	HANDLE PRESS %s" % self)
 	print("	Pressed Song time %s" % str(rhythm_game.conductor.get_song_time()))
 	
 	if _notes.is_empty():
@@ -353,6 +356,7 @@ func handle_press(key: Key) -> bool:
 	
 	if note is LongNote:
 		held_key = key
+		print("Held Key %s" % OS.get_keycode_string(held_key))
 		if note.evaluate_long(hit_delta, key, held_key):
 			
 			if note.release_back:
@@ -372,6 +376,7 @@ func handle_press(key: Key) -> bool:
 			print("	Pressed TAP note beat %s %s key %s" % [note.beat, hit_delta, OS.get_keycode_string(key)])
 			pop_back()
 			
+			print(Enums.Note_Type.keys()[front_note_type])
 			previous_key = key
 			front_note_type = Enums.Note_Type.TAP
 			previous_note_type.emit(self, front_note_type)
@@ -430,9 +435,9 @@ func handle_empty_release(key: Key) -> bool:
 	print("EMPTY RELEASE Previous Key %s" % OS.get_keycode_string(previous_key))
 	if previous_key == key:
 		print("Previous key == key %s" % OS.get_keycode_string(previous_key))
-		front_note_type = Enums.Note_Type.NONE
-		previous_key = KEY_NONE
 		
+		previous_key = KEY_NONE
+		front_note_type = Enums.Note_Type.NONE
 		array_change.emit()
 		return true
 	
