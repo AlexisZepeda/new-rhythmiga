@@ -1,6 +1,6 @@
 extends SubViewportContainer
 
-const DEFAULT_WAVE_SPEED: float = 0.6
+const DEFAULT_WAVE_SPEED: float = 0.2
 const DEFAULT_GWM: float = 1.5
 const DEFAULT_TM: float = 0.25
 const LOADING_WAVE_SPEED: float = 2.5
@@ -37,9 +37,11 @@ func disappear_shader() -> void:
 		var gwm_tween: Tween = create_tween().set_parallel()
 		var tm_tween: Tween = create_tween().set_parallel()
 		
-		wave_tween.tween_property(_material, "shader_parameter/wave_speed", 0.0, 0.75).set_trans(Tween.TRANS_LINEAR)
+		wave_tween.tween_property(_material, "shader_parameter/wave_speed", -0.2, 0.75).set_trans(Tween.TRANS_LINEAR)
 		gwm_tween.tween_property(_material, "shader_parameter/GWM", 0.0, 0.5).set_trans(Tween.TRANS_LINEAR)
 		tm_tween.tween_property(_material, "shader_parameter/TM", 0.0, 0.75).set_trans(Tween.TRANS_LINEAR)
+		
+		await wave_tween.finished
 
 
 func appear_shader() -> void:
@@ -55,3 +57,5 @@ func appear_shader() -> void:
 		wave_tween.tween_property(_material, "shader_parameter/wave_speed", DEFAULT_WAVE_SPEED, 1.0).set_trans(Tween.TRANS_LINEAR)
 		gwm_tween.tween_property(_material, "shader_parameter/GWM", DEFAULT_GWM, 1.0).set_trans(Tween.TRANS_LINEAR)
 		tm_tween.tween_property(_material, "shader_parameter/TM", DEFAULT_TM, 1.0).set_trans(Tween.TRANS_LINEAR)
+		
+		await wave_tween.finished

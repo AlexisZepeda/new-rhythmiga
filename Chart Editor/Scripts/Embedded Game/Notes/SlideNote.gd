@@ -47,8 +47,8 @@ func _set_rotation() -> void:
 
 
 func evaluate_slide(param_delta: float, param_direction:Enums.Direction=Enums.Direction.UP) -> bool:
-	print("Note direction %s" % direction)
-	print("Param direction %s" % param_direction)
+	print("Note direction %s" % Enums.Direction.keys()[direction])
+	print("Param direction %s" % Enums.Direction.keys()[param_direction])
 	if param_direction != direction:
 		print("Wrong direction")
 		#hit_bad()

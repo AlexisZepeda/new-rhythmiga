@@ -1,0 +1,164 @@
+[gd_scene format=3 uid="uid://py8nkqkmrmhl"]
+
+[ext_resource type="Script" uid="uid://d0p5qqu1iry4t" path="res://Scripts/Screens/ResultScreen.gd" id="1_44lmb"]
+[ext_resource type="Resource" uid="uid://eef2yluepmw1" path="res://Chart Editor/Resources/CurrentGameStats.tres" id="2_31hep"]
+[ext_resource type="PackedScene" uid="uid://blt2xfgped1n8" path="res://Scenes/UI Prefabs/outer_side_panel.tscn" id="3_iyoam"]
+[ext_resource type="PackedScene" uid="uid://d3tcsll630mrm" path="res://Scenes/UI Prefabs/inner_side_panel.tscn" id="4_p1krq"]
+
+[node name="Result Screen" type="Control" unique_id=940793917 node_paths=PackedStringArray("score", "perfect", "critical", "great", "good", "bad", "miss", "main_menu_btn", "song_list_btn", "retry_btn")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_44lmb")
+main_menu_screen_path = "res://Scenes/Screens/main_menu_screen.tscn"
+song_list_screen_path = "res://Scenes/Screens/song_list_screen.tscn"
+main_rhythm_game_path = "res://Scenes/Screens/main_rhythm_game.tscn"
+current_game_stats = ExtResource("2_31hep")
+score = NodePath("Panel/AspectRatioContainer/Panel/MarginContainer/VBoxContainer2/GridContainer/Score")
+perfect = NodePath("Panel/AspectRatioContainer/Panel/MarginContainer/VBoxContainer2/GridContainer/Perfect")
+critical = NodePath("Panel/AspectRatioContainer/Panel/MarginContainer/VBoxContainer2/GridContainer/Critical")
+great = NodePath("Panel/AspectRatioContainer/Panel/MarginContainer/VBoxContainer2/GridContainer/Great")
+good = NodePath("Panel/AspectRatioContainer/Panel/MarginContainer/VBoxContainer2/GridContainer/Good")
+bad = NodePath("Panel/AspectRatioContainer/Panel/MarginContainer/VBoxContainer2/GridContainer/Bad")
+miss = NodePath("Panel/AspectRatioContainer/Panel/MarginContainer/VBoxContainer2/GridContainer/Miss")
+main_menu_btn = NodePath("Panel/AspectRatioContainer/Panel/MarginContainer/VBoxContainer2/HBoxContainer/MainMenuBtn")
+song_list_btn = NodePath("Panel/AspectRatioContainer/Panel/MarginContainer/VBoxContainer2/HBoxContainer/SongListBtn")
+retry_btn = NodePath("Panel/AspectRatioContainer/Panel/MarginContainer/VBoxContainer2/HBoxContainer/RetryBtn")
+title = "Result Screen"
+
+[node name="Panel" parent="." unique_id=469996951 instance=ExtResource("3_iyoam")]
+layout_mode = 1
+
+[node name="AspectRatioContainer" type="AspectRatioContainer" parent="Panel" unique_id=873503347]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" parent="Panel/AspectRatioContainer" unique_id=585441006 instance=ExtResource("4_p1krq")]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="Panel/AspectRatioContainer/Panel" unique_id=842653285]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="Panel/AspectRatioContainer/Panel/MarginContainer" unique_id=242907971]
+layout_mode = 2
+
+[node name="GridContainer" type="GridContainer" parent="Panel/AspectRatioContainer/Panel/MarginContainer/VBoxContainer2" unique_id=987937175]
+layout_mode = 2
+size_flags_vertical = 6
+columns = 2
+
+[node name="Score Label" type="Label" parent="Panel/AspectRatioContainer/Panel/MarginContainer/VBoxContainer2/GridContainer" unique_id=332421708]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+text = "Score"
+
+[node name="Score" type="Label" parent="Panel/AspectRatioContainer/Panel/MarginContainer/VBoxContainer2/GridContainer" unique_id=131164735]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+text = "0"
+
+[node name="Perfect Label" type="Label" parent="Panel/AspectRatioContainer/Panel/MarginContainer/VBoxContainer2/GridContainer" unique_id=1053232618]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+text = "Perfect"
+
+[node name="Perfect" type="Label" parent="Panel/AspectRatioContainer/Panel/MarginContainer/VBoxContainer2/GridContainer" unique_id=1464682595]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+text = "0"
+
+[node name="Critical Label" type="Label" parent="Panel/AspectRatioContainer/Panel/MarginContainer/VBoxContainer2/GridContainer" unique_id=1164369988]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+text = "Critical"
+
+[node name="Critical" type="Label" parent="Panel/AspectRatioContainer/Panel/MarginContainer/VBoxContainer2/GridContainer" unique_id=966441712]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+text = "0"
+
+[node name="Great Label" type="Label" parent="Panel/AspectRatioContainer/Panel/MarginContainer/VBoxContainer2/GridContainer" unique_id=53572469]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+text = "Great"
+
+[node name="Great" type="Label" parent="Panel/AspectRatioContainer/Panel/MarginContainer/VBoxContainer2/GridContainer" unique_id=799166103]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+text = "0"
+
+[node name="Good Label" type="Label" parent="Panel/AspectRatioContainer/Panel/MarginContainer/VBoxContainer2/GridContainer" unique_id=1885315911]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+text = "Good"
+
+[node name="Good" type="Label" parent="Panel/AspectRatioContainer/Panel/MarginContainer/VBoxContainer2/GridContainer" unique_id=1993281018]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+text = "0"
+
+[node name="Bad Label" type="Label" parent="Panel/AspectRatioContainer/Panel/MarginContainer/VBoxContainer2/GridContainer" unique_id=905324711]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+text = "Bad"
+
+[node name="Bad" type="Label" parent="Panel/AspectRatioContainer/Panel/MarginContainer/VBoxContainer2/GridContainer" unique_id=1278640413]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+text = "0"
+
+[node name="Miss Label" type="Label" parent="Panel/AspectRatioContainer/Panel/MarginContainer/VBoxContainer2/GridContainer" unique_id=76094060]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+text = "Miss"
+
+[node name="Miss" type="Label" parent="Panel/AspectRatioContainer/Panel/MarginContainer/VBoxContainer2/GridContainer" unique_id=1571918633]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+text = "0"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel/AspectRatioContainer/Panel/MarginContainer/VBoxContainer2" unique_id=684076359]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="MainMenuBtn" type="Button" parent="Panel/AspectRatioContainer/Panel/MarginContainer/VBoxContainer2/HBoxContainer" unique_id=1497842930]
+layout_mode = 2
+text = "Main Menu"
+
+[node name="SongListBtn" type="Button" parent="Panel/AspectRatioContainer/Panel/MarginContainer/VBoxContainer2/HBoxContainer" unique_id=1690477463]
+layout_mode = 2
+text = "Song List"
+
+[node name="RetryBtn" type="Button" parent="Panel/AspectRatioContainer/Panel/MarginContainer/VBoxContainer2/HBoxContainer" unique_id=1780516626]
+layout_mode = 2
+text = "Retry"

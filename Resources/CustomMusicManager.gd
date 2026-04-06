@@ -107,11 +107,11 @@ static func open_folder(folder_name: String) -> void:
 			elif file.begins_with("MEDIUM"):
 				var beatmap_file_path: String = "%s/%s" % [path, file]
 				print(beatmap_file_path)
-				library[folder_name][Library_Keys.MEDIUM_CHART_PATH] = file
+				library[folder_name][Library_Keys.MEDIUM_CHART_PATH] = beatmap_file_path
 			elif file.begins_with("HARD"):
 				var beatmap_file_path: String = "%s/%s" % [path, file]
 				print(beatmap_file_path)
-				library[folder_name][Library_Keys.HARD_CHART_PATH] = file
+				library[folder_name][Library_Keys.HARD_CHART_PATH] = beatmap_file_path
 
 
 static func check_valid_folder(folder_name: String) -> bool:

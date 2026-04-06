@@ -18,6 +18,8 @@ signal scroll_speed_changed(speed: float)
 ## Shortest duration of a beat. Based on BPM.
 @export var sixteenth_duration: float = 0.0
 
+@export var current_game_stats: CurrentGameStats
+
 var average_x_position: float = 0.0
 var size: float = 0.0
 

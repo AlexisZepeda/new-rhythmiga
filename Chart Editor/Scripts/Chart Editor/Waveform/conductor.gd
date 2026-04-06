@@ -180,6 +180,11 @@ func pause_conductor() -> void:
 	_is_playing = false
 
 
+func unpause_conductor() -> void:
+	is_paused = false
+	_is_playing = true
+
+
 func stop_conductor() -> void:
 	stop()
 	_song_time_audio = -100

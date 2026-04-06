@@ -56,3 +56,7 @@ func save_keymap() -> void:
 	var file := FileAccess.open(keymaps_path, FileAccess.WRITE)
 	file.store_var(keymaps, true)
 	file.close()
+
+
+func print_keymap() -> void:
+	print(keymaps)

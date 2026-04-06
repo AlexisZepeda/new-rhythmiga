@@ -17,6 +17,7 @@ enum UI_Screens {
 	CHART_EDITOR,
 	SETTINGS,
 	RHYTHM_GAME,
+	RESULT_SCREEN,
 	NONE,
 }
 

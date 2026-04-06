@@ -27,7 +27,7 @@ func _process(_delta: float) -> void:
 			else:
 				input_buffer.push_front(input_buffer.pop_back())
 	
-	debug_ui.print_keys(input_to_command_manager.is_still_held(KEY_E), input_to_command_manager.is_still_held(KEY_F), input_to_command_manager.is_still_held(KEY_I), input_to_command_manager.is_still_held(KEY_J))
+	#debug_ui.print_keys(input_to_command_manager.is_still_held(KEY_E), input_to_command_manager.is_still_held(KEY_F), input_to_command_manager.is_still_held(KEY_I), input_to_command_manager.is_still_held(KEY_J))
 
 
 ## Adds command to the input buffer array.

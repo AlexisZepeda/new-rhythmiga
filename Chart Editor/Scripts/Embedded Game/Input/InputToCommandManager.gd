@@ -3,27 +3,57 @@ extends Resource
 
 enum _Note_Manager_Dict_Keys { NOTE_MANAGER, NOTE_TYPE }
 
+var tap_left_1: Key = KEY_E
+var tap_left_2: Key = KEY_F
+var tap_right_1: Key = KEY_I
+var tap_right_2: Key = KEY_J
+
 
 var last_four_tap_commands: Dictionary[Key, Command] = {
-	KEY_E: null,
-	KEY_F: null,
-	KEY_I: null,
-	KEY_J: null,
+	tap_left_1: null,
+	tap_left_2: null,
+	tap_right_1: null,
+	tap_right_2: null,
 }
 
 var keys_pressed_together: Dictionary[Key, bool] = {
-	KEY_E: false,
-	KEY_F: false,
-	KEY_I: false,
-	KEY_J: false,
+	tap_left_1: false,
+	tap_left_2: false,
+	tap_right_1: false,
+	tap_right_2: false,
 }
 
 var note_manager_dict: Dictionary[Key, Array] = {
-	KEY_E: [null, Enums.Note_Type.NONE],
-	KEY_F: [null, Enums.Note_Type.NONE],
-	KEY_I: [null, Enums.Note_Type.NONE],
-	KEY_J: [null, Enums.Note_Type.NONE],
+	tap_left_1: [null, Enums.Note_Type.NONE],
+	tap_left_2: [null, Enums.Note_Type.NONE],
+	tap_right_1: [null, Enums.Note_Type.NONE],
+	tap_right_2: [null, Enums.Note_Type.NONE],
 }
+
+
+## Update new [Key].
+func set_dictionaries() -> void:
+	last_four_tap_commands = {
+		tap_left_1: null,
+		tap_left_2: null,
+		tap_right_1: null,
+		tap_right_2: null,
+	}
+	
+	keys_pressed_together = {
+		tap_left_1: false,
+		tap_left_2: false,
+		tap_right_1: false,
+		tap_right_2: false,
+	}
+
+	note_manager_dict = {
+		tap_left_1: [null, Enums.Note_Type.NONE],
+		tap_left_2: [null, Enums.Note_Type.NONE],
+		tap_right_1: [null, Enums.Note_Type.NONE],
+		tap_right_2: [null, Enums.Note_Type.NONE],
+	}
+
 
 ## Adds a [Command] to the [member InputToCommandManager.keys_pressed_together] dictionary.
 func pressed_together(command: Command) -> void:

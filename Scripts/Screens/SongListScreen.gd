@@ -42,8 +42,6 @@ func _on_play_pressed() -> void:
 	GlobalBackground.disappear_shader()
 	Loader.loaded_stream = player.stream
 	
-	print("Difficulty %s" % song_info_container.difficulty)
-	
 	match song_info_container.difficulty:
 		Enums.Difficulty.EASY:
 			Loader.beat_map_path = CustomMusicManager.library[hovered_btn.id][CustomMusicManager.Library_Keys.EASY_CHART_PATH]

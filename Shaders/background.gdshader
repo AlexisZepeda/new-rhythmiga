@@ -11,7 +11,7 @@ group_uniforms Waves;
 uniform vec4 background_color : source_color = vec4(0.518, 0.384, 0.0, 1.0);
 uniform float GWM = 1.5;
 uniform float TM = 0.25;
-uniform float wave_speed = 0.6;
+uniform float wave_speed: hint_range(-2, 2) = 0.2;
 uniform sampler2D tex;
 
 
@@ -49,7 +49,7 @@ void fragment() {
 	vec4 color = vec4(0.0);
 
 	for(float i = 0.0; i < 1.0; i++) {
-		uv.y += (0.2 * sin(uv.x + i / 7.0 - TIME * wave_speed));
+		uv.y += (wave_speed * sin(uv.x + i / 7.0 - TIME * 0.6));
 		float Y = uv.y + getWeight(pow(i, 2.0) * 20.0) * (texture(tex, vec2(uvTrue.x, 1)).x - 0.5);
 		li = 0.4 + pow(1.6 * abs(mod(uvTrue.x + i / 1.1 + TIME, 2.0) - 1.0), 2.0);
 		gw = abs(li / (150.0 * Y));

@@ -127,6 +127,8 @@ func _parse_data_text(file: String) -> Array:
 	var regex: RegEx = RegEx.new()
 	regex.compile("^[^:]+")
 	
+	print(file)
+	
 	if FileAccess.file_exists(file):
 		var text_file: FileAccess = FileAccess.open(file, FileAccess.READ)
 		#var content = text_file.get_as_text()
