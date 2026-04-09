@@ -153,7 +153,6 @@ func play_conductor(time: float) -> void:
 	_filter = OneEuroFilter.new(filter_args)
 	
 	if is_paused:
-		print("Unpause")
 		is_paused = false
 	else:
 		_is_playing = true
@@ -229,4 +228,3 @@ func get_song_time() -> float:
 func _on_finished() -> void:
 	_song_time_audio = stream.get_length()
 	stop_conductor()
-	print("Finished")

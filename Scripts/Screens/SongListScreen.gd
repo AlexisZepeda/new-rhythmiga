@@ -25,6 +25,7 @@ func _ready() -> void:
 	
 	back_button.pressed.connect(_on_back_pressed)
 	play_button.pressed.connect(_on_play_pressed)
+	song_info_container.difficulty_changed.connect(_on_difficulty_changed)
 	
 	load_songs()
 	
@@ -36,23 +37,21 @@ func _on_back_pressed() -> void:
 	scene_path = main_menu_path
 
 
+func _on_difficulty_changed(difficulty: Enums.Difficulty) -> void:
+	var score: int = UserData.get_score(hovered_btn.id, difficulty)
+	song_info_container.set_score(str(score))
+	set_all_button_score(difficulty)
+
+
 func _on_play_pressed() -> void:
 	CHANGING_SCENE.emit(Vector2.ZERO, "", MainUIScreen.UI_Screens.RHYTHM_GAME)
 	scene_path = main_rhythm_game_path
 	GlobalBackground.disappear_shader()
 	Loader.loaded_stream = player.stream
-	
-	match song_info_container.difficulty:
-		Enums.Difficulty.EASY:
-			Loader.beat_map_path = CustomMusicManager.library[hovered_btn.id][CustomMusicManager.Library_Keys.EASY_CHART_PATH]
-		Enums.Difficulty.MEDIUM:
-			Loader.beat_map_path = CustomMusicManager.library[hovered_btn.id][CustomMusicManager.Library_Keys.MEDIUM_CHART_PATH]
-		Enums.Difficulty.HARD:
-			Loader.beat_map_path = CustomMusicManager.library[hovered_btn.id][CustomMusicManager.Library_Keys.HARD_CHART_PATH]
+	Loader.beat_map_path = CustomMusicManager.load_beat_map(hovered_btn.id, song_info_container.difficulty)
 
 
 func _on_mouse_entered(btn: NewSongButton) -> void:
-	print("Mouse entered %s" % btn.song_title_str)
 	hovered_btn = btn
 	song_info_container.set_info(btn.song_title_str, btn.artist_str, btn.score_str, btn.cover_art.texture)
 	
@@ -62,11 +61,11 @@ func _on_mouse_entered(btn: NewSongButton) -> void:
 
 
 func load_songs() -> void:
-	
 	for key: String in CustomMusicManager.library:
 		var song_name: String = CustomMusicManager.library[key][CustomMusicManager.Library_Keys.SONG_NAME]
 		var artist: String = CustomMusicManager.library[key][CustomMusicManager.Library_Keys.ARTIST]
 		var cover_path: String = CustomMusicManager.library[key][CustomMusicManager.Library_Keys.COVER_PATH]
+		var score: int = UserData.get_score(key, CustomMusicManager.current_difficulty)
 		
 		
 		if song_name != "":
@@ -75,14 +74,22 @@ func load_songs() -> void:
 			btn.set_song_title(song_name)
 			btn.set_artist(artist)
 			btn.set_cover_art(cover_path)
+			btn.set_score(str(score))
 			btn.id = key
 			
 			var entered = Callable(self, "_on_mouse_entered").bind(btn)
 			btn.button.mouse_entered.connect(entered)
-			
 			
 			song_button_list.add_child(btn)
 
 
 func change_scene() -> void:
 	Loader.load_scene(self, scene_path, get_parent())
+
+
+func set_all_button_score(difficulty: Enums.Difficulty) -> void:
+	var buttons: Array = song_button_list.get_children()
+	
+	for button: NewSongButton in buttons:
+		var score: int = UserData.get_score(button.id, difficulty)
+		button.set_score(str(score))

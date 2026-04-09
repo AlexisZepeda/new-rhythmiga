@@ -31,12 +31,17 @@ var state: UI_Screens
 func _ready() -> void:
 	Loader.LOADED_SCENE.connect(_on_loaded_scene)
 	
+	header.visible = false
+	
 	panel = PanelContainer.new()
 	add_child(panel)
 	
 	await get_tree().process_frame
 	
-	Loader.load_scene(panel, main_menu_screen, self)
+	if Loader.scene_path.is_empty():
+		Loader.load_scene(panel, main_menu_screen, self)
+	else:
+		Loader.load_scene(panel, Loader.scene_path, self)
 
 
 func _on_loaded_scene(node: Node) -> void:
@@ -45,8 +50,15 @@ func _on_loaded_scene(node: Node) -> void:
 		
 		node.CHANGING_SCENE.connect(_on_changing_scene)
 		
-		header.set_label_text(node.title)
 		state = child_scene.state
+		
+		match state:
+			UI_Screens.CHART_EDITOR, UI_Screens.RHYTHM_GAME:
+				header.visible = false
+			_:
+				header.visible = true
+		
+		header.set_label_text(node.title)
 		
 		if first_scene_loaded:
 			
@@ -76,7 +88,6 @@ func _on_changing_scene(new_position: Vector2, title: String, incoming_state: UI
 			if new_position == Vector2.ZERO:
 				first_scene_loaded = true
 			else:
-				var tween: Tween = create_tween()
-				tween.tween_property(header, "position", prev_position, 0.5)
-		
+				await header.move_anim(prev_position)
+	
 	child_scene.change_scene()

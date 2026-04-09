@@ -1,5 +1,6 @@
 [gd_scene format=3 uid="uid://bd58q3vjfndcs"]
 
+[ext_resource type="Theme" uid="uid://kwgoi4r6jr0i" path="res://Resources/Themes/Global.tres" id="1_4ncpg"]
 [ext_resource type="PackedScene" uid="uid://bfguicx1m70d1" path="res://Chart Editor/Scenes/Embedded Game/rhythm_game.tscn" id="1_fgyss"]
 [ext_resource type="Script" uid="uid://dikvlqsecj4ir" path="res://Scripts/Screens/MainRhythmGame.gd" id="1_jxqwy"]
 [ext_resource type="Script" uid="uid://1bcgusmumeqv" path="res://Chart Editor/Scripts/Chart Editor/Waveform/conductor.gd" id="2_dha5t"]
@@ -7,7 +8,7 @@
 [ext_resource type="Resource" uid="uid://byovroyvcdtjs" path="res://Chart Editor/Resources/CurrentNotesResource.tres" id="3_dha5t"]
 [ext_resource type="PackedScene" uid="uid://d3tcsll630mrm" path="res://Scenes/UI Prefabs/inner_side_panel.tscn" id="4_4ncpg"]
 
-[node name="Main Game" type="Control" unique_id=1868958031 node_paths=PackedStringArray("conductor", "rhythm_game", "pause_container")]
+[node name="Main Game" type="Control" unique_id=1868958031 node_paths=PackedStringArray("conductor", "rhythm_game", "pause_container", "retry_btn", "song_list_btn")]
 process_mode = 3
 layout_mode = 3
 anchors_preset = 15
@@ -16,11 +17,15 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 1
+theme = ExtResource("1_4ncpg")
 script = ExtResource("1_jxqwy")
 result_screen_path = "res://Scenes/Screens/result_screen.tscn"
+song_list_screen_path = "res://Scenes/Screens/song_list_screen.tscn"
 conductor = NodePath("ChartConductor")
 rhythm_game = NodePath("SubViewportContainer/SubViewport/Rhythm Game")
 pause_container = NodePath("Panel/AspectRatioContainer/Panel/PauseContainer")
+retry_btn = NodePath("Panel/AspectRatioContainer/Panel/PauseContainer/VBoxContainer/RetryBtn")
+song_list_btn = NodePath("Panel/AspectRatioContainer/Panel/PauseContainer/VBoxContainer/SongListBtn")
 
 [node name="SubViewportContainer" type="SubViewportContainer" parent="." unique_id=1317318825]
 process_mode = 1
@@ -62,6 +67,7 @@ mouse_filter = 1
 
 [node name="PauseContainer" type="MarginContainer" parent="Panel/AspectRatioContainer/Panel" unique_id=1088661542]
 visible = false
+top_level = true
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0

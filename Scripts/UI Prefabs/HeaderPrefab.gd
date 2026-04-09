@@ -41,12 +41,14 @@ func appear_anim() -> void:
 
 
 func disappear_anim() -> void:
-	var mod_tween: Tween = create_tween()
-	var scale_tween: Tween = create_tween()
+	if visible == true:
+		var mod_tween: Tween = create_tween()
+		var scale_tween: Tween = create_tween()
+		
+		scale_tween.tween_property(self, "scale", Vector2(2.0, 2.0), 1.0).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN)
+		mod_tween.tween_property(self, "modulate:a", 0.0, 1.0).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 	
-	scale_tween.tween_property(self, "scale", Vector2(2.0, 2.0), 0.55).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN)
-	mod_tween.tween_property(self, "modulate:a", 0.0, 0.5).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
-	await mod_tween.finished
+		await scale_tween.finished
 
 
 func enter_anim(position_offset: Vector2) -> void:
@@ -56,7 +58,14 @@ func enter_anim(position_offset: Vector2) -> void:
 	var mod_tween: Tween = create_tween()
 	var target_pos: Vector2 = position + position_offset
 	
-	pos_tween.tween_property(self, "position:x", target_pos.x, 0.75).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
-	mod_tween.tween_property(self, "modulate:a", 1.0, 0.5).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+	pos_tween.tween_property(self, "position:x", target_pos.x, 1.0).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+	mod_tween.tween_property(self, "modulate:a", 1.0, 1.0).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 	
 	await mod_tween.finished
+
+
+func move_anim(position_offset: Vector2) -> void:
+	var pos_tween: Tween = create_tween()
+	pos_tween.tween_property(self, "position", position_offset, 1.0).set_trans(Tween.TRANS_LINEAR)
+	
+	await pos_tween.finished

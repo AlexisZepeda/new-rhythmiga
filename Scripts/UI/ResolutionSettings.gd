@@ -92,22 +92,13 @@ func add_aspect_ratios() -> void:
 
 
 func enable_or_disable_resolutions() -> void:
-	print("Enable/Disable resolutions")
-	print(GUI.is_fullscreen())
 	if GUI.is_fullscreen():
-		print("Disable resolutions")
 		resolution_option_button.disabled = true
 	else:
-		print("Enable resolutions")
 		resolution_option_button.disabled = false
 
 
 func _on_apply_pressed() -> void:
-	
-	print("Apply settings")
-	print("Resolution %s" % GUI.current_resolution)
-	print("Window Mode %s" % GUI.current_window_mode)
-	
 	UserConfig.set_video_pref(GUI.current_resolution, GUI.current_window_mode, GUI.current_gui_aspect_ratio)
 	UserConfig.apply_user_pref_section(UserConfig.VIDEO_SECTION)
 

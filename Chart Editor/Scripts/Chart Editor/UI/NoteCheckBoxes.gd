@@ -47,7 +47,6 @@ func _on_long_arrow_toggled(toggled_on: bool) -> void:
 		arrows_panel.set_long_slide_texture()
 		arrows_panel_2.set_long_slide_texture()
 	else:
-		print("Off")
 		arrows_panel.disable_buttons(true)
 		LONG_RELEASE_SELECTION.emit(false)
 	

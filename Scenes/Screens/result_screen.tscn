@@ -4,6 +4,7 @@
 [ext_resource type="Resource" uid="uid://eef2yluepmw1" path="res://Chart Editor/Resources/CurrentGameStats.tres" id="2_31hep"]
 [ext_resource type="PackedScene" uid="uid://blt2xfgped1n8" path="res://Scenes/UI Prefabs/outer_side_panel.tscn" id="3_iyoam"]
 [ext_resource type="PackedScene" uid="uid://d3tcsll630mrm" path="res://Scenes/UI Prefabs/inner_side_panel.tscn" id="4_p1krq"]
+[ext_resource type="Script" uid="uid://bbd8e46y3vujw" path="res://Scripts/UI Prefabs/ScoreLabelPrefab.gd" id="5_p1krq"]
 
 [node name="Result Screen" type="Control" unique_id=940793917 node_paths=PackedStringArray("score", "perfect", "critical", "great", "good", "bad", "miss", "main_menu_btn", "song_list_btn", "retry_btn")]
 layout_mode = 3
@@ -27,7 +28,7 @@ miss = NodePath("Panel/AspectRatioContainer/Panel/MarginContainer/VBoxContainer2
 main_menu_btn = NodePath("Panel/AspectRatioContainer/Panel/MarginContainer/VBoxContainer2/HBoxContainer/MainMenuBtn")
 song_list_btn = NodePath("Panel/AspectRatioContainer/Panel/MarginContainer/VBoxContainer2/HBoxContainer/SongListBtn")
 retry_btn = NodePath("Panel/AspectRatioContainer/Panel/MarginContainer/VBoxContainer2/HBoxContainer/RetryBtn")
-title = "Result Screen"
+title = "Results"
 
 [node name="Panel" parent="." unique_id=469996951 instance=ExtResource("3_iyoam")]
 layout_mode = 1
@@ -69,11 +70,13 @@ size_flags_horizontal = 3
 size_flags_vertical = 1
 text = "Score"
 
-[node name="Score" type="Label" parent="Panel/AspectRatioContainer/Panel/MarginContainer/VBoxContainer2/GridContainer" unique_id=131164735]
+[node name="Score" type="Label" parent="Panel/AspectRatioContainer/Panel/MarginContainer/VBoxContainer2/GridContainer" unique_id=252362345]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
 text = "0"
+script = ExtResource("5_p1krq")
+metadata/_custom_type_script = "uid://bbd8e46y3vujw"
 
 [node name="Perfect Label" type="Label" parent="Panel/AspectRatioContainer/Panel/MarginContainer/VBoxContainer2/GridContainer" unique_id=1053232618]
 layout_mode = 2
@@ -81,11 +84,13 @@ size_flags_horizontal = 3
 size_flags_vertical = 1
 text = "Perfect"
 
-[node name="Perfect" type="Label" parent="Panel/AspectRatioContainer/Panel/MarginContainer/VBoxContainer2/GridContainer" unique_id=1464682595]
+[node name="Perfect" type="Label" parent="Panel/AspectRatioContainer/Panel/MarginContainer/VBoxContainer2/GridContainer" unique_id=1824769642]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
 text = "0"
+script = ExtResource("5_p1krq")
+metadata/_custom_type_script = "uid://bbd8e46y3vujw"
 
 [node name="Critical Label" type="Label" parent="Panel/AspectRatioContainer/Panel/MarginContainer/VBoxContainer2/GridContainer" unique_id=1164369988]
 layout_mode = 2
@@ -93,11 +98,13 @@ size_flags_horizontal = 3
 size_flags_vertical = 1
 text = "Critical"
 
-[node name="Critical" type="Label" parent="Panel/AspectRatioContainer/Panel/MarginContainer/VBoxContainer2/GridContainer" unique_id=966441712]
+[node name="Critical" type="Label" parent="Panel/AspectRatioContainer/Panel/MarginContainer/VBoxContainer2/GridContainer" unique_id=1353081889]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
 text = "0"
+script = ExtResource("5_p1krq")
+metadata/_custom_type_script = "uid://bbd8e46y3vujw"
 
 [node name="Great Label" type="Label" parent="Panel/AspectRatioContainer/Panel/MarginContainer/VBoxContainer2/GridContainer" unique_id=53572469]
 layout_mode = 2
@@ -105,11 +112,13 @@ size_flags_horizontal = 3
 size_flags_vertical = 1
 text = "Great"
 
-[node name="Great" type="Label" parent="Panel/AspectRatioContainer/Panel/MarginContainer/VBoxContainer2/GridContainer" unique_id=799166103]
+[node name="Great" type="Label" parent="Panel/AspectRatioContainer/Panel/MarginContainer/VBoxContainer2/GridContainer" unique_id=2007377756]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
 text = "0"
+script = ExtResource("5_p1krq")
+metadata/_custom_type_script = "uid://bbd8e46y3vujw"
 
 [node name="Good Label" type="Label" parent="Panel/AspectRatioContainer/Panel/MarginContainer/VBoxContainer2/GridContainer" unique_id=1885315911]
 layout_mode = 2
@@ -117,11 +126,13 @@ size_flags_horizontal = 3
 size_flags_vertical = 1
 text = "Good"
 
-[node name="Good" type="Label" parent="Panel/AspectRatioContainer/Panel/MarginContainer/VBoxContainer2/GridContainer" unique_id=1993281018]
+[node name="Good" type="Label" parent="Panel/AspectRatioContainer/Panel/MarginContainer/VBoxContainer2/GridContainer" unique_id=1540993222]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
 text = "0"
+script = ExtResource("5_p1krq")
+metadata/_custom_type_script = "uid://bbd8e46y3vujw"
 
 [node name="Bad Label" type="Label" parent="Panel/AspectRatioContainer/Panel/MarginContainer/VBoxContainer2/GridContainer" unique_id=905324711]
 layout_mode = 2
@@ -129,11 +140,13 @@ size_flags_horizontal = 3
 size_flags_vertical = 1
 text = "Bad"
 
-[node name="Bad" type="Label" parent="Panel/AspectRatioContainer/Panel/MarginContainer/VBoxContainer2/GridContainer" unique_id=1278640413]
+[node name="Bad" type="Label" parent="Panel/AspectRatioContainer/Panel/MarginContainer/VBoxContainer2/GridContainer" unique_id=1509986157]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
 text = "0"
+script = ExtResource("5_p1krq")
+metadata/_custom_type_script = "uid://bbd8e46y3vujw"
 
 [node name="Miss Label" type="Label" parent="Panel/AspectRatioContainer/Panel/MarginContainer/VBoxContainer2/GridContainer" unique_id=76094060]
 layout_mode = 2
@@ -141,11 +154,13 @@ size_flags_horizontal = 3
 size_flags_vertical = 1
 text = "Miss"
 
-[node name="Miss" type="Label" parent="Panel/AspectRatioContainer/Panel/MarginContainer/VBoxContainer2/GridContainer" unique_id=1571918633]
+[node name="Miss" type="Label" parent="Panel/AspectRatioContainer/Panel/MarginContainer/VBoxContainer2/GridContainer" unique_id=74446299]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
 text = "0"
+script = ExtResource("5_p1krq")
+metadata/_custom_type_script = "uid://bbd8e46y3vujw"
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Panel/AspectRatioContainer/Panel/MarginContainer/VBoxContainer2" unique_id=684076359]
 layout_mode = 2

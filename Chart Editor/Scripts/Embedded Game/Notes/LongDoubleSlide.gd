@@ -26,6 +26,8 @@ var direction_2: Enums.Direction:
 		_set_sprite_offset()
 		#print("Direction %s" % direction)
 
+
+
 func _ready() -> void:
 	var _arrow_sprite_height: float = arrow_1.texture.get_height()
 	_arrow_drawing_offset = -_arrow_sprite_height / 2.0

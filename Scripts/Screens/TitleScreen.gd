@@ -14,6 +14,7 @@ var gui_margin := 0.0
 
 func _init() -> void:
 	CustomMusicManager.load_custom_music_directory()
+	UserData.load_data()
 
 
 func _ready() -> void:

@@ -5,6 +5,9 @@ extends Control
 @export var timing_label_prefab: PackedScene
 @export var song_progress_bar: ProgressBar
 
+@export var song_name: Label
+@export var score_label: Label
+
 const LABEL_X_OFFSET: float = 15.0
 const PERFECT: String = "Perfect"
 const CRITICAL: String = "Critical"
@@ -22,9 +25,12 @@ func init_game_signals(note_manager: NoteManager) -> void:
 
 func _ready() -> void:
 	rhythm_game.conductor.loaded_new_stream.connect(_on_loaded_new_stream)
+	rhythm_game.play_stats.changed.connect(_on_play_stats_changed)
 	
 	if rhythm_game.conductor.stream != null:
 		song_length = rhythm_game.conductor.stream.get_length()
+	
+	#song_name.set_text(CustomMusicManager.library[CustomMusicManager.current_id][CustomMusicManager.Library_Keys.SONG_NAME])
 
 
 func _process(_delta: float) -> void:
@@ -53,7 +59,12 @@ func _on_hit_type(hit_type: Enums.Hit_Type, label_position: Vector2) -> void:
 
 
 func _on_loaded_new_stream() -> void: 
-	print(rhythm_game.conductor.stream.get_length())
 	if rhythm_game.conductor.stream != null:
 		song_length = rhythm_game.conductor.stream.get_length()
 	#song_progress_bar.max_value = rhythm_game.conductor.stream.get_length()
+
+
+func _on_play_stats_changed() -> void:
+	score_label.set_score(str(rhythm_game.play_stats.target_score))
+	
+	#score_label.set_text(str(rhythm_game.play_stats.target_score))

@@ -23,14 +23,15 @@ func _ready() -> void:
 	for btn: MenuButtonPrefab in all_buttons:
 		var pressed = Callable(self, "_on_pressed").bind(btn)
 		btn.pressed.connect(pressed)
+		btn.connect_signals()
 	
 	await get_tree().process_frame
 	
 	all_buttons.sort_custom(GUIUtils.buttons_array_sorting)
 	await animate_buttons(all_buttons.duplicate(), true, 0.50, Vector2(-10, 0), Vector2.ZERO, 0.75)
 	
-	for btn: MenuButtonPrefab in all_buttons:
-		btn.connect_signals()
+	#for btn: MenuButtonPrefab in all_buttons:
+		#btn.connect_signals()
 
 
 func _on_pressed(button: MenuButtonPrefab) -> void:

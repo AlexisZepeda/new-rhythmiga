@@ -21,6 +21,9 @@ static var music_folder: String = "user://CustomMusic/"
 
 static var library: Dictionary = {}
 
+static var current_id: String = ""
+static var current_difficulty: Enums.Difficulty = Enums.Difficulty.EASY
+
 
 static func _create_directory(path: String) -> void:
 		var dir: Error = DirAccess.make_dir_absolute(path)
@@ -40,78 +43,6 @@ static func _open_directory(path: String) -> void:
 		for file: String in files:
 			if check_valid_folder(file):
 				open_folder(file)
-
-
-static func load_custom_music_directory() -> void:
-	if DirAccess.dir_exists_absolute(music_folder):
-		_open_directory(music_folder)
-	else:
-		_create_directory(music_folder)
-
-
-static func open_folder(folder_name: String) -> void:
-	var path: String = music_folder + folder_name
-	var folder: DirAccess = DirAccess.open(path)
-	
-	var files: PackedStringArray = folder.get_files()
-	var valid_files: PackedStringArray = check_valid_music_files(files)
-	var info_dat: String = check_valid_info_dat(files)
-	var beatmaps: PackedStringArray = check_valid_chart_files(files)
-	
-	if not library.has(folder_name):
-		library[folder_name] = {
-			Library_Keys.SONG_PATH: "",
-			Library_Keys.SONG_NAME: "",
-			Library_Keys.ARTIST: "",
-			Library_Keys.COVER_PATH: "",
-			Library_Keys.EASY_CHART_PATH: "",
-			Library_Keys.MEDIUM_CHART_PATH: "",
-			Library_Keys.HARD_CHART_PATH: "",
-		}
-	
-	## Only one audio file in folder may be used.
-	if not valid_files.is_empty():
-		var music_file_path: String = "%s/%s" % [path, valid_files.get(0)]
-		
-		if library[folder_name][Library_Keys.SONG_PATH] != music_file_path:
-			library[folder_name][Library_Keys.SONG_PATH] = music_file_path
-		else:
-			print("")
-	else:
-		print("Folder contains no music")
-	
-	## Get info.dat
-	if info_dat != "":
-		var file: FileAccess = FileAccess.open(path + "/" + info_dat, FileAccess.READ)
-		
-		if FileAccess.get_open_error() != OK:
-			print(FileAccess.get_open_error())
-			return
-		else:
-			print("Opened %s" % [info_dat])
-		
-		var dictionary: Dictionary = file.get_var()
-		
-		library[folder_name][Library_Keys.SONG_NAME] = dictionary[Library_Keys.SONG_NAME]
-		library[folder_name][Library_Keys.ARTIST] = dictionary[Library_Keys.ARTIST]
-		library[folder_name][Library_Keys.COVER_PATH] = dictionary[Library_Keys.COVER_PATH]
-		
-	
-	## Get beatmap paths
-	if not beatmaps.is_empty():
-		for file: String in beatmaps:
-			if file.begins_with("EASY"):
-				var beatmap_file_path: String = "%s/%s" % [path, file]
-				print(beatmap_file_path)
-				library[folder_name][Library_Keys.EASY_CHART_PATH] = beatmap_file_path
-			elif file.begins_with("MEDIUM"):
-				var beatmap_file_path: String = "%s/%s" % [path, file]
-				print(beatmap_file_path)
-				library[folder_name][Library_Keys.MEDIUM_CHART_PATH] = beatmap_file_path
-			elif file.begins_with("HARD"):
-				var beatmap_file_path: String = "%s/%s" % [path, file]
-				print(beatmap_file_path)
-				library[folder_name][Library_Keys.HARD_CHART_PATH] = beatmap_file_path
 
 
 static func check_valid_folder(folder_name: String) -> bool:
@@ -172,3 +103,90 @@ static func load_audio(song_name: String) -> AudioStream:
 			stream = AudioStreamOggVorbis.load_from_file(file)
 	
 	return stream
+
+
+static func load_beat_map(id: String, difficulty: Enums.Difficulty) -> String:
+	var result: String = ""
+	
+	match difficulty:
+		Enums.Difficulty.EASY:
+			result = library[id][Library_Keys.EASY_CHART_PATH]
+		Enums.Difficulty.MEDIUM:
+			result = library[id][Library_Keys.MEDIUM_CHART_PATH]
+		Enums.Difficulty.HARD:
+			result = library[id][Library_Keys.HARD_CHART_PATH]
+	
+	if not result.is_empty():
+		current_id = id
+		current_difficulty = difficulty
+	
+	return result
+
+
+static func load_custom_music_directory() -> void:
+	if DirAccess.dir_exists_absolute(music_folder):
+		_open_directory(music_folder)
+	else:
+		_create_directory(music_folder)
+
+
+static func open_folder(folder_name: String) -> void:
+	var path: String = music_folder + folder_name
+	var folder: DirAccess = DirAccess.open(path)
+	
+	var files: PackedStringArray = folder.get_files()
+	var valid_files: PackedStringArray = check_valid_music_files(files)
+	var info_dat: String = check_valid_info_dat(files)
+	var beatmaps: PackedStringArray = check_valid_chart_files(files)
+	
+	if not library.has(folder_name):
+		library[folder_name] = {
+			Library_Keys.SONG_PATH: "",
+			Library_Keys.SONG_NAME: "",
+			Library_Keys.ARTIST: "",
+			Library_Keys.COVER_PATH: "",
+			Library_Keys.EASY_CHART_PATH: "",
+			Library_Keys.MEDIUM_CHART_PATH: "",
+			Library_Keys.HARD_CHART_PATH: "",
+		}
+	
+	## Only one audio file in folder may be used.
+	if not valid_files.is_empty():
+		var music_file_path: String = "%s/%s" % [path, valid_files.get(0)]
+		
+		if library[folder_name][Library_Keys.SONG_PATH] != music_file_path:
+			library[folder_name][Library_Keys.SONG_PATH] = music_file_path
+		#else:
+			#print("")
+	else:
+		print("Folder contains no music")
+	
+	## Get info.dat
+	if info_dat != "":
+		var file: FileAccess = FileAccess.open(path + "/" + info_dat, FileAccess.READ)
+		
+		if FileAccess.get_open_error() != OK:
+			print(FileAccess.get_open_error())
+			return
+		#else:
+			#print("Opened %s" % [info_dat])
+		
+		var dictionary: Dictionary = file.get_var()
+		
+		library[folder_name][Library_Keys.SONG_NAME] = dictionary[Library_Keys.SONG_NAME]
+		library[folder_name][Library_Keys.ARTIST] = dictionary[Library_Keys.ARTIST]
+		library[folder_name][Library_Keys.COVER_PATH] = dictionary[Library_Keys.COVER_PATH]
+		
+	
+	## Get beatmap paths
+	if not beatmaps.is_empty():
+		for file: String in beatmaps:
+			if file.begins_with("EASY"):
+				var beatmap_file_path: String = "%s/%s" % [path, file]
+				library[folder_name][Library_Keys.EASY_CHART_PATH] = beatmap_file_path
+			elif file.begins_with("MEDIUM"):
+				var beatmap_file_path: String = "%s/%s" % [path, file]
+				library[folder_name][Library_Keys.MEDIUM_CHART_PATH] = beatmap_file_path
+			elif file.begins_with("HARD"):
+				var beatmap_file_path: String = "%s/%s" % [path, file]
+				library[folder_name][Library_Keys.HARD_CHART_PATH] = beatmap_file_path

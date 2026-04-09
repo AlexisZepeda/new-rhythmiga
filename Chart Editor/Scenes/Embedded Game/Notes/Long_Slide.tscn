@@ -1,8 +1,8 @@
 [gd_scene format=3 uid="uid://tcpf46tiihqj"]
 
-[ext_resource type="Script" uid="uid://b1783angorvil" path="res://Scripts/Embedded Game/Notes/LongSlide.gd" id="1_n8ree"]
-[ext_resource type="Texture2D" uid="uid://2bfay36h3sv7" path="res://Sprites/Embedded Game/Long Back.png" id="2_uqy2y"]
-[ext_resource type="Texture2D" uid="uid://kxo24fnvgb6d" path="res://Sprites/Embedded Game/Long Arrow.png" id="3_uqy2y"]
+[ext_resource type="Script" uid="uid://b1783angorvil" path="res://Chart Editor/Scripts/Embedded Game/Notes/LongSlide.gd" id="1_n8ree"]
+[ext_resource type="Texture2D" uid="uid://2bfay36h3sv7" path="res://Chart Editor/Sprites/Embedded Game/Long Back.png" id="2_uqy2y"]
+[ext_resource type="Texture2D" uid="uid://kxo24fnvgb6d" path="res://Chart Editor/Sprites/Embedded Game/Long Arrow.png" id="3_uqy2y"]
 
 [node name="Long Slide" type="Node2D" unique_id=1722815838 node_paths=PackedStringArray("arrow", "base_sprite")]
 scale = Vector2(0.1, 0.1)

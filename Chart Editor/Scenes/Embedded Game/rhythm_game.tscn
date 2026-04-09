@@ -9,6 +9,8 @@
 [ext_resource type="Resource" uid="uid://eef2yluepmw1" path="res://Chart Editor/Resources/CurrentGameStats.tres" id="6_164ha"]
 [ext_resource type="Texture2D" uid="uid://c6u2y0ytum6tx" path="res://Chart Editor/Sprites/Embedded Game/Judgement.png" id="7_n2tj6"]
 [ext_resource type="Script" uid="uid://c5jow466yiy7h" path="res://Chart Editor/Scripts/Embedded Game/UI/DebugUI.gd" id="8_wkmn2"]
+[ext_resource type="Theme" uid="uid://kwgoi4r6jr0i" path="res://Resources/Themes/Global.tres" id="9_jnl3j"]
+[ext_resource type="PackedScene" uid="uid://dlow671ec18dy" path="res://Scenes/UI Prefabs/score_label_prefab.tscn" id="11_8x8f7"]
 [ext_resource type="Script" uid="uid://dft1j78d3t8yt" path="res://Chart Editor/Scripts/Embedded Game/UI/GameUI.gd" id="11_cvody"]
 [ext_resource type="PackedScene" uid="uid://dmgkcsxdw1emc" path="res://Chart Editor/Scenes/Embedded Game/UI/Utility/timing_label_prefab.tscn" id="12_0i2wr"]
 
@@ -86,17 +88,35 @@ play_stats = ExtResource("6_164ha")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1955421491]
 
-[node name="Game UI" type="Control" parent="CanvasLayer" unique_id=818850164 node_paths=PackedStringArray("rhythm_game", "song_progress_bar")]
+[node name="Game UI" type="Control" parent="CanvasLayer" unique_id=818850164 node_paths=PackedStringArray("rhythm_game", "song_progress_bar", "song_name", "score_label")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("9_jnl3j")
 script = ExtResource("11_cvody")
 rhythm_game = NodePath("../..")
 timing_label_prefab = ExtResource("12_0i2wr")
 song_progress_bar = NodePath("ProgressBar")
+song_name = NodePath("HBoxContainer/Song Name")
+score_label = NodePath("HBoxContainer/ScoreLabelPrefab")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Game UI" unique_id=125215291]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 23.0
+grow_horizontal = 2
+
+[node name="Song Name" type="Label" parent="CanvasLayer/Game UI/HBoxContainer" unique_id=2112052831]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Song Name"
+
+[node name="ScoreLabelPrefab" parent="CanvasLayer/Game UI/HBoxContainer" unique_id=47682174 instance=ExtResource("11_8x8f7")]
+layout_mode = 2
 
 [node name="ProgressBar" type="ProgressBar" parent="CanvasLayer/Game UI" unique_id=1030508638]
 layout_mode = 1
@@ -118,6 +138,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("9_jnl3j")
 script = ExtResource("8_wkmn2")
 label_1 = NodePath("Note Deltas/Curr Beat")
 label_2 = NodePath("Note Deltas/Raw Curr Beat")

@@ -50,6 +50,8 @@ var notes: Array = []
 
 
 func _ready() -> void:
+	play_stats.reset()
+	
 	match state:
 		Game_Version.CHART_EDITOR:
 			
@@ -127,7 +129,7 @@ func _parse_data_text(file: String) -> Array:
 	var regex: RegEx = RegEx.new()
 	regex.compile("^[^:]+")
 	
-	print(file)
+	#print(file)
 	
 	if FileAccess.file_exists(file):
 		var text_file: FileAccess = FileAccess.open(file, FileAccess.READ)
@@ -236,13 +238,14 @@ func _on_current_notes_changed() -> void:
 
 
 func init_beatmap(file: String) -> void:
-	print(file)
+	#print(file)
 	
 	notes = _parse_data_text(file)
+	play_stats.total_notes = notes.size()
 	_init_text_notes(notes)
 	
-	print("BPM %s" % bpm)
-	print("First beat offset %s" % int(song_offset_sec * 1000))
+	#print("BPM %s" % bpm)
+	#print("First beat offset %s" % int(song_offset_sec * 1000))
 	
 	conductor.bpm = bpm
 	conductor.first_beat_offset_ms = int(song_offset_sec * 1000)

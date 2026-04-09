@@ -52,11 +52,9 @@ func _set_preview_pressed() -> void:
 	
 	if start.is_valid_float():
 		song_preview_start = float(start)
-		print("Set Song Preview Start")
 	
 	if end.is_valid_float():
 		song_preview_end = float(end)
-		print("Set Song Preview End")
 
 
 func _cover_file_dialog_file_selected(path: String) -> void:
@@ -73,7 +71,6 @@ func _cover_file_dialog_file_selected(path: String) -> void:
 
 func _difficulty_btn_pressed(index: int) -> void:
 	difficulty = Enums.Difficulty.keys()[index]
-	print("Difficulty %s" % difficulty)
 
 
 func export_information() -> Dictionary:

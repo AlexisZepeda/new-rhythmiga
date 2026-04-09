@@ -1,12 +1,12 @@
-[gd_scene load_steps=3 format=3 uid="uid://upoko037nj7c"]
+[gd_scene format=3 uid="uid://upoko037nj7c"]
 
-[ext_resource type="Script" uid="uid://djj6ojwbph4t1" path="res://Scripts/Notes/LongBackNote.gd" id="1_rjy70"]
-[ext_resource type="Texture2D" uid="uid://2bfay36h3sv7" path="res://Sprites/Long Back.png" id="2_4ksv5"]
+[ext_resource type="Script" uid="uid://djj6ojwbph4t1" path="res://Chart Editor/Scripts/Embedded Game/Notes/LongBackNote.gd" id="1_rjy70"]
+[ext_resource type="Texture2D" uid="uid://2bfay36h3sv7" path="res://Chart Editor/Sprites/Embedded Game/Long Back.png" id="2_4ksv5"]
 
-[node name="Long Back" type="Node2D" node_paths=PackedStringArray("base_sprite")]
+[node name="Long Back" type="Node2D" unique_id=1668054263 node_paths=PackedStringArray("base_sprite")]
 scale = Vector2(0.1, 0.1)
 script = ExtResource("1_rjy70")
 base_sprite = NodePath("Sprite2D")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=740711319]
 texture = ExtResource("2_4ksv5")

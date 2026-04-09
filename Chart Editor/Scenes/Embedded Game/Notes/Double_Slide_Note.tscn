@@ -1,8 +1,8 @@
 [gd_scene format=3 uid="uid://d20kgjiv0mmm8"]
 
-[ext_resource type="Script" uid="uid://cftm66h3u7yt6" path="res://Scripts/Embedded Game/Notes/DoubleSlideNote.gd" id="1_1ycm0"]
-[ext_resource type="Texture2D" uid="uid://ckkqkvj223rob" path="res://Sprites/Embedded Game/Slide.png" id="2_1ycm0"]
-[ext_resource type="Texture2D" uid="uid://cgbnby07jnpi0" path="res://Sprites/Embedded Game/path31.png" id="3_ldtfu"]
+[ext_resource type="Script" uid="uid://cftm66h3u7yt6" path="res://Chart Editor/Scripts/Embedded Game/Notes/DoubleSlideNote.gd" id="1_1ycm0"]
+[ext_resource type="Texture2D" uid="uid://ckkqkvj223rob" path="res://Chart Editor/Sprites/Embedded Game/Slide.png" id="2_1ycm0"]
+[ext_resource type="Texture2D" uid="uid://cgbnby07jnpi0" path="res://Chart Editor/Sprites/Embedded Game/path31.png" id="3_ldtfu"]
 
 [node name="DoubleSlideNote" type="Node2D" unique_id=268624900 node_paths=PackedStringArray("arrow_1", "arrow_2", "base_sprite")]
 scale = Vector2(0.1, 0.1)
