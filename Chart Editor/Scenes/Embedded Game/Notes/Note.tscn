@@ -1,13 +1,13 @@
-[gd_scene load_steps=3 format=3 uid="uid://oaacvc53xke3"]
+[gd_scene format=3 uid="uid://oaacvc53xke3"]
 
-[ext_resource type="Script" uid="uid://g2ahm73rnf1f" path="res://Scripts/Notes/Note.gd" id="1_v22gl"]
-[ext_resource type="Texture2D" uid="uid://bxauhy7int8a4" path="res://Sprites/Tap_trigger_V5.png" id="2_iathj"]
+[ext_resource type="Script" uid="uid://g2ahm73rnf1f" path="res://Chart Editor/Scripts/Embedded Game/Notes/Note.gd" id="1_v22gl"]
+[ext_resource type="Texture2D" uid="uid://pvgd6eqi2m7t" path="res://Chart Editor/Sprites/Embedded Game/Tap.png" id="2_ll2pf"]
 
-[node name="Note" type="Node2D" node_paths=PackedStringArray("base_sprite")]
+[node name="Note" type="Node2D" unique_id=1709270139 node_paths=PackedStringArray("base_sprite")]
 script = ExtResource("1_v22gl")
 y_offset = 150.0
 base_sprite = NodePath("Sprite2D")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=534465814]
 scale = Vector2(2, 2)
-texture = ExtResource("2_iathj")
+texture = ExtResource("2_ll2pf")
