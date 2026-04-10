@@ -4,6 +4,7 @@
 [ext_resource type="ButtonGroup" uid="uid://dyjlxm4fcuv1m" path="res://Resources/difficulty_button_group.tres" id="2_12puj"]
 
 [node name="SongInfoContainer" type="MarginContainer" unique_id=1470138478 node_paths=PackedStringArray("album_art", "song_artist", "song_title", "score", "easy_btn", "medium_btn", "hard_btn")]
+modulate = Color(1, 1, 1, 0)
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0

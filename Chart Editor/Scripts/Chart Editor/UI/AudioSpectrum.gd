@@ -82,6 +82,7 @@ func _ready():
 	#option_menu.select(GlobalSettings.Duration.size() - 2)
 	
 	spinbox_bpm.value = bpm
+	rhythm_game.init_rhythm_game(RhythmGame.Game_Version.CHART_EDITOR)
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

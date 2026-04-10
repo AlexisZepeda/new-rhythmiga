@@ -5,4 +5,5 @@
 [node name="ScoreLabelPrefab" type="Label" unique_id=47682174]
 offset_right = 40.0
 offset_bottom = 23.0
+theme_override_font_sizes/font_size = 32
 script = ExtResource("1_gyh4d")

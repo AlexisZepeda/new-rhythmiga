@@ -15,7 +15,6 @@ var all_buttons: Array
 func _ready() -> void:
 	super._ready()
 	
-	title = "Main Menu"
 	state = MainUIScreen.UI_Screens.MAIN_MENU
 	
 	all_buttons = GUIUtils.get_all_buttons(button_vbox)
@@ -29,9 +28,6 @@ func _ready() -> void:
 	
 	all_buttons.sort_custom(GUIUtils.buttons_array_sorting)
 	await animate_buttons(all_buttons.duplicate(), true, 0.50, Vector2(-10, 0), Vector2.ZERO, 0.75)
-	
-	#for btn: MenuButtonPrefab in all_buttons:
-		#btn.connect_signals()
 
 
 func _on_pressed(button: MenuButtonPrefab) -> void:
@@ -47,6 +43,9 @@ func _on_pressed(button: MenuButtonPrefab) -> void:
 		MainUIScreen.UI_Screens.SETTINGS:
 			CHANGING_SCENE.emit(button_position, "Settings", button.screen)
 			scene_path = settings_menu_path
+	
+	for btn: MenuButtonPrefab in all_buttons:
+		btn.disconnect_signals()
 
 
 func animate_buttons(buttons: Array, forward: bool=true, delay_between_buttons: float=0.16, move_offset: Vector2=Vector2(-20, 0), scale_offset: Vector2=Vector2.ZERO, animation_length:float=0.52) -> void:

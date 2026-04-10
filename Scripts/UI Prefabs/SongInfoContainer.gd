@@ -12,6 +12,7 @@ signal difficulty_changed(_difficulty: Enums.Difficulty)
 @export var easy_btn: Button
 @export var medium_btn: Button
 @export var hard_btn: Button
+@export_group("")
 
 var difficulty: Enums.Difficulty
 
@@ -22,6 +23,8 @@ func _ready() -> void:
 	hard_btn.pressed.connect(_on_hard_pressed)
 	
 	_set_difficulty_pressed()
+	
+	await appear_anim()
 
 
 func _on_easy_pressed() -> void:
@@ -51,12 +54,52 @@ func _set_difficulty_pressed() -> void:
 			hard_btn.button_pressed = true
 
 
-func set_info(_name: String, _artist: String, _score: String, _art: Texture2D) -> void:
+func appear_anim() -> void:
+	var mod_tween: Tween = create_tween()
+	
+	mod_tween.tween_property(self, "modulate:a", 1.0, 1.0)
+	
+	await mod_tween.finished
+
+
+func disappear_anim() -> void:
+	var mod_tween: Tween = create_tween()
+	
+	mod_tween.tween_property(self, "modulate:a", 0.0, 1.0)
+	
+	await mod_tween.finished
+
+
+func enable_difficulties(id: String) -> void:
+	# Check beatmap paths. Disable difficulties with no beatmap
+	var easy_beatmap: String = CustomMusicManager.library[id][CustomMusicManager.Library_Keys.EASY_CHART_PATH]
+	var med_beatmap: String = CustomMusicManager.library[id][CustomMusicManager.Library_Keys.MEDIUM_CHART_PATH]
+	var hard_beatmap: String = CustomMusicManager.library[id][CustomMusicManager.Library_Keys.HARD_CHART_PATH]
+	
+	if easy_beatmap.is_empty():
+		easy_btn.disabled = true
+	else:
+		easy_btn.disabled = false
+	
+	if med_beatmap.is_empty():
+		medium_btn.disabled = true
+	else:
+		medium_btn.disabled = false
+	
+	if hard_beatmap.is_empty():
+		hard_btn.disabled = true
+	else:
+		hard_btn.disabled = false
+
+
+func set_info(_name: String, _artist: String, _score: int, _art: Texture2D) -> void:
 	song_title.set_text(_name)
 	song_artist.set_text(_artist)
 	album_art.set_texture(_art)
-	score.set_text(_score)
+	set_score(_score)
 
 
-func set_score(_score: String) -> void:
-	score.set_text(_score)
+func set_score(_score: int) -> void:
+	var result: String = Utils.set_score(_score)
+	
+	score.set_text(result)

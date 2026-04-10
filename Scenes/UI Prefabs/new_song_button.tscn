@@ -2,15 +2,106 @@
 
 [ext_resource type="Script" uid="uid://cmnfl20g7f44" path="res://Scripts/UI Prefabs/NewSongButton.gd" id="1_p7uh8"]
 
-[node name="NewSongButton" type="MarginContainer" unique_id=936495087 node_paths=PackedStringArray("button", "song_title", "artist", "album", "cover_art", "score", "difficulty")]
+[sub_resource type="Animation" id="Animation_p7uh8"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1e-05, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_xdgnw"]
+resource_name = "appear"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(1, 0), Vector2(1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_by5bi"]
+resource_name = "disappear"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(1, 1e-05)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_by5bi"]
+_data = {
+&"RESET": SubResource("Animation_p7uh8"),
+&"appear": SubResource("Animation_xdgnw"),
+&"disappear": SubResource("Animation_by5bi")
+}
+
+[node name="NewSongButton" type="MarginContainer" unique_id=936495087 node_paths=PackedStringArray("button", "animation_player", "song_title", "artist", "album", "cover_art", "score", "difficulty")]
+modulate = Color(1, 1, 1, 0)
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+scale = Vector2(1e-05, 1)
 mouse_filter = 2
 script = ExtResource("1_p7uh8")
 button = NodePath("Button")
+animation_player = NodePath("AnimationPlayer")
 song_title = NodePath("HBoxContainer/VBoxContainer/Song Title")
 artist = NodePath("HBoxContainer/VBoxContainer/Artist Name")
 album = NodePath("HBoxContainer/VBoxContainer/Album")
@@ -71,3 +162,6 @@ text = "Difficulty"
 [node name="Button" type="Button" parent="." unique_id=215609905]
 show_behind_parent = true
 layout_mode = 2
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=236585561]
+libraries/ = SubResource("AnimationLibrary_by5bi")

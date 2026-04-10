@@ -5,7 +5,7 @@ extends Control
 @export var timing_label_prefab: PackedScene
 @export var song_progress_bar: ProgressBar
 
-@export var song_name: Label
+@export var song_name: SongPanel
 @export var score_label: Label
 
 const LABEL_X_OFFSET: float = 15.0
@@ -19,13 +19,12 @@ const MISS: String = "Miss"
 var song_length: float = 0.0
 
 
-func init_game_signals(note_manager: NoteManager) -> void:
-	note_manager.note_hit_type.connect(_on_hit_type)
-
 
 func _ready() -> void:
 	rhythm_game.conductor.loaded_new_stream.connect(_on_loaded_new_stream)
 	rhythm_game.play_stats.changed.connect(_on_play_stats_changed)
+	
+	song_name.visible = false
 	
 	if rhythm_game.conductor.stream != null:
 		song_length = rhythm_game.conductor.stream.get_length()
@@ -65,6 +64,15 @@ func _on_loaded_new_stream() -> void:
 
 
 func _on_play_stats_changed() -> void:
-	score_label.set_score(str(rhythm_game.play_stats.target_score))
+	score_label.set_score(rhythm_game.play_stats.target_score)
 	
 	#score_label.set_text(str(rhythm_game.play_stats.target_score))
+
+
+func init_game_signals(note_manager: NoteManager) -> void:
+	note_manager.note_hit_type.connect(_on_hit_type)
+
+
+func set_song_panel() -> void:
+	song_name.visible = true
+	song_name.set_info()

@@ -13,6 +13,7 @@
 [ext_resource type="PackedScene" uid="uid://dlow671ec18dy" path="res://Scenes/UI Prefabs/score_label_prefab.tscn" id="11_8x8f7"]
 [ext_resource type="Script" uid="uid://dft1j78d3t8yt" path="res://Chart Editor/Scripts/Embedded Game/UI/GameUI.gd" id="11_cvody"]
 [ext_resource type="PackedScene" uid="uid://dmgkcsxdw1emc" path="res://Chart Editor/Scenes/Embedded Game/UI/Utility/timing_label_prefab.tscn" id="12_0i2wr"]
+[ext_resource type="PackedScene" uid="uid://dstqirhphp27y" path="res://Scenes/UI Prefabs/song_panel.tscn" id="12_7yn5f"]
 
 [node name="Rhythm Game" type="Node2D" unique_id=872145979 node_paths=PackedStringArray("note_manager", "note_manager_2", "note_manager_3", "note_manager_4", "lane_1", "lane_2", "lane_3", "lane_4", "game_manager", "game_ui", "debug_ui")]
 script = ExtResource("1_76km0")
@@ -100,7 +101,7 @@ script = ExtResource("11_cvody")
 rhythm_game = NodePath("../..")
 timing_label_prefab = ExtResource("12_0i2wr")
 song_progress_bar = NodePath("ProgressBar")
-song_name = NodePath("HBoxContainer/Song Name")
+song_name = NodePath("HBoxContainer/SongPanel")
 score_label = NodePath("HBoxContainer/ScoreLabelPrefab")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Game UI" unique_id=125215291]
@@ -110,13 +111,15 @@ anchor_right = 1.0
 offset_bottom = 23.0
 grow_horizontal = 2
 
-[node name="Song Name" type="Label" parent="CanvasLayer/Game UI/HBoxContainer" unique_id=2112052831]
+[node name="SongPanel" parent="CanvasLayer/Game UI/HBoxContainer" unique_id=905905264 instance=ExtResource("12_7yn5f")]
 layout_mode = 2
-size_flags_horizontal = 3
-text = "Song Name"
+size_flags_horizontal = 4
+size_flags_vertical = 4
 
 [node name="ScoreLabelPrefab" parent="CanvasLayer/Game UI/HBoxContainer" unique_id=47682174 instance=ExtResource("11_8x8f7")]
 layout_mode = 2
+size_flags_horizontal = 10
+size_flags_vertical = 0
 
 [node name="ProgressBar" type="ProgressBar" parent="CanvasLayer/Game UI" unique_id=1030508638]
 layout_mode = 1

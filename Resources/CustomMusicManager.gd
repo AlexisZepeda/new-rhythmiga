@@ -35,8 +35,6 @@ static func _create_directory(path: String) -> void:
 
 
 static func _open_directory(path: String) -> void:
-		print("Open Music Folder")
-		
 		var dir: DirAccess = DirAccess.open(path)
 		var files: PackedStringArray = dir.get_directories()
 		
@@ -121,6 +119,27 @@ static func load_beat_map(id: String, difficulty: Enums.Difficulty) -> String:
 		current_difficulty = difficulty
 	
 	return result
+
+
+static func load_artist_name() -> String:
+	if current_id.is_empty():
+		return ""
+	
+	return library[current_id][Library_Keys.ARTIST]
+
+
+static func load_cover_art() -> String:
+	if current_id.is_empty():
+		return ""
+	
+	return library[current_id][Library_Keys.COVER_PATH]
+
+
+static func load_song_name() -> String:
+	if current_id.is_empty():
+		return ""
+	
+	return library[current_id][Library_Keys.SONG_NAME]
 
 
 static func load_custom_music_directory() -> void:

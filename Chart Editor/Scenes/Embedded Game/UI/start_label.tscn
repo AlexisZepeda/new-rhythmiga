@@ -1,0 +1,82 @@
+[gd_scene format=3 uid="uid://fiqymgskmasd"]
+
+[ext_resource type="Shader" uid="uid://b81m4epggrpa2" path="res://Shaders/fade.gdshader" id="1_2bhij"]
+[ext_resource type="Script" uid="uid://cxs8adbjfybhk" path="res://Chart Editor/Scripts/Embedded Game/UI/Utility/StartLabel.gd" id="1_7xh5x"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_5w8k1"]
+shader = ExtResource("1_2bhij")
+shader_parameter/use_sprite_alpha = true
+shader_parameter/use_transition_texture = false
+shader_parameter/transition_type = 0
+shader_parameter/position = Vector2(0, 0)
+shader_parameter/invert = false
+shader_parameter/grid_size = Vector2(1, 1)
+shader_parameter/rotation_angle = 0.0
+shader_parameter/global_x_mirror = false
+shader_parameter/global_y_mirror = false
+shader_parameter/local_x_mirror = false
+shader_parameter/local_y_mirror = false
+shader_parameter/stagger = Vector2(0, 0)
+shader_parameter/cumulative_stagger_flip = false
+shader_parameter/cumulative_stagger = Vector2(0, 0)
+shader_parameter/stagger_frequency = Vector2i(2, 2)
+shader_parameter/flip_frequency = Vector2i(1, 1)
+shader_parameter/basic_feather = 0.0
+shader_parameter/use_mask_size = false
+shader_parameter/mask_size = Vector2(100, 100)
+shader_parameter/edges = 6
+shader_parameter/shape_feather = 0.1
+shader_parameter/sectors = 1
+shader_parameter/clock_feather = 0.0
+shader_parameter/progress = 0.0
+shader_parameter/progress_bias = Vector2(0, 0)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_2bhij"]
+shader = ExtResource("1_2bhij")
+shader_parameter/use_sprite_alpha = true
+shader_parameter/use_transition_texture = false
+shader_parameter/transition_type = 0
+shader_parameter/position = Vector2(0, 0)
+shader_parameter/invert = false
+shader_parameter/grid_size = Vector2(0, -1)
+shader_parameter/rotation_angle = 0.0
+shader_parameter/global_x_mirror = false
+shader_parameter/global_y_mirror = false
+shader_parameter/local_x_mirror = false
+shader_parameter/local_y_mirror = false
+shader_parameter/stagger = Vector2(0, 0)
+shader_parameter/cumulative_stagger_flip = false
+shader_parameter/cumulative_stagger = Vector2(0, 0)
+shader_parameter/stagger_frequency = Vector2i(2, 2)
+shader_parameter/flip_frequency = Vector2i(1, 1)
+shader_parameter/basic_feather = 0.0
+shader_parameter/use_mask_size = false
+shader_parameter/mask_size = Vector2(100, 100)
+shader_parameter/edges = 3
+shader_parameter/shape_feather = 0.1
+shader_parameter/sectors = 1
+shader_parameter/clock_feather = 0.0
+shader_parameter/progress = 0.0
+shader_parameter/progress_bias = Vector2(0, 0)
+
+[node name="StartLabel" type="PanelContainer" unique_id=1605396537 node_paths=PackedStringArray("label")]
+material = SubResource("ShaderMaterial_5w8k1")
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -33.0
+offset_top = -19.5
+offset_right = 33.0
+offset_bottom = 19.5
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_7xh5x")
+label = NodePath("Label")
+
+[node name="Label" type="Label" parent="." unique_id=84734952]
+material = SubResource("ShaderMaterial_2bhij")
+layout_mode = 2
+theme_override_font_sizes/font_size = 28
+text = "Start"

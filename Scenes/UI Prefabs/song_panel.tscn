@@ -1,0 +1,46 @@
+[gd_scene format=3 uid="uid://dstqirhphp27y"]
+
+[ext_resource type="Script" uid="uid://dt7adxnm0mdu4" path="res://Scripts/UI Prefabs/SongPanel.gd" id="1_u0yba"]
+
+[node name="SongPanel" type="MarginContainer" unique_id=905905264 node_paths=PackedStringArray("song_title", "artist", "cover_art", "difficulty")]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_u0yba")
+song_title = NodePath("HBoxContainer/VBoxContainer/Title")
+artist = NodePath("HBoxContainer/VBoxContainer/Artist")
+cover_art = NodePath("HBoxContainer/CenterContainer/TextureRect")
+difficulty = NodePath("HBoxContainer/VBoxContainer/Difficulty")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=2083791096]
+layout_mode = 2
+
+[node name="CenterContainer" type="CenterContainer" parent="HBoxContainer" unique_id=1024731019]
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="TextureRect" type="TextureRect" parent="HBoxContainer/CenterContainer" unique_id=1496573949]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+expand_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer" unique_id=284794973]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Title" type="Label" parent="HBoxContainer/VBoxContainer" unique_id=705087165]
+layout_mode = 2
+size_flags_vertical = 3
+text = "Title"
+
+[node name="Artist" type="Label" parent="HBoxContainer/VBoxContainer" unique_id=567042192]
+layout_mode = 2
+size_flags_vertical = 3
+text = "Artist"
+
+[node name="Difficulty" type="Label" parent="HBoxContainer/VBoxContainer" unique_id=797910005]
+layout_mode = 2
+size_flags_vertical = 3
+text = "Difficulty"

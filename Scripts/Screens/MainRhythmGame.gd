@@ -16,9 +16,9 @@ func _ready() -> void:
 	_connect_signals()
 	
 	EmbeddedGlobalSettings.enable_input = true
-	rhythm_game.state = RhythmGame.Game_Version.MAIN_GAME
 	conductor.load_stream(Loader.loaded_stream)
 	
+	rhythm_game.init_rhythm_game(RhythmGame.Game_Version.MAIN_GAME)
 	rhythm_game.init_beatmap(Loader.beat_map_path)
 
 

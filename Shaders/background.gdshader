@@ -12,6 +12,7 @@ uniform vec4 background_color : source_color = vec4(0.518, 0.384, 0.0, 1.0);
 uniform float GWM = 1.5;
 uniform float TM = 0.25;
 uniform float wave_speed: hint_range(-2, 2) = 0.2;
+uniform float alpha: hint_range(0.0, 1.0) = 1.0;
 uniform sampler2D tex;
 
 
@@ -55,7 +56,7 @@ void fragment() {
 		gw = abs(li / (150.0 * Y));
 
         ts = gw * (GWM + sin(TIME * TM));
-		color += vec4(ts, ts, ts, 1.0);
+		color += vec4(ts * alpha, ts * alpha, ts * alpha, 1.0);
 	}
 
 	COLOR = vec4(color + backdrop);

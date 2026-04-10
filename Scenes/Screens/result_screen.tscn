@@ -4,9 +4,11 @@
 [ext_resource type="Resource" uid="uid://eef2yluepmw1" path="res://Chart Editor/Resources/CurrentGameStats.tres" id="2_31hep"]
 [ext_resource type="PackedScene" uid="uid://blt2xfgped1n8" path="res://Scenes/UI Prefabs/outer_side_panel.tscn" id="3_iyoam"]
 [ext_resource type="PackedScene" uid="uid://d3tcsll630mrm" path="res://Scenes/UI Prefabs/inner_side_panel.tscn" id="4_p1krq"]
+[ext_resource type="PackedScene" uid="uid://dstqirhphp27y" path="res://Scenes/UI Prefabs/song_panel.tscn" id="5_6jeoy"]
 [ext_resource type="Script" uid="uid://bbd8e46y3vujw" path="res://Scripts/UI Prefabs/ScoreLabelPrefab.gd" id="5_p1krq"]
+[ext_resource type="PackedScene" uid="uid://fs3aj35j6dw0" path="res://Scenes/UI Prefabs/menu_button_prefab.tscn" id="7_0bmig"]
 
-[node name="Result Screen" type="Control" unique_id=940793917 node_paths=PackedStringArray("score", "perfect", "critical", "great", "good", "bad", "miss", "main_menu_btn", "song_list_btn", "retry_btn")]
+[node name="Result Screen" type="Control" unique_id=940793917 node_paths=PackedStringArray("score", "perfect", "critical", "great", "good", "bad", "miss", "main_menu_btn", "song_list_btn", "retry_btn", "grid_container", "song_panel", "button_vbox", "inner_panel", "main_vbox")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -25,9 +27,14 @@ great = NodePath("Panel/AspectRatioContainer/Panel/MarginContainer/VBoxContainer
 good = NodePath("Panel/AspectRatioContainer/Panel/MarginContainer/VBoxContainer2/GridContainer/Good")
 bad = NodePath("Panel/AspectRatioContainer/Panel/MarginContainer/VBoxContainer2/GridContainer/Bad")
 miss = NodePath("Panel/AspectRatioContainer/Panel/MarginContainer/VBoxContainer2/GridContainer/Miss")
-main_menu_btn = NodePath("Panel/AspectRatioContainer/Panel/MarginContainer/VBoxContainer2/HBoxContainer/MainMenuBtn")
-song_list_btn = NodePath("Panel/AspectRatioContainer/Panel/MarginContainer/VBoxContainer2/HBoxContainer/SongListBtn")
-retry_btn = NodePath("Panel/AspectRatioContainer/Panel/MarginContainer/VBoxContainer2/HBoxContainer/RetryBtn")
+main_menu_btn = NodePath("Panel/AspectRatioContainer/Panel/MarginContainer/VBoxContainer2/HBoxContainer/MenuButton Prefab")
+song_list_btn = NodePath("Panel/AspectRatioContainer/Panel/MarginContainer/VBoxContainer2/HBoxContainer/MenuButton Prefab2")
+retry_btn = NodePath("Panel/AspectRatioContainer/Panel/MarginContainer/VBoxContainer2/HBoxContainer/MenuButton Prefab3")
+grid_container = NodePath("Panel/AspectRatioContainer/Panel/MarginContainer/VBoxContainer2/GridContainer")
+song_panel = NodePath("Panel/AspectRatioContainer/Panel/MarginContainer/VBoxContainer2/SongPanel")
+button_vbox = NodePath("Panel/AspectRatioContainer/Panel/MarginContainer/VBoxContainer2/HBoxContainer")
+inner_panel = NodePath("Panel/AspectRatioContainer/Panel")
+main_vbox = NodePath("Panel/AspectRatioContainer/Panel/MarginContainer/VBoxContainer2")
 title = "Results"
 
 [node name="Panel" parent="." unique_id=469996951 instance=ExtResource("3_iyoam")]
@@ -59,6 +66,10 @@ theme_override_constants/margin_bottom = 10
 [node name="VBoxContainer2" type="VBoxContainer" parent="Panel/AspectRatioContainer/Panel/MarginContainer" unique_id=242907971]
 layout_mode = 2
 
+[node name="SongPanel" parent="Panel/AspectRatioContainer/Panel/MarginContainer/VBoxContainer2" unique_id=905905264 instance=ExtResource("5_6jeoy")]
+layout_mode = 2
+size_flags_vertical = 3
+
 [node name="GridContainer" type="GridContainer" parent="Panel/AspectRatioContainer/Panel/MarginContainer/VBoxContainer2" unique_id=987937175]
 layout_mode = 2
 size_flags_vertical = 6
@@ -74,7 +85,7 @@ text = "Score"
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
-text = "0"
+text = "-"
 script = ExtResource("5_p1krq")
 metadata/_custom_type_script = "uid://bbd8e46y3vujw"
 
@@ -88,7 +99,7 @@ text = "Perfect"
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
-text = "0"
+text = "-"
 script = ExtResource("5_p1krq")
 metadata/_custom_type_script = "uid://bbd8e46y3vujw"
 
@@ -102,7 +113,7 @@ text = "Critical"
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
-text = "0"
+text = "-"
 script = ExtResource("5_p1krq")
 metadata/_custom_type_script = "uid://bbd8e46y3vujw"
 
@@ -116,7 +127,7 @@ text = "Great"
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
-text = "0"
+text = "-"
 script = ExtResource("5_p1krq")
 metadata/_custom_type_script = "uid://bbd8e46y3vujw"
 
@@ -130,7 +141,7 @@ text = "Good"
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
-text = "0"
+text = "-"
 script = ExtResource("5_p1krq")
 metadata/_custom_type_script = "uid://bbd8e46y3vujw"
 
@@ -144,7 +155,7 @@ text = "Bad"
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
-text = "0"
+text = "-"
 script = ExtResource("5_p1krq")
 metadata/_custom_type_script = "uid://bbd8e46y3vujw"
 
@@ -158,22 +169,29 @@ text = "Miss"
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
-text = "0"
+text = "-"
 script = ExtResource("5_p1krq")
 metadata/_custom_type_script = "uid://bbd8e46y3vujw"
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Panel/AspectRatioContainer/Panel/MarginContainer/VBoxContainer2" unique_id=684076359]
+[node name="HBoxContainer" type="VBoxContainer" parent="Panel/AspectRatioContainer/Panel/MarginContainer/VBoxContainer2" unique_id=1054816226]
 layout_mode = 2
-size_flags_horizontal = 4
+size_flags_horizontal = 0
+size_flags_vertical = 6
 
-[node name="MainMenuBtn" type="Button" parent="Panel/AspectRatioContainer/Panel/MarginContainer/VBoxContainer2/HBoxContainer" unique_id=1497842930]
+[node name="MenuButton Prefab" parent="Panel/AspectRatioContainer/Panel/MarginContainer/VBoxContainer2/HBoxContainer" unique_id=1617453365 instance=ExtResource("7_0bmig")]
 layout_mode = 2
 text = "Main Menu"
+alignment = 0
+screen = 0
 
-[node name="SongListBtn" type="Button" parent="Panel/AspectRatioContainer/Panel/MarginContainer/VBoxContainer2/HBoxContainer" unique_id=1690477463]
+[node name="MenuButton Prefab2" parent="Panel/AspectRatioContainer/Panel/MarginContainer/VBoxContainer2/HBoxContainer" unique_id=1169497861 instance=ExtResource("7_0bmig")]
 layout_mode = 2
-text = "Song List"
+text = "song list"
+alignment = 0
+screen = 1
 
-[node name="RetryBtn" type="Button" parent="Panel/AspectRatioContainer/Panel/MarginContainer/VBoxContainer2/HBoxContainer" unique_id=1780516626]
+[node name="MenuButton Prefab3" parent="Panel/AspectRatioContainer/Panel/MarginContainer/VBoxContainer2/HBoxContainer" unique_id=769095519 instance=ExtResource("7_0bmig")]
 layout_mode = 2
-text = "Retry"
+text = "retry"
+alignment = 0
+screen = 4

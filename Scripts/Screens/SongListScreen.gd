@@ -17,6 +17,7 @@ var hovered_btn: NewSongButton
 
 func _ready() -> void:
 	super._ready()
+	
 	GUIUtils.update_margin_container.call_deferred(margin, 67)
 	CustomMusicManager.load_custom_music_directory()
 	
@@ -33,17 +34,21 @@ func _ready() -> void:
 
 
 func _on_back_pressed() -> void:
+	disappear()
+	
 	CHANGING_SCENE.emit(Vector2.ZERO, "", MainUIScreen.UI_Screens.MAIN_MENU)
 	scene_path = main_menu_path
 
 
 func _on_difficulty_changed(difficulty: Enums.Difficulty) -> void:
 	var score: int = UserData.get_score(hovered_btn.id, difficulty)
-	song_info_container.set_score(str(score))
+	song_info_container.set_score(score)
 	set_all_button_score(difficulty)
 
 
 func _on_play_pressed() -> void:
+	disappear()
+	
 	CHANGING_SCENE.emit(Vector2.ZERO, "", MainUIScreen.UI_Screens.RHYTHM_GAME)
 	scene_path = main_rhythm_game_path
 	GlobalBackground.disappear_shader()
@@ -53,11 +58,14 @@ func _on_play_pressed() -> void:
 
 func _on_mouse_entered(btn: NewSongButton) -> void:
 	hovered_btn = btn
+	
 	song_info_container.set_info(btn.song_title_str, btn.artist_str, btn.score_str, btn.cover_art.texture)
+	song_info_container.enable_difficulties(hovered_btn.id)
 	
 	player.stream = btn.audio_stream
 	
 	player.play()
+
 
 
 func load_songs() -> void:
@@ -67,20 +75,28 @@ func load_songs() -> void:
 		var cover_path: String = CustomMusicManager.library[key][CustomMusicManager.Library_Keys.COVER_PATH]
 		var score: int = UserData.get_score(key, CustomMusicManager.current_difficulty)
 		
-		
 		if song_name != "":
 			var btn: NewSongButton = song_button_prefab.instantiate()
 			btn.audio_stream = CustomMusicManager.load_audio(song_name)
 			btn.set_song_title(song_name)
 			btn.set_artist(artist)
 			btn.set_cover_art(cover_path)
-			btn.set_score(str(score))
+			btn.set_score(score)
 			btn.id = key
 			
 			var entered = Callable(self, "_on_mouse_entered").bind(btn)
 			btn.button.mouse_entered.connect(entered)
 			
 			song_button_list.add_child(btn)
+
+
+func disappear() -> void:
+	song_info_container.disappear_anim()
+	lower_volume()
+	var buttons = song_button_list.get_children()
+	
+	for button: NewSongButton in buttons:
+		await button.disappear_anim()
 
 
 func change_scene() -> void:
@@ -92,4 +108,9 @@ func set_all_button_score(difficulty: Enums.Difficulty) -> void:
 	
 	for button: NewSongButton in buttons:
 		var score: int = UserData.get_score(button.id, difficulty)
-		button.set_score(str(score))
+		button.set_score(score)
+
+
+func lower_volume() -> void:
+	var vol_tween: Tween = create_tween()
+	vol_tween.tween_property(player, "volume_linear", 0.0, 0.75)

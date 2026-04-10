@@ -49,7 +49,8 @@ var state: Game_Version = Game_Version.MAIN_GAME
 var notes: Array = []
 
 
-func _ready() -> void:
+func init_rhythm_game(game_state: Game_Version) -> void:
+	state = game_state
 	play_stats.reset()
 	
 	match state:
@@ -58,7 +59,7 @@ func _ready() -> void:
 			#var notes: Array = _parse_data_text(data)
 			_init_game_window()
 			#_init_text_notes(notes)
-			_init_game_ui()
+			_init_game_ui_signals()
 			#
 			#await get_tree().create_timer(0.5).timeout
 			#
@@ -77,6 +78,7 @@ func _ready() -> void:
 			current_notes.changed.connect(_on_current_notes_changed)
 		Game_Version.MAIN_GAME:
 			_init_game_window()
+			_init_game_ui_signals()
 			_init_game_ui()
 
 
@@ -103,11 +105,15 @@ func _init_game_window() -> void:
 
 
 
-func _init_game_ui() -> void:
+func _init_game_ui_signals() -> void:
 	game_ui.init_game_signals(note_manager)
 	game_ui.init_game_signals(note_manager_2)
 	game_ui.init_game_signals(note_manager_3)
 	game_ui.init_game_signals(note_manager_4)
+
+
+func _init_game_ui() -> void:
+	game_ui.set_song_panel()
 
 
 func _init_text_notes(_notes: Array) -> void:

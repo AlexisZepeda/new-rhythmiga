@@ -46,7 +46,7 @@ static func get_all_buttons(node: Node) -> Array:
 	return buttons
 
 
-static func buttons_array_sorting(a: Button, b: Button) -> bool:
+static func buttons_array_sorting(a: Control, b: Control) -> bool:
 	if a.global_position.y == b.global_position.y:
 		return a.global_position.x < b.global_position.x
 	

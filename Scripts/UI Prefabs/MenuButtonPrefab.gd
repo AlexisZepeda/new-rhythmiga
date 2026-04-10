@@ -68,3 +68,22 @@ func connect_signals() -> void:
 	
 	focus_entered.connect(_on_entered)
 	focus_exited.connect(_on_exited)
+
+
+func disconnect_signals() -> void:
+	disabled = true
+	
+	if pressed.is_connected(_on_pressed):
+		pressed.disconnect(_on_pressed)
+	
+	if mouse_entered.is_connected(_on_entered):
+		mouse_entered.disconnect(_on_entered)
+	
+	if mouse_exited.is_connected(_on_exited):
+		mouse_exited.disconnect(_on_exited)
+	
+	if focus_entered.is_connected(_on_entered):
+		focus_entered.disconnect(_on_entered)
+	
+	if focus_exited.is_connected(_on_exited):
+		focus_exited.disconnect(_on_exited)

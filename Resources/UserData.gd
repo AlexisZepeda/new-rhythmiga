@@ -24,8 +24,17 @@ static func load_data() -> void:
 static func save_score(score: int, difficulty: Enums.Difficulty) -> void:
 	var key: String = CustomMusicManager.current_id
 	
+	if key.is_empty():
+		return
+	
 	if save_data.has(key):
-		save_data[key][difficulty] = score
+		if save_data[key].has(difficulty):
+			var saved_score: int = save_data[key][difficulty]
+			
+			if score >= saved_score:
+				save_data[key][difficulty] = score
+		else:
+			save_data[key][difficulty] = score
 	else:
 		save_data[key] = {
 			difficulty: score

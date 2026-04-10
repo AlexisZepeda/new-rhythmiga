@@ -19,6 +19,7 @@ settings_menu_path = "res://Scenes/Screens/settings_menu.tscn"
 song_list_menu_path = "res://Scenes/Screens/song_list_screen.tscn"
 chart_editor_menu_path = "res://Chart Editor/Scenes/Chart Editor/chart_editor.tscn"
 button_vbox = NodePath("Panel/AspectRatioContainer/Panel/MarginContainer/ButtonVbox")
+title = "main menu"
 
 [node name="Panel" parent="." unique_id=469996951 instance=ExtResource("2_3ehj6")]
 layout_mode = 1
@@ -55,7 +56,7 @@ theme_override_constants/separation = 20
 custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
 size_flags_horizontal = 0
-text = "Song List"
+text = "song list"
 alignment = 0
 screen = 1
 
@@ -63,7 +64,7 @@ screen = 1
 custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
 size_flags_horizontal = 0
-text = "Editor"
+text = "editor"
 alignment = 0
 screen = 2
 
@@ -71,5 +72,5 @@ screen = 2
 custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
 size_flags_horizontal = 0
-text = "Settings"
+text = "settings"
 alignment = 0
