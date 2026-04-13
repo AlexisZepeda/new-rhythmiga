@@ -2,7 +2,7 @@
 
 importer="oggvorbisstr"
 type="AudioStreamOggVorbis"
-uid="uid://d3ys7j68j28l8"
+uid="uid://glsgksc51oxi"
 path="res://.godot/imported/Battle Theme #3 Ogg.ogg-a4a8dce336e95e911e82f4909d1b2f11.oggvorbisstr"
 
 [deps]
@@ -13,7 +13,7 @@ dest_files=["res://.godot/imported/Battle Theme #3 Ogg.ogg-a4a8dce336e95e911e82f
 [params]
 
 loop=false
-loop_offset=0.0
-bpm=160.0
+loop_offset=0
+bpm=0
 beat_count=0
 bar_beats=4

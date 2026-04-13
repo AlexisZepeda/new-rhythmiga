@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://b2suntdf7h6l1"
+path="res://.godot/imported/Battle Theme #1 Ogg.ogg-dcf009fec70436c5ac79907e62f153a2.oggvorbisstr"
+
+[deps]
+
+source_file="res://Chart Editor/Music/Battle Theme #1 Ogg.ogg"
+dest_files=["res://.godot/imported/Battle Theme #1 Ogg.ogg-dcf009fec70436c5ac79907e62f153a2.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

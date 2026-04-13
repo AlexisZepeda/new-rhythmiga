@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://c2c366irirhhg"
+path="res://.godot/imported/Town Theme Ogg.ogg-d6e39e6212802cdba6b5aaf1bcc79596.oggvorbisstr"
+
+[deps]
+
+source_file="res://Chart Editor/Music/Town Theme Ogg.ogg"
+dest_files=["res://.godot/imported/Town Theme Ogg.ogg-d6e39e6212802cdba6b5aaf1bcc79596.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4
