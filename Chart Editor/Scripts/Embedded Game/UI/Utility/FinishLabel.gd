@@ -1,7 +1,7 @@
-class_name StartLabel
+class_name FinishLabel
 extends PanelContainer
 
-@export var start_texture: TextureRect
+@export var finish_texture: TextureRect
 
 
 func _ready() -> void:
@@ -15,12 +15,12 @@ func start_anim() -> void:
 	#mod_tween.tween_property(self, "modulate:a", 1.0, 0.5).set_trans(Tween.TRANS_SINE)
 	#font_tween.tween_property(label, "theme_override_font_sizes/font_size", 60, 0.5).set_trans(Tween.TRANS_SINE)
 	
-	if start_texture.material is ShaderMaterial:
+	if finish_texture.material is ShaderMaterial:
 		var alpha_tween: Tween = create_tween()
 		
-		start_texture.material.set_shader_parameter("invert", true)
+		finish_texture.material.set_shader_parameter("invert", true)
 		
-		alpha_tween.tween_property(start_texture.material, "shader_parameter/progress", 2.0, 1.0)
+		alpha_tween.tween_property(finish_texture.material, "shader_parameter/progress", 2.0, 1.0)
 		
 		await alpha_tween.finished
 		
@@ -30,11 +30,11 @@ func start_anim() -> void:
 
 
 func disappear_anim() -> void:
-	if start_texture.material is ShaderMaterial:
+	if finish_texture.material is ShaderMaterial:
 		var alpha_tween: Tween = create_tween()
 		
 		#start_texture.material.set_shader_parameter("invert", false)
 		
-		alpha_tween.tween_property(start_texture.material, "shader_parameter/progress", 0.0, 1.0)
+		alpha_tween.tween_property(finish_texture.material, "shader_parameter/progress", 0.0, 1.0)
 		
 		await alpha_tween.finished

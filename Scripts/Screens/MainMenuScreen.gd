@@ -34,7 +34,7 @@ func _on_pressed(button: MenuButtonPrefab) -> void:
 	var button_position: Vector2 = button.position + button_vbox.position + inner_panel.position
 	match button.screen:
 		MainUIScreen.UI_Screens.SONG_LIST:
-			CHANGING_SCENE.emit(button_position, "Song List", button.screen)
+			CHANGING_SCENE.emit(button_position, "Quickplay", button.screen)
 			scene_path = song_list_menu_path
 		MainUIScreen.UI_Screens.CHART_EDITOR:
 			CHANGING_SCENE.emit(button_position, "Editor", button.screen)

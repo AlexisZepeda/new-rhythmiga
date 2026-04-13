@@ -2,6 +2,22 @@
 
 [ext_resource type="FontFile" uid="uid://sw5v761b4urd" path="res://Fonts/Cat North/CatNorth.otf" id="1_p1j05"]
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8nb00"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_p1j05"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_s7jre"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_hs8cg"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_h6j54"]
+
 [resource]
 default_font = ExtResource("1_p1j05")
 Label/fonts/font = ExtResource("1_p1j05")
+TabContainer/constants/tab_separation = 8
+TabContainer/styles/panel = SubResource("StyleBoxEmpty_8nb00")
+TabContainer/styles/tab_focus = SubResource("StyleBoxEmpty_p1j05")
+TabContainer/styles/tab_hovered = SubResource("StyleBoxEmpty_s7jre")
+TabContainer/styles/tab_selected = SubResource("StyleBoxEmpty_hs8cg")
+TabContainer/styles/tab_unselected = SubResource("StyleBoxEmpty_h6j54")

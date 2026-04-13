@@ -8,6 +8,9 @@ extends Control
 @export var song_name: SongPanel
 @export var score_label: Label
 
+@export var start_label: PackedScene
+@export var finish_label: PackedScene
+
 const LABEL_X_OFFSET: float = 15.0
 const PERFECT: String = "Perfect"
 const CRITICAL: String = "Critical"
@@ -76,3 +79,23 @@ func init_game_signals(note_manager: NoteManager) -> void:
 func set_song_panel() -> void:
 	song_name.visible = true
 	song_name.set_info()
+
+
+func start_animation() -> void:
+	var start: StartLabel = start_label.instantiate()
+	
+	add_child(start)
+	
+	await start.start_anim()
+	
+	start.queue_free()
+
+
+func finish_animation() -> void:
+	var finish: FinishLabel = finish_label.instantiate()
+	
+	add_child(finish)
+	
+	await finish.start_anim()
+	
+	finish.queue_free()

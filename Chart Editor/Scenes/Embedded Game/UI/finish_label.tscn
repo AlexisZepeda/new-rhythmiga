@@ -1,13 +1,13 @@
-[gd_scene format=3 uid="uid://fiqymgskmasd"]
+[gd_scene format=3 uid="uid://ff4jy1bvdwqe"]
 
-[ext_resource type="Shader" uid="uid://b81m4epggrpa2" path="res://Shaders/fade.gdshader" id="1_2bhij"]
-[ext_resource type="Script" uid="uid://cxs8adbjfybhk" path="res://Chart Editor/Scripts/Embedded Game/UI/Utility/StartLabel.gd" id="1_7xh5x"]
-[ext_resource type="Texture2D" uid="uid://bcxywhqfowpp5" path="res://Sprites/text1.png" id="3_5w8k1"]
+[ext_resource type="Script" uid="uid://dx0stw7ktpvrn" path="res://Chart Editor/Scripts/Embedded Game/UI/Utility/FinishLabel.gd" id="1_1b6jy"]
+[ext_resource type="Texture2D" uid="uid://kdcoqk30rd8c" path="res://Sprites/text2.png" id="1_yxgp4"]
+[ext_resource type="Shader" uid="uid://b81m4epggrpa2" path="res://Shaders/fade.gdshader" id="2_k28jc"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_5w8k1"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_1b6jy"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_u556x"]
-shader = ExtResource("1_2bhij")
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ke1c5"]
+shader = ExtResource("2_k28jc")
 shader_parameter/use_sprite_alpha = true
 shader_parameter/use_transition_texture = false
 shader_parameter/transition_type = 0
@@ -34,25 +34,25 @@ shader_parameter/clock_feather = 0.0
 shader_parameter/progress = 0.0
 shader_parameter/progress_bias = Vector2(0, 0)
 
-[node name="StartLabel" type="PanelContainer" unique_id=1605396537 node_paths=PackedStringArray("start_texture")]
-custom_minimum_size = Vector2(100, 100)
+[node name="FinishLabel" type="PanelContainer" unique_id=1066814731 node_paths=PackedStringArray("finish_texture")]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -468.0
+offset_left = -396.0
 offset_top = -128.0
-offset_right = 468.0
+offset_right = 396.0
 offset_bottom = 128.0
 grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(0.5, 0.5)
-theme_override_styles/panel = SubResource("StyleBoxEmpty_5w8k1")
-script = ExtResource("1_7xh5x")
-start_texture = NodePath("TextureRect")
+pivot_offset_ratio = Vector2(0.5, 0.5)
+theme_override_styles/panel = SubResource("StyleBoxEmpty_1b6jy")
+script = ExtResource("1_1b6jy")
+finish_texture = NodePath("TextureRect")
 
-[node name="TextureRect" type="TextureRect" parent="." unique_id=229718084]
-material = SubResource("ShaderMaterial_u556x")
+[node name="TextureRect" type="TextureRect" parent="." unique_id=323618378]
+material = SubResource("ShaderMaterial_ke1c5")
 layout_mode = 2
-texture = ExtResource("3_5w8k1")
+texture = ExtResource("1_yxgp4")

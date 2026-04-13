@@ -78,7 +78,7 @@ func _on_main_menu_pressed() -> void:
 func _on_song_list_pressed() -> void:
 	var button_position: Vector2 = song_list_btn.position + button_vbox.position + inner_panel.position + main_vbox.position
 	
-	CHANGING_SCENE.emit(button_position, "Song List", song_list_btn.screen)
+	CHANGING_SCENE.emit(button_position, "Quickplay", song_list_btn.screen)
 	scene_path = song_list_screen_path
 	
 	disconnect_buttons()

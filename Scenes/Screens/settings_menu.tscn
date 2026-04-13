@@ -12,7 +12,131 @@
 [ext_resource type="AudioStream" uid="uid://wlgmjtdkn7x0" path="res://Sounds/Hit SFX.ogg" id="6_qfe0j"]
 [ext_resource type="PackedScene" uid="uid://cipiemic4dbd3" path="res://Scenes/Screens/Settings/input_settings.tscn" id="7_3domo"]
 
-[node name="Settings Menu" type="Control" unique_id=297158495 node_paths=PackedStringArray("sfx_player", "master_volume", "music_volume", "sfx_volume")]
+[sub_resource type="Animation" id="Animation_qfe0j"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Panel/AspectRatioContainer/Inner Side Panel/MarginContainer:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Panel/AspectRatioContainer/Inner Side Panel/Back Button:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Panel/AspectRatioContainer/Inner Side Panel/MarginContainer:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_hrnuu"]
+resource_name = "appear"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Panel/AspectRatioContainer/Inner Side Panel/MarginContainer:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(1, 1e-05), Vector2(1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Panel/AspectRatioContainer/Inner Side Panel/Back Button:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.8333333, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Panel/AspectRatioContainer/Inner Side Panel/MarginContainer:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.70002955, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_lhk1s"]
+resource_name = "disappear"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Panel/AspectRatioContainer/Inner Side Panel/MarginContainer:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(1, 1e-05)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Panel/AspectRatioContainer/Inner Side Panel/Back Button:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Panel/AspectRatioContainer/Inner Side Panel/MarginContainer:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_lhk1s"]
+_data = {
+&"RESET": SubResource("Animation_qfe0j"),
+&"appear": SubResource("Animation_hrnuu"),
+&"disappear": SubResource("Animation_lhk1s")
+}
+
+[node name="Settings Menu" type="Control" unique_id=297158495 node_paths=PackedStringArray("player", "sfx_player", "animation_player", "master_volume", "music_volume", "sfx_volume")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -24,7 +148,9 @@ theme = ExtResource("1_hrnuu")
 script = ExtResource("1_g8ys1")
 main_menu_path = "uid://c2pcwa46ftj3t"
 user_config = ExtResource("2_qer3s")
+player = NodePath("MusicPlayer")
 sfx_player = NodePath("SFXPlayer")
+animation_player = NodePath("AnimationPlayer")
 master_volume = NodePath("Panel/AspectRatioContainer/Inner Side Panel/MarginContainer/TabContainer/Audio/Audio/Master/Master Volume Slider")
 music_volume = NodePath("Panel/AspectRatioContainer/Inner Side Panel/MarginContainer/TabContainer/Audio/Audio/Music/Music Volume Slider")
 sfx_volume = NodePath("Panel/AspectRatioContainer/Inner Side Panel/MarginContainer/TabContainer/Audio/Audio/SFX/SFX Volume Slider")
@@ -239,6 +365,9 @@ bus = &"Music"
 [node name="SFXPlayer" type="AudioStreamPlayer" parent="." unique_id=2082354207]
 stream = ExtResource("6_qfe0j")
 bus = &"SFX"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=52059853]
+libraries/ = SubResource("AnimationLibrary_lhk1s")
 
 [connection signal="value_changed" from="Panel/AspectRatioContainer/Inner Side Panel/MarginContainer/TabContainer/Audio/Audio/SFX/SFX Volume Slider" to="." method="_on_sfx_volume_slider_value_changed"]
 [connection signal="aspect_ratio_changed" from="Panel/AspectRatioContainer/Inner Side Panel/MarginContainer/TabContainer/Video/Video/Resolution" to="." method="_on_resolution_aspect_ratio_changed"]

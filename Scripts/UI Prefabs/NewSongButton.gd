@@ -1,7 +1,7 @@
 class_name NewSongButton
 extends MarginContainer
 
-@export var button: Button
+@export var panel: Panel
 @export var animation_player: AnimationPlayer
 @export_category("Song Info")
 @export var song_title: Label
@@ -27,7 +27,22 @@ var id: String = "": set=_set_id
 func _ready() -> void:
 	self.scale.x = 0.0
 	
+	panel.mouse_entered.connect(_on_panel_mouse_entered)
+	panel.mouse_exited.connect(_on_panel_mouse_exited)
+	
 	await appear_anim()
+
+
+func _on_panel_mouse_entered() -> void:
+	var stylebox: StyleBox = panel.get_theme_stylebox("panel").duplicate()
+	stylebox.bg_color = Color(0.39, 0.39, 0.39, 0.6)
+	panel.add_theme_stylebox_override("panel", stylebox)
+
+
+func _on_panel_mouse_exited() -> void:
+	var stylebox: StyleBox = panel.get_theme_stylebox("panel").duplicate()
+	stylebox.bg_color = Color(0.39, 0.39, 0.39, 0.0)
+	panel.add_theme_stylebox_override("panel", stylebox)
 
 
 func _set_id(value: String) -> void:

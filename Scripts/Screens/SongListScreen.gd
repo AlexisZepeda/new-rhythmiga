@@ -21,7 +21,7 @@ func _ready() -> void:
 	GUIUtils.update_margin_container.call_deferred(margin, 67)
 	CustomMusicManager.load_custom_music_directory()
 	
-	title = "Song List"
+	title = "Quickplay"
 	state = MainUIScreen.UI_Screens.SONG_LIST
 	
 	back_button.pressed.connect(_on_back_pressed)
@@ -85,7 +85,7 @@ func load_songs() -> void:
 			btn.id = key
 			
 			var entered = Callable(self, "_on_mouse_entered").bind(btn)
-			btn.button.mouse_entered.connect(entered)
+			btn.panel.mouse_entered.connect(entered)
 			
 			song_button_list.add_child(btn)
 

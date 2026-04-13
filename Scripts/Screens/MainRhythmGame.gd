@@ -23,18 +23,16 @@ func _ready() -> void:
 
 
 func _connect_signals() -> void:
-	conductor.finished.connect(_on_conductor_finished)
+	rhythm_game.game_finished.connect(_on_game_finished)
 	retry_btn.pressed.connect(_on_retry_pressed)
 	song_list_btn.pressed.connect(_on_song_list_pressed)
 
 
-func _on_conductor_finished() -> void:
+func _on_game_finished() -> void:
 	EmbeddedGlobalSettings.current_game_stats = rhythm_game.play_stats
 	
 	CHANGING_SCENE.emit(Vector2.ZERO, "", MainUIScreen.UI_Screens.RESULT_SCREEN)
 	scene_path = result_screen_path
-	
-	await get_tree().create_timer(2.0).timeout
 
 
 func _on_retry_pressed() -> void:

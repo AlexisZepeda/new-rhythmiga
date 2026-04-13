@@ -1,6 +1,8 @@
 class_name RhythmGame
 extends Node2D
 
+signal game_finished
+
 #@export_category("Chart")
 #@export var chart: ChartData.Chart = ChartData.Chart.SYNC_TEST
 @export_file var data: String 
@@ -48,38 +50,8 @@ var state: Game_Version = Game_Version.MAIN_GAME
 
 var notes: Array = []
 
-
-func init_rhythm_game(game_state: Game_Version) -> void:
-	state = game_state
+func _ready() -> void:
 	play_stats.reset()
-	
-	match state:
-		Game_Version.CHART_EDITOR:
-			
-			#var notes: Array = _parse_data_text(data)
-			_init_game_window()
-			#_init_text_notes(notes)
-			_init_game_ui_signals()
-			#
-			#await get_tree().create_timer(0.5).timeout
-			#
-			#conductor.bpm = bpm
-			#conductor.first_beat_offset_ms = int(song_offset_sec * 1000)
-			#conductor.conductor_play()
-			#metronome.start()
-			#
-			#queue.push(note_manager, note_manager.get_note_delta_of_first_note())
-			#queue.push(note_manager_2, note_manager_2.get_note_delta_of_first_note())
-			#queue.push(note_manager_3, note_manager_3.get_note_delta_of_first_note())
-			#queue.push(note_manager_4, note_manager_4.get_note_delta_of_first_note())
-			#
-			#debug_ui.print_queue(queue)
-			
-			current_notes.changed.connect(_on_current_notes_changed)
-		Game_Version.MAIN_GAME:
-			_init_game_window()
-			_init_game_ui_signals()
-			_init_game_ui()
 
 
 func _process(_delta: float) -> void:
@@ -104,7 +76,6 @@ func _init_game_window() -> void:
 	lane_4.position = Vector2(judgement_line, _window_height * 4)
 
 
-
 func _init_game_ui_signals() -> void:
 	game_ui.init_game_signals(note_manager)
 	game_ui.init_game_signals(note_manager_2)
@@ -126,7 +97,6 @@ func _init_text_notes(_notes: Array) -> void:
 	note_manager_4.create_notes(_window_height * 4) #200
 	
 	init_game()
-
 
 
 func _parse_data_text(file: String) -> Array:
@@ -216,6 +186,12 @@ func _on_notes_4_array_change() -> void:
 	_reinit_queue()
 
 
+func _on_conductor_finished() -> void:
+	await game_ui.finish_animation()
+	
+	game_finished.emit()
+
+
 func _on_current_notes_changed() -> void:
 	note_manager.flush_notes()
 	note_manager_2.flush_notes()
@@ -256,7 +232,7 @@ func init_beatmap(file: String) -> void:
 	conductor.bpm = bpm
 	conductor.first_beat_offset_ms = int(song_offset_sec * 1000)
 	
-	await get_tree().create_timer(0.5).timeout
+	await game_ui.start_animation()
 	
 	conductor.play_conductor(0.0)
 
@@ -268,6 +244,24 @@ func init_game() -> void:
 	queue.push(note_manager_4, note_manager_4.get_note_delta_of_first_note())
 	
 	debug_ui.print_queue(queue)
+
+
+func init_rhythm_game(game_state: Game_Version) -> void:
+	state = game_state
+	play_stats.reset()
+	
+	match state:
+		Game_Version.CHART_EDITOR:
+			_init_game_window()
+			_init_game_ui_signals()
+			
+			current_notes.changed.connect(_on_current_notes_changed)
+		Game_Version.MAIN_GAME:
+			_init_game_window()
+			_init_game_ui_signals()
+			_init_game_ui()
+	
+	conductor.finished.connect(_on_conductor_finished)
 
 
 func reset() -> void:
