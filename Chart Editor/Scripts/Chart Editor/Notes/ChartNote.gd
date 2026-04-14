@@ -20,7 +20,7 @@ var direction_2: int
 
 
 func _init(_beat: float, _type: Note_Type, _lane: int, _direction:int=4, _direction_2:int=4) -> void:
-	beat = _beat * 4 # Turns beat into sixteenth beat
+	beat = _beat
 	type = _type
 	lane = _lane
 	direction = _direction
@@ -41,7 +41,7 @@ func calculate_ticks() -> int:
 ## Calculates the metric time (seconds) of the note based on the BPM and PPQ.
 ## In case of tempo changes the most recent BPM before the note must be used.
 func calculate_seconds() -> float:
-	#print("PPQ duration %s" % [60000 / (GlobalSettings.bpm * GlobalSettings.PPQ)])
+	print("PPQ duration %s" % [60000 / (GlobalSettings.bpm * GlobalSettings.PPQ) / 1000])
 	var seconds_per_tick: float = 60000 / (GlobalSettings.bpm * GlobalSettings.PPQ) / 1000
 	
 	return _ticks * seconds_per_tick

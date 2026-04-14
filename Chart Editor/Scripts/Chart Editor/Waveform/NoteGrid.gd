@@ -74,32 +74,34 @@ func _ready() -> void:
 
 
 func _on_cell_position_change() -> void:
-	if not _cells.is_empty():
-		for key in _cells:
-			var sprite: Sprite2D = _cells[key][Keys.SPRITE]
-			var cell: Vector2 = key
-			
-			#print("Note type %s" % NoteType.keys()[_cells[key][Keys.NOTE_TYPE]])
-			match _cells[key][Keys.NOTE_TYPE]:
-				NoteType.LONG:
-					sprite.global_position = grid.calculate_map_position_with_offset(cell)
-				NoteType.LONG_BACK, NoteType.LONG_ARROW, NoteType.LONG_DOUBLE_ARROW:
-					pass
-				_:
-					sprite.global_position = grid.calculate_map_position_with_offset(cell)
+	pass
+	
+	#if not _cells.is_empty():
+		#for key in _cells:
+			#var sprite: Sprite2D = _cells[key][Keys.SPRITE]
+			#var cell: Vector2 = key
+			#
+			##print("Note type %s" % NoteType.keys()[_cells[key][Keys.NOTE_TYPE]])
+			#match _cells[key][Keys.NOTE_TYPE]:
+				#NoteType.LONG:
+					#sprite.global_position = grid.calculate_map_position_with_offset(cell)
+				#NoteType.LONG_BACK, NoteType.LONG_ARROW, NoteType.LONG_DOUBLE_ARROW:
+					#pass
+				#_:
+					#sprite.global_position = grid.calculate_map_position_with_offset(cell)
 
 
 func _set_cells(cell: Vector2, note_type: NoteType, sprite: Sprite2D, note: ChartNote) -> void:
 	if _cells.has(cell):
 		return
 	
+	#var snapped_cell: Vector2 = Vector2(cell.x / GlobalSettings.beat_duration, cell.y)
+	
 	_cells.set(cell, [note_type, sprite, note])
 	current_notes.set_note(note.beat, note)
 
 
 func _on_ui_editor_add_tap_note(cell: Vector2) -> void:
-	print("Cell %s" % cell)
-	
 	if is_occupied(cell) or _occupied_cells_by_lines.has(cell):
 		print("Cell is occupied.")
 		return
@@ -332,7 +334,7 @@ func _on_ui_editor_add_long_double_arrow_note(cell: Vector2, direction: int, dir
 
 
 func _on_ui_editor_remove_note(cell: Vector2) -> void:
-	print(_cells)
+	cell = Vector2(cell.x / GlobalSettings.beat_duration, cell.y)
 	
 	if not is_occupied(cell):
 		print("Nothing to remove")

@@ -1,23 +1,8 @@
 [gd_scene format=3 uid="uid://bxo06qsrmvn5b"]
 
-[ext_resource type="Texture2D" uid="uid://ng76ijks21wg" path="res://Sprites/Chart Editor/Tap_Icon.png" id="1_ong3h"]
-[ext_resource type="Script" uid="uid://dq2w3m3dy46po" path="res://Scripts/Chart Editor/Notes/NoteScene.gd" id="2_poybh"]
+[ext_resource type="Texture2D" uid="uid://ng76ijks21wg" path="res://Chart Editor/Sprites/Chart Editor/Tap_Icon.png" id="1_ong3h"]
+[ext_resource type="Script" uid="uid://dq2w3m3dy46po" path="res://Chart Editor/Scripts/Chart Editor/Notes/NoteScene.gd" id="2_poybh"]
 
 [node name="Note" type="Sprite2D" unique_id=1993709473]
 texture = ExtResource("1_ong3h")
 script = ExtResource("2_poybh")
-
-[node name="Button" type="Button" parent="." unique_id=204704875]
-self_modulate = Color(1, 1, 1, 0)
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -64.0
-offset_top = -64.0
-offset_right = -64.0
-offset_bottom = -64.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[connection signal="button_down" from="Button" to="." method="_on_button_button_down"]
-[connection signal="button_up" from="Button" to="." method="_on_button_button_up"]

@@ -35,6 +35,7 @@ var song_offset: float = 0.0:
 func calculate_map_position(grid_position: Vector2) -> Vector2:
 	var map_position = grid_position * cell_size + (_half_cell_size)
 	#map_position.y += offset
+	
 	map_position.x -= song_offset
 	
 	return map_position

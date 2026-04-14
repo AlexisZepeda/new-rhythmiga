@@ -189,10 +189,9 @@ layout_mode = 2
 custom_minimum_size = Vector2(300, 0)
 layout_mode = 2
 size_flags_vertical = 3
-current_tab = 1
+current_tab = 0
 
 [node name="Settings" type="VBoxContainer" parent="VBoxContainer/HBoxContainer/ControlsContainer/Controls/TabContainer" unique_id=1807798334]
-visible = false
 layout_mode = 2
 metadata/_tab_index = 0
 
@@ -206,10 +205,6 @@ text = "Snap"
 [node name="Beat Snap" type="OptionButton" parent="VBoxContainer/HBoxContainer/ControlsContainer/Controls/TabContainer/Settings/Chart Settings" unique_id=1305007969]
 layout_mode = 2
 size_flags_vertical = 8
-selected = 0
-item_count = 1
-popup/item_0/text = "1/4 Beat"
-popup/item_0/id = 0
 
 [node name="Label" type="Label" parent="VBoxContainer/HBoxContainer/ControlsContainer/Controls/TabContainer/Settings/Chart Settings" unique_id=1985757899]
 layout_mode = 2
@@ -231,6 +226,7 @@ layout_mode = 2
 text = "0.0"
 
 [node name="Notes" type="HBoxContainer" parent="VBoxContainer/HBoxContainer/ControlsContainer/Controls/TabContainer" unique_id=544756160]
+visible = false
 layout_mode = 2
 metadata/_tab_index = 1
 

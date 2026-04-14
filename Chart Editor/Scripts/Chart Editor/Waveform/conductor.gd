@@ -217,6 +217,7 @@ func get_current_beat_raw() -> float:
 func get_beat_duration() -> float:
 	return 60 / bpm / note_duration
 
+
 ## Returns the number of measures in the stream.
 func get_measures() -> float:
 	return stream.get_length() / ((60.0 / bpm) * 4.0)
@@ -224,6 +225,7 @@ func get_measures() -> float:
 
 func get_song_time() -> float:
 	return _song_time_audio + _filtered_audio_system_delta
+
 
 func _on_finished() -> void:
 	_song_time_audio = stream.get_length()

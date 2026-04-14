@@ -73,13 +73,19 @@ func _ready():
 	
 	#option_menu.clear()
 	#
-	#for i in GlobalSettings.Duration.keys():
-		#if i == GlobalSettings.Duration.keys()[GlobalSettings.Duration.NONE]:
-			#continue
-		#
+	for i in GlobalSettings.Duration.keys():
+		if i == GlobalSettings.Duration.keys()[GlobalSettings.Duration.NONE]:
+			continue
+		
+		match GlobalSettings.Duration[i]:
+			GlobalSettings.Duration.SIXTEENTH:
+				option_menu.add_item("1/4 Beat", GlobalSettings.Duration[i])
+			GlobalSettings.Duration.TRIPLET:
+				option_menu.add_item("1/3 Beat", GlobalSettings.Duration[i])
+		
 		#option_menu.add_item(i, GlobalSettings.Duration[i])
-	#
-	#option_menu.select(GlobalSettings.Duration.size() - 2)
+	
+	option_menu.select(1)
 	
 	spinbox_bpm.value = bpm
 	rhythm_game.init_rhythm_game(RhythmGame.Game_Version.CHART_EDITOR)
