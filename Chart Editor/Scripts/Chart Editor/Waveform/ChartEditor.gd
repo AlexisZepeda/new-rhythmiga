@@ -132,6 +132,8 @@ func _on_load_beat_map_file_dialog_file_selected(path: String) -> void:
 	#
 	#var info_file: FileAccess = FileAccess.open(info_file_path, FileAccess.READ)
 	
+	print("Path %s" % path)
+	
 	if FileAccess.get_open_error() != OK:
 		print("Could not file %s" % FileAccess.get_open_error())
 		return
@@ -326,6 +328,8 @@ func loading_file(load_file: FileAccess) -> void:
 	pause()
 	
 	scroll_container.scroll_horizontal = 0
+	
+	print("Clear Grid")
 	note_grid.clear_grid()
 	
 	await get_tree().create_timer(1.0).timeout
@@ -379,9 +383,9 @@ func loading_file(load_file: FileAccess) -> void:
 		
 		var _notes: Dictionary = {}
 		
+		print("Read notes")
 		while load_file.get_position() < load_file.get_length():
 			# Read data
-			
 			# Key
 			var _cell_x: float = load_file.get_float()
 			var _cell_y: float = load_file.get_float()
@@ -397,10 +401,14 @@ func loading_file(load_file: FileAccess) -> void:
 			#var _note: Note = Note.new(_beat, _note_type, _note_lane, _direction, _direction_2)
 			_notes[_cell] = [_note_type, _direction, _direction_2]
 			
+			#await get_tree().process_frame
+			
 			#print("Cell %s Note %s" % [_cell, _note])
 			#print(_notes)
-		await get_tree().create_timer(0.5).timeout
+		await get_tree().process_frame
+		#await get_tree().create_timer(0.5).timeout
 		
+		print("Load notes")
 		note_grid.load_notes(_notes)
 	else:
 		accept_dialog.show()

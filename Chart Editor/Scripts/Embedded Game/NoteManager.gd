@@ -101,7 +101,7 @@ func _auto_process_note() -> void:
 		#var note := _notes[0] as Note
 		if is_instance_valid(_notes.back()):
 			var note: Note = _notes.back()
-			var note_delta := _get_note_delta(note)
+			var note_delta := _get_tick_delta(note)
 			
 			if -Note.HIT_MARGIN_PERFECT <= note_delta and note_delta <= Note.HIT_MARGIN_PERFECT:
 				if note is TapNote:
@@ -358,7 +358,7 @@ func handle_press(key: Key) -> bool:
 		return false
 	
 	var note: Note = _notes.back()
-	var hit_delta: float = _get_note_delta(note)
+	var hit_delta: float = _get_tick_delta(note)
 	
 	print("	Current beat %s" % _get_current_tick())
 	print("	Note %s beat %s" % [note, note.beat])
@@ -414,7 +414,7 @@ func handle_release(key: Key) -> bool:
 		return false
 	
 	var note: Note = _notes.back()
-	var hit_delta: float = _get_note_delta(note)
+	var hit_delta: float = _get_tick_delta(note)
 	
 	print("	Current beat %s" % _get_current_tick())
 	print("	Note %s beat %s" % [note, note.beat])
@@ -475,7 +475,7 @@ func handle_slide(direction: Enums.Direction) -> bool:
 		return false
 	
 	var note: Note = _notes.back()
-	var hit_delta: float = _get_note_delta(note)
+	var hit_delta: float = _get_tick_delta(note)
 	print("Evaluate at %s" % str(Time.get_ticks_usec() / 1000000.0))
 	
 	print("Is LongSlide %s" % [note is LongSlideNote])
@@ -507,7 +507,7 @@ func handle_double_slide(direction_right: Enums.Direction, direction_left: Enums
 		return false
 	
 	var note: Note = _notes.back()
-	var hit_delta: float = _get_note_delta(note)
+	var hit_delta: float = _get_tick_delta(note)
 	print("Evaluate at %s" % str(Time.get_ticks_usec() / 1000000.0))
 	
 	if note is DoubleSlideNote or note is LongDoubleSlide:

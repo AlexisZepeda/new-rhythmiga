@@ -459,6 +459,7 @@ layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
+[connection signal="tree_exiting" from="." to="." method="_on_tree_exiting"]
 [connection signal="finished" from="Conductor" to="Conductor" method="_on_finished"]
 [connection signal="finished" from="Conductor" to="VBoxContainer/WaveformContainer/SubViewport/CanvasLayer/UI Editor/AudioSpectrum" method="_on_conductor_finished"]
 [connection signal="loaded_new_stream" from="Conductor" to="VBoxContainer/WaveformContainer/SubViewport/CanvasLayer/UI Editor/AudioSpectrum" method="_on_conductor_loaded_new_stream"]

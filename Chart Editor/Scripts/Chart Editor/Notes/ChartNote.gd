@@ -20,7 +20,7 @@ var direction_2: int
 
 
 func _init(_beat: float, _type: Note_Type, _lane: int, _direction:int=4, _direction_2:int=4) -> void:
-	beat = _beat * 4 # Turns beat into sixteenth beat
+	beat = _beat
 	type = _type
 	lane = _lane
 	direction = _direction
