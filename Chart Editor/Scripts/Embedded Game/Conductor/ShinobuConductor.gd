@@ -1,0 +1,181 @@
+class_name ShinobuConductor
+extends Node
+
+signal finished
+signal loaded_new_stream
+
+@export_file_path var sound_file: String = ""
+## Offset (in milliseconds) of when the 1st beat of the song is in the audio
+## file. [code]5000[/code] means the 1st beat happens 5 seconds into the track.
+@export var first_beat_offset_ms: int = 1540
+
+var BPM: float = 155.0
+
+var bgm_sound_player: ShinobuSoundPlayer
+var seconds_per_tick: float = 60000 / (BPM * GlobalSettings.PPQ) / 1000
+
+var offset_ticks: float = -1 * (first_beat_offset_ms / 1000.0) / seconds_per_tick
+var ticks: float = offset_ticks
+
+var stream: AudioStream
+
+
+func _ready() -> void:
+	GlobalSettings.BPM_CHANGED.connect(_on_bpm_changed)
+	GlobalSettings.OFFSET_CHANGED.connect(_on_offset_changed)
+	#init_conductor(sound_file)
+	#play()
+
+
+func _on_bpm_changed(_bpm: float) -> void:
+	BPM = _bpm
+	seconds_per_tick = 60000 / (BPM * GlobalSettings.PPQ) / 1000
+
+
+# _offset is in seconds
+func _on_offset_changed(_offset: float) -> void:
+	#print("Offset %s" % _offset)
+	first_beat_offset_ms = int(_offset * 1000) #+ int(((60.0 / bpm) * 4.0) * 1000)
+	offset_ticks = -1 * (first_beat_offset_ms / 1000.0) / seconds_per_tick
+	ticks = offset_ticks
+
+
+func _process(_delta: float) -> void:
+	#print(Shinobu.get_dsp_time() / 1000.0)
+	if not is_instance_valid(bgm_sound_player):
+		return
+	
+	if not bgm_sound_player.is_playing():
+		return
+	
+	var time_in_sec: float = (bgm_sound_player.get_playback_position_msec() - Shinobu.get_actual_buffer_size())/ 1000.0
+	
+	#ticks += GlobalSettings.PPQ * (BPM / 60.0) * _delta #* play_speed
+	#ticks =  PPQ * (1 / BPM) * 1000 * time_in_sec
+	ticks = time_in_sec / seconds_per_tick + offset_ticks
+	
+	#print("Ticks %s" % ticks)
+	#print("Offset ticks %s" % offset_ticks)
+	
+	#var beat: float = floor(ticks / GlobalSettings.PPQ) + 1
+	#
+	#print("Beat %s" % beat)
+	
+	#var _tick_delta = (ticks - target_tick) * seconds_per_tick
+	##var _tick_delta = (ticks - current_tick)
+	#
+	#print("Tick delta %s" % _tick_delta)
+	#
+	#sprite.position.x = (_tick_delta * 200.0) + 1200.0
+	#
+	#if ticks > target_tick:
+		#print("Change BPM")
+		#GlobalSettings.BPM = 10.0
+		#
+		#seconds_per_tick = 60000 / (GlobalSettings.BPM * GlobalSettings.PPQ) / 1000
+	
+	is_at_end()
+
+
+func init_conductor(file: String) -> void:
+	Shinobu.desired_buffer_size_msec = 10
+	if Shinobu.initialize() == OK:
+		print("Shinobu is initialized.")
+		
+		var bgm_group: ShinobuGroup = Shinobu.create_group("BGM", null)
+		if bgm_group.connect_to_endpoint() == OK:
+			print("Connected to endpoint.")
+			var audio_file: FileAccess = FileAccess.open(file, FileAccess.READ)
+			
+			sound_file = file
+			
+			var audio_byte_array: PackedByteArray = audio_file.get_buffer(audio_file.get_length())
+			audio_file.close()
+			
+			#var who_brings_shadow: AudioStreamOggVorbis = AudioStreamOggVorbis.new()
+			#who_brings_shadow.data = audio_byte_array
+			
+			var bgm_sound_source: ShinobuSoundSource = Shinobu.register_sound_from_memory("GameAudio", audio_byte_array)
+			print("Created ShinobuSoundSource")
+			
+			bgm_sound_player = bgm_sound_source.instantiate(bgm_group)
+			print("Created ShinobuSoundPlayer")
+			add_child(bgm_sound_player)
+			
+			#bgm_sound_player.start()
+
+
+func get_current_beat() -> float:
+	return floor(ticks / GlobalSettings.PPQ) + 1
+
+
+func get_current_tick() -> float:
+	return ticks
+
+
+func get_length() -> float:
+	if is_instance_valid(bgm_sound_player):
+		return bgm_sound_player.get_length_msec() / 1000.0
+	else:
+		return 0.0
+
+
+func get_song_time() -> float:
+	return bgm_sound_player.get_playback_position_msec() / 1000.0
+
+
+func get_playback_position() -> float:
+	if is_instance_valid(bgm_sound_player):
+		return bgm_sound_player.get_playback_position_msec() / 1000.0
+	else:
+		return 0.0
+
+
+func get_ppq_duration() -> float:
+	return 60000 / (BPM * GlobalSettings.PPQ) / 1000
+
+
+func get_tick() -> float:
+	return ticks
+
+
+func is_at_end() -> void:
+	if bgm_sound_player.get_playback_position_msec() >= bgm_sound_player.get_length_msec():
+		finished.emit()
+		bgm_sound_player.stop()
+
+
+func is_empty() -> bool:
+	if is_instance_valid(bgm_sound_player):
+		return bgm_sound_player.get_length_msec() <= 0
+	else:
+		return false
+
+
+func is_playing() -> bool:
+	if is_instance_valid(bgm_sound_player):
+		return bgm_sound_player.is_playing()
+	else:
+		return false
+
+
+func load_stream(new_stream: String) -> void:
+	stream = Utils.create_audio_stream(new_stream)
+	
+	init_conductor(new_stream)
+	loaded_new_stream.emit()
+
+
+func pause() -> void:
+	Shinobu.pause()
+
+
+func play(_to_time_msec: int=0) -> void:
+	Shinobu.resume()
+	
+	bgm_sound_player.seek(_to_time_msec)
+	bgm_sound_player.start()
+
+
+func stop() -> void:
+	bgm_sound_player.stop()

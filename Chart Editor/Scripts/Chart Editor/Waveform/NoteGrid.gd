@@ -98,7 +98,7 @@ func _set_cells(cell: Vector2, note_type: NoteType, sprite: Sprite2D, note: Char
 
 
 func _on_ui_editor_add_tap_note(cell: Vector2) -> void:
-	print("Cell %s" % cell)
+	#print("Cell %s" % cell)
 	
 	if is_occupied(cell) or _occupied_cells_by_lines.has(cell):
 		print("Cell is occupied.")

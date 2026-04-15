@@ -15,7 +15,8 @@ const FILE_EXTENSION: String = ".dat"
 @export var cursor: Cursor
 @export var loading_screen: ColorRect
 @export var note_grid: NoteGrid
-@export var conductor: ChartConductor
+#@export var conductor: ChartConductor
+@export var shinobu_conductor: ShinobuConductor
 @export var audio_file_dialog: FileDialog
 @export var beat_map_file_dialog: FileDialog
 @export var load_map_file_dialog: FileDialog
@@ -59,8 +60,8 @@ func _ready() -> void:
 	
 	var resource_path: String = ""
 	
-	if conductor.stream != null:
-		resource_path = conductor.stream.resource_path
+	if shinobu_conductor.sound_file != null:
+		resource_path = shinobu_conductor.sound_file
 	
 	audio_name = Utils.get_file_name(resource_path, "")
 
@@ -103,11 +104,11 @@ func _on_import_audio_file_pressed() -> void:
 
 
 func _on_audio_file_dialog_file_selected(path: String) -> void:
-	var audio_stream: AudioStream = Utils.create_audio_stream(path)
+	var _audio_stream: AudioStream = Utils.create_audio_stream(path)
 	
 	current_audio_file_path = path
 	audio_name = Utils.get_file_name(path, "")
-	conductor.load_stream(audio_stream)
+	shinobu_conductor.load_stream(path)
 
 
 func _on_beat_map_file_dialog_file_selected(path: String) -> void:
@@ -174,12 +175,12 @@ func _on_import_audio_file_loaded(imported_file_name: String, file_type: String,
 			audio_stream.stereo = true
 			audio_stream.data = buffer
 			
-			conductor.load_stream(audio_stream)
+			#conductor.load_stream(audio_stream)
 		"application/ogg":
 			var buffer = Marshalls.base64_to_raw(base64_data)
-			var audio_stream: AudioStreamOggVorbis = AudioStreamOggVorbis.load_from_buffer(buffer)
+			var _audio_stream: AudioStreamOggVorbis = AudioStreamOggVorbis.load_from_buffer(buffer)
 			
-			conductor.load_stream(audio_stream)
+			#conductor.load_stream(audio_stream)
 	
 	
 	current_audio_file_path = imported_file_name
@@ -262,7 +263,7 @@ func save(save_file: FileAccess) -> void:
 	
 	print("Current audio file path %s" % current_audio_file_path)
 	if current_audio_file_path.is_empty():
-		_audio_path = conductor.stream.resource_path#audio_file_dialog.file_path
+		_audio_path = shinobu_conductor.sound_file
 	else:
 		_audio_path = current_audio_file_path
 	
@@ -367,7 +368,7 @@ func loading_file(load_file: FileAccess) -> void:
 	
 	var audio_stream: AudioStream = Utils.create_audio_stream(current_audio_file_path)
 	if audio_stream != null:
-		conductor.load_stream(audio_stream)
+		shinobu_conductor.load_stream(current_audio_file_path)
 		audio_name = Utils.get_file_name(current_audio_file_path, "")
 		
 		GlobalSettings.bpm = _bpm

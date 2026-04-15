@@ -6,7 +6,7 @@ signal OFFSET_CHANGED(_offset: float)
 enum Duration {
 	NONE,
 	#QUARTER = 1,
-	#TRIPLET = 3,
+	TRIPLET = 3,
 	#EIGHTH = 2,
 	SIXTEENTH = 4,
 }

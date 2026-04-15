@@ -26,7 +26,8 @@ signal game_finished
 
 @export var game_manager: GameManager
 
-@export var conductor: ChartConductor
+#@export var conductor: ChartConductor
+@export var shinobu_conductor: ShinobuConductor
 
 @export var game_ui: Control
 @export var debug_ui: Control
@@ -122,6 +123,7 @@ func _parse_data_text(file: String) -> Array:
 				beats.append(float(result.get_string()))
 				#print(result.get_string())
 				var beat: float = float(result.get_string())
+				var tick: float = float(beat * GlobalSettings.PPQ)
 				
 				var separator: int = line.find(":")
 				
@@ -136,13 +138,13 @@ func _parse_data_text(file: String) -> Array:
 				
 				match note_lane:
 					0:
-						note_manager.set_notes(beat, note_type, direction, direction_2)
+						note_manager.set_notes(beat, note_type, direction, direction_2, tick)
 					1:
-						note_manager_2.set_notes(beat, note_type, direction, direction_2)
+						note_manager_2.set_notes(beat, note_type, direction, direction_2, tick)
 					2:
-						note_manager_3.set_notes(beat, note_type, direction, direction_2)
+						note_manager_3.set_notes(beat, note_type, direction, direction_2, tick)
 					3:
-						note_manager_4.set_notes(beat, note_type, direction, direction_2)
+						note_manager_4.set_notes(beat, note_type, direction, direction_2, tick)
 				
 				#print("Type %s Lane %s Direction %s" % [note_type, note_lane, direction])
 		#print(content)
@@ -205,16 +207,17 @@ func _on_current_notes_changed() -> void:
 			var note_lane: int = int(note.lane)
 			var direction: int = int(note.direction)
 			var direction_2: int = int(note.direction_2)
+			var tick: float = note._ticks
 			
 			match note_lane:
 				0:
-					note_manager.set_notes(beat, note_type, direction, direction_2)
+					note_manager.set_notes(beat, note_type, direction, direction_2, tick)
 				1:
-					note_manager_2.set_notes(beat, note_type, direction, direction_2)
+					note_manager_2.set_notes(beat, note_type, direction, direction_2, tick)
 				2:
-					note_manager_3.set_notes(beat, note_type, direction, direction_2)
+					note_manager_3.set_notes(beat, note_type, direction, direction_2, tick)
 				3:
-					note_manager_4.set_notes(beat, note_type, direction, direction_2)
+					note_manager_4.set_notes(beat, note_type, direction, direction_2, tick)
 	
 	_init_text_notes([])
 
@@ -229,12 +232,12 @@ func init_beatmap(file: String) -> void:
 	#print("BPM %s" % bpm)
 	#print("First beat offset %s" % int(song_offset_sec * 1000))
 	
-	conductor.bpm = bpm
-	conductor.first_beat_offset_ms = int(song_offset_sec * 1000)
+	shinobu_conductor.BPM = bpm
+	shinobu_conductor.first_beat_offset_ms = int(song_offset_sec * 1000)
 	
 	await game_ui.start_animation()
 	
-	conductor.play_conductor(0.0)
+	shinobu_conductor.play(0)
 
 
 func init_game() -> void:
@@ -261,7 +264,7 @@ func init_rhythm_game(game_state: Game_Version) -> void:
 			_init_game_ui_signals()
 			_init_game_ui()
 	
-	conductor.finished.connect(_on_conductor_finished)
+	shinobu_conductor.finished.connect(_on_conductor_finished)
 
 
 func reset() -> void:

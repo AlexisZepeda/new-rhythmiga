@@ -5,6 +5,7 @@ extends BaseUIScreen
 @export_file_path var song_list_screen_path: String
 
 @export var conductor: ChartConductor
+@export var shinobu_conductor: ShinobuConductor
 @export var rhythm_game: RhythmGame
 @export var pause_container: MarginContainer
 @export var retry_btn: Button
@@ -17,6 +18,7 @@ func _ready() -> void:
 	
 	EmbeddedGlobalSettings.enable_input = true
 	conductor.load_stream(Loader.loaded_stream)
+	#shinobu_conductor.load_stream()
 	
 	rhythm_game.init_rhythm_game(RhythmGame.Game_Version.MAIN_GAME)
 	rhythm_game.init_beatmap(Loader.beat_map_path)

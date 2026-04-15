@@ -4,12 +4,13 @@ extends Node2D
 signal note_hit(hit_type: Enums.Hit_Type)
 
 @export_category("Conductor")
-@export var conductor: ChartConductor
+@export var conductor: ShinobuConductor
 
 @export_category("Settings")
 @export var x_offset: float = EmbeddedGlobalSettings.judgement_line#1620#400.0
 @export var y_offset: float = 0.0
 @export var beat: float = 0.0
+@export var tick: float = 0.0
 
 @export_category("Children")
 @export var base_sprite: Sprite2D
@@ -68,6 +69,14 @@ func _get_average_position() -> void:
 
 func update_beat(curr_beat: float) -> void:
 	_song_time_delta = (curr_beat - beat) * conductor.get_beat_duration()
+	_update_position()
+
+
+func update_tick(curr_tick: float) -> void:
+	_song_time_delta = (curr_tick - tick) * conductor.get_ppq_duration()
+	#print("Curr tick %s" % curr_tick)
+	#print("Tick %s" % tick)
+	#print("Delta %s" % _song_time_delta)
 	_update_position()
 
 

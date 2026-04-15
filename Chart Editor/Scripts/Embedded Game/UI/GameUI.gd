@@ -24,19 +24,22 @@ var song_length: float = 0.0
 
 
 func _ready() -> void:
-	rhythm_game.conductor.loaded_new_stream.connect(_on_loaded_new_stream)
+	rhythm_game.shinobu_conductor.loaded_new_stream.connect(_on_loaded_new_stream)
 	rhythm_game.play_stats.changed.connect(_on_play_stats_changed)
 	
 	song_name.visible = false
 	
-	if rhythm_game.conductor.stream != null:
-		song_length = rhythm_game.conductor.stream.get_length()
+	#if rhythm_game.conductor.stream != null:
+		#song_length = rhythm_game.conductor.stream.get_length()
+	
+	if not rhythm_game.shinobu_conductor.is_empty():
+		song_length = rhythm_game.shinobu_conductor.get_length()
 	
 	#song_name.set_text(CustomMusicManager.library[CustomMusicManager.current_id][CustomMusicManager.Library_Keys.SONG_NAME])
 
 
 func _process(_delta: float) -> void:
-	song_progress_bar.value = rhythm_game.conductor.get_playback_position() / song_length
+	song_progress_bar.value = rhythm_game.shinobu_conductor.get_playback_position() / song_length
 
 
 func _on_hit_type(hit_type: Enums.Hit_Type, label_position: Vector2) -> void:
@@ -61,8 +64,8 @@ func _on_hit_type(hit_type: Enums.Hit_Type, label_position: Vector2) -> void:
 
 
 func _on_loaded_new_stream() -> void: 
-	if rhythm_game.conductor.stream != null:
-		song_length = rhythm_game.conductor.stream.get_length()
+	if not rhythm_game.shinobu_conductor.is_empty():
+		song_length = rhythm_game.shinobu_conductor.get_length()
 	#song_progress_bar.max_value = rhythm_game.conductor.stream.get_length()
 
 

@@ -4,7 +4,8 @@ extends MarginContainer
 @export_category("Nodes")
 @export var rhythm_game: RhythmGame
 @export var metronome: AudioStreamPlayer
-@export var player: ChartConductor
+#@export var player: ChartConductor
+@export var shinobu_conductor: ShinobuConductor
 @export_group("UI")
 @export var timeline_texture: RMAudioStreamEditor
 @export var scroll_container: ScrollContainer
@@ -66,10 +67,14 @@ var format_string: String = "%.3f"
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	if player.stream != null:
-		song_length = player.stream.get_length()
+	if not shinobu_conductor.is_empty():
+		song_length = shinobu_conductor.get_length()
 	#print("song length %s" % song_length)
 	set_song_offset(offset)
+	
+	
+	shinobu_conductor.finished.connect(_on_conductor_finished)
+	shinobu_conductor.loaded_new_stream.connect(_on_conductor_loaded_new_stream)
 	
 	#option_menu.clear()
 	#
@@ -103,13 +108,13 @@ func _on_play_pressed() -> void:
 
 func _on_pause_pressed() -> void:
 	EmbeddedGlobalSettings.enable_input = false
-	player.pause_conductor()
+	shinobu_conductor.pause()
 
 
 func _on_stop_pressed() -> void:
 	_seek = 0.0
 	EmbeddedGlobalSettings.enable_input = false
-	player.stop_conductor()
+	shinobu_conductor.stop()
 	metronome.reset()
 	rhythm_game.reset()
 
@@ -128,9 +133,9 @@ func _on_lines_image_length_changed(length: int) -> void:
 	
 	timeline_texture.custom_minimum_size.x = image_length
 	timeline_texture.start_point = 0.0
-	timeline_texture.end_point = player.stream.get_length()
+	timeline_texture.end_point = shinobu_conductor.get_length()
 	timeline_texture.rms_size_multiplier = 2.0
-	timeline_texture.edit(player.stream)
+	timeline_texture.edit(shinobu_conductor.stream)
 	
 	_seconds_per_pixel = playable_song_length / image_length
 	_song_position_offset = song_offset / _seconds_per_pixel
@@ -139,14 +144,14 @@ func _on_lines_image_length_changed(length: int) -> void:
 
 
 func _on_time_graph_draw() -> void:
-	if player.playing:
+	if shinobu_conductor.is_playing():
 		#var song_beats = quarter_beats
 		#var curr_beat = clampf(player.get_current_beat() / Enums.Duration.SIXTEENTH, 0, song_beats)
 		#var time_x: float = remap(curr_beat, 0, song_beats, 0, time_graph.size.x)
 		#
 		#time_graph.draw_line(Vector2(time_x, 0), Vector2(time_x, time_graph.size.y), Color.RED, 2)
 		
-		var progress: float = player.get_playback_position()
+		var progress: float = shinobu_conductor.get_playback_position()
 		var time_x: float = (progress / song_length) * time_graph.size.x
 		
 		time_graph.draw_line(Vector2(time_x, 0), Vector2(time_x, time_graph.size.y), Color.RED, 2)
@@ -159,15 +164,15 @@ func _on_time_graph_draw() -> void:
 
 
 func _on_conductor_loaded_new_stream() -> void:
-	song_length = player.stream.get_length()
+	song_length = shinobu_conductor.get_length()
 	
 	set_song_offset(offset)
 	
 	timeline_texture.custom_minimum_size.x = image_length
 	timeline_texture.start_point = 0.0
-	timeline_texture.end_point = player.stream.get_length()
+	timeline_texture.end_point = song_length
 	timeline_texture.rms_size_multiplier = 2.0
-	timeline_texture.edit(player.stream)
+	timeline_texture.edit(shinobu_conductor.stream)
 
 
 func _on_conductor_finished() -> void:
@@ -179,7 +184,7 @@ func play(time:float):
 		rhythm_game.reset()
 	
 	EmbeddedGlobalSettings.enable_input = true
-	player.play_conductor(time)
+	shinobu_conductor.play(int(time * 1000))
 	metronome.start()
 
 
@@ -199,7 +204,7 @@ func set_bpm(value) -> void:
 	else:
 		bpm = value
 	
-	if not player:
+	if not shinobu_conductor:
 		await self.ready
 	
 	set_beat_duration(beat_duration)
@@ -223,7 +228,7 @@ func set_bpm(value) -> void:
 func set_beat_duration(value: GlobalSettings.Duration) -> void:
 	beat_duration = value
 	
-	if not player:
+	if not shinobu_conductor:
 		await self.ready
 	
 	GlobalSettings.beat_duration = beat_duration
@@ -267,7 +272,7 @@ func set_song_offset(value: String) -> void:
 
 
 func hover_time_graph_line(_mouse_position: Vector2) -> void:
-	if player.stream != null:
+	if shinobu_conductor.stream != null:
 		
 		is_hover = true
 		
@@ -276,7 +281,7 @@ func hover_time_graph_line(_mouse_position: Vector2) -> void:
 
 
 func clear_hover_time_graph_line() -> void:
-	if player.stream != null:
+	if shinobu_conductor.stream != null:
 		is_hover = false
 		
 		mouse_position = Vector2(-1, -1)
