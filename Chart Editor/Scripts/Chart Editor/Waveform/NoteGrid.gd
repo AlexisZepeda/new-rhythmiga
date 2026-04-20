@@ -114,7 +114,6 @@ func _on_ui_editor_add_tap_note(cell: Vector2) -> void:
 	var sprite: NoteGridSprite = NoteGridSprite.new()
 	var note: ChartNote = ChartNote.new(beat, ChartNote.Note_Type.TAP, lane)
 	sprite.texture = _tap_texture
-	sprite.snap = grid.cell_size / 2
 	sprite.global_position = grid.calculate_map_position_with_offset(cell)
 	
 	_set_cells(cell, NoteType.TAP, sprite, note)
