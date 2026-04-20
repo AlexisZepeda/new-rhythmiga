@@ -23,3 +23,9 @@ func remove_note(key: float, value: ChartNote) -> bool:
 	
 	changed.emit()
 	return true
+
+
+func clear() -> void:
+	current_notes.clear()
+	
+	changed.emit()

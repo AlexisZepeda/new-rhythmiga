@@ -332,7 +332,7 @@ func loading_file(load_file: FileAccess) -> void:
 	print("Clear Grid")
 	note_grid.clear_grid()
 	
-	await get_tree().create_timer(1.0).timeout
+	#await get_tree().create_timer(1.0).timeout
 
 	var song_name: String = load_file.get_pascal_string()
 	var artist: String = load_file.get_pascal_string()

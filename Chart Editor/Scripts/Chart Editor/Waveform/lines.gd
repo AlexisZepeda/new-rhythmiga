@@ -43,6 +43,13 @@ func _draw() -> void:
 	
 	var line_coordinates: PackedVector2Array = []
 	
+	match GlobalSettings.beat_duration:
+		GlobalSettings.Duration.TRIPLET:
+			grid.set_cell_size(Vector2(PIXELS_PER_TRIPLET, distance_between_lanes))
+		GlobalSettings.Duration.SIXTEENTH:
+			grid.set_cell_size(Vector2(PIXELS_PER_SIXTEENTH, distance_between_lanes))
+	
+	
 	# Draw Vertical beat lines
 	for i in range(beats):
 		
@@ -67,15 +74,31 @@ func _draw() -> void:
 				#
 				#if i % 2 == 0:
 					#draw_line(Vector2(line_position_x, 0), Vector2(line_position_x, 200), Color.WHITE, 2)
-			#GlobalSettings.Duration.TRIPLET:
+			GlobalSettings.Duration.TRIPLET:
 				#grid.set_cell_size(Vector2(PIXELS_PER_TRIPLET, distance_between_lanes))
-				#line_position_x = i * PIXELS_PER_TRIPLET + song_x_offset
-				#
-				#if i % 3 == 0:
-					#draw_line(Vector2(line_position_x, 0), Vector2(line_position_x, line_length), Color.WHITE, 2)
-			_:
-			#GlobalSettings.Duration.SIXTEENTH:
-				grid.set_cell_size(Vector2(PIXELS_PER_SIXTEENTH, distance_between_lanes))
+				line_position_x = i * PIXELS_PER_TRIPLET + song_x_offset
+				
+				if i % 3 == 0:
+					var label_beat: int = int(i / 3.0) + 1
+					
+					if not _labels.has(label_beat):
+					
+						var label: BeatLabel = beat_label_prefab.instantiate()
+						label.set_text(str(label_beat))
+						label.position.x = line_position_x + 2
+						
+						if get_child_count() > 0:
+							add_child(label)
+						
+						_labels[label_beat] = label
+					else:
+						var label: BeatLabel = _labels[label_beat]
+						label.position.x = line_position_x + 2
+					
+					draw_line(Vector2(line_position_x, 0), Vector2(line_position_x, line_length), Color.WHITE, 2)
+			#_:
+			GlobalSettings.Duration.SIXTEENTH:
+				#grid.set_cell_size(Vector2(PIXELS_PER_SIXTEENTH, distance_between_lanes))
 				line_position_x = i * PIXELS_PER_SIXTEENTH + song_x_offset
 				
 				if i % 4 == 0:

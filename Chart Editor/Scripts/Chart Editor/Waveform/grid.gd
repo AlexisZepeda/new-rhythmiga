@@ -26,8 +26,9 @@ var _half_cell_size = cell_size / 2
 var offset: float = 0.0
 var song_offset: float = 0.0:
 	set(value):
-		song_offset = value
-		cell_position_change.emit()
+		if song_offset != value:
+			song_offset = value
+			cell_position_change.emit()
 
 
 # Returns the position of a cell's center in pixels.

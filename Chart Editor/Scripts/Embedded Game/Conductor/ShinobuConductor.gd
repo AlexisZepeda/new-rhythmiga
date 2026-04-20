@@ -11,6 +11,8 @@ signal loaded_new_stream
 
 var BPM: float = 155.0
 
+
+var bgm_group: ShinobuGroup
 var bgm_sound_player: ShinobuSoundPlayer
 var seconds_per_tick: float = 60000 / (BPM * GlobalSettings.PPQ) / 1000
 
@@ -18,6 +20,16 @@ var offset_ticks: float = -1 * (first_beat_offset_ms / 1000.0) / seconds_per_tic
 var ticks: float = offset_ticks
 
 var stream: AudioStream
+
+
+func _init() -> void:
+	Shinobu.desired_buffer_size_msec = 10
+	if Shinobu.initialize() == OK:
+		print("Shinobu is initialized.")
+		
+		bgm_group = Shinobu.create_group("BGM", null)
+		if bgm_group.connect_to_endpoint() == OK:
+			print("Connected to endpoint.")
 
 
 func _ready() -> void:
@@ -50,59 +62,32 @@ func _process(_delta: float) -> void:
 	
 	var time_in_sec: float = (bgm_sound_player.get_playback_position_msec() - Shinobu.get_actual_buffer_size())/ 1000.0
 	
-	#ticks += GlobalSettings.PPQ * (BPM / 60.0) * _delta #* play_speed
-	#ticks =  PPQ * (1 / BPM) * 1000 * time_in_sec
 	ticks = time_in_sec / seconds_per_tick + offset_ticks
-	
-	#print("Ticks %s" % ticks)
-	#print("Offset ticks %s" % offset_ticks)
-	
-	#var beat: float = floor(ticks / GlobalSettings.PPQ) + 1
-	#
-	#print("Beat %s" % beat)
-	
-	#var _tick_delta = (ticks - target_tick) * seconds_per_tick
-	##var _tick_delta = (ticks - current_tick)
-	#
-	#print("Tick delta %s" % _tick_delta)
-	#
-	#sprite.position.x = (_tick_delta * 200.0) + 1200.0
-	#
-	#if ticks > target_tick:
-		#print("Change BPM")
-		#GlobalSettings.BPM = 10.0
-		#
-		#seconds_per_tick = 60000 / (GlobalSettings.BPM * GlobalSettings.PPQ) / 1000
-	
 	is_at_end()
 
 
 func init_conductor(file: String) -> void:
-	Shinobu.desired_buffer_size_msec = 10
-	if Shinobu.initialize() == OK:
-		print("Shinobu is initialized.")
+	if get_child_count() > 0:
+		for child in get_children():
+			child.queue_free()
+	
+	if is_instance_valid(bgm_sound_player):
+		bgm_sound_player = null
+	
+	if bgm_group.connect_to_endpoint() == OK:
+		var audio_file: FileAccess = FileAccess.open(file, FileAccess.READ)
 		
-		var bgm_group: ShinobuGroup = Shinobu.create_group("BGM", null)
-		if bgm_group.connect_to_endpoint() == OK:
-			print("Connected to endpoint.")
-			var audio_file: FileAccess = FileAccess.open(file, FileAccess.READ)
-			
-			sound_file = file
-			
-			var audio_byte_array: PackedByteArray = audio_file.get_buffer(audio_file.get_length())
-			audio_file.close()
-			
-			#var who_brings_shadow: AudioStreamOggVorbis = AudioStreamOggVorbis.new()
-			#who_brings_shadow.data = audio_byte_array
-			
-			var bgm_sound_source: ShinobuSoundSource = Shinobu.register_sound_from_memory("GameAudio", audio_byte_array)
-			print("Created ShinobuSoundSource")
-			
-			bgm_sound_player = bgm_sound_source.instantiate(bgm_group)
-			print("Created ShinobuSoundPlayer")
-			add_child(bgm_sound_player)
-			
-			#bgm_sound_player.start()
+		sound_file = file
+		
+		var audio_byte_array: PackedByteArray = audio_file.get_buffer(audio_file.get_length())
+		audio_file.close()
+		
+		var bgm_sound_source: ShinobuSoundSource = Shinobu.register_sound_from_memory("GameAudio", audio_byte_array)
+		print("Created ShinobuSoundSource")
+		
+		bgm_sound_player = bgm_sound_source.instantiate(bgm_group)
+		print("Created ShinobuSoundPlayer")
+		add_child(bgm_sound_player)
 
 
 func get_current_beat() -> float:
