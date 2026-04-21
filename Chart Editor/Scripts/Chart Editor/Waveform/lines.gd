@@ -37,8 +37,8 @@ var lane_5_coordinates: Array[Vector2] = [Vector2(0, 150), Vector2(image_length,
 
 
 func _draw() -> void:
-	grid.set_grid_size(Vector2(beats, COLUMNS))
-	grid.song_offset = song_x_offset
+	#grid.set_grid_size(Vector2(beats, COLUMNS))
+	#grid.song_offset = song_x_offset
 	#grid.set_cell_size(Vector2(lines_per_pixel, DISTANCE_BETWEEN_LANES))
 	
 	var line_coordinates: PackedVector2Array = []
@@ -162,6 +162,9 @@ func _on_resized() -> void:
 
 
 func set_lines() -> void:
+	grid.set_grid_size(Vector2(beats, COLUMNS))
+	grid.song_offset = song_x_offset
+	
 	grid.offset = offset + distance_between_lanes
 	
 	if image_length != roundi(PIXELS_PER_QUARTER * quarter_beats):

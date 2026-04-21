@@ -240,7 +240,7 @@ func _on_ui_editor_add_long_note(cell: Vector2, _note_position: Vector2=Vector2.
 			note = ChartNote.new(beat, ChartNote.Note_Type.LONG, lane)
 			long_note_sprite = _long_note_grid_sprite_prefab.instantiate()
 			
-			#sprite.texture = _long_texture
+			print("Position %s" % grid.calculate_map_position_with_offset(cell)) 
 			
 			long_note_sprite.global_position = grid.calculate_map_position_with_offset(cell)
 			long_note_sprite.front_cell = cell
@@ -263,7 +263,6 @@ func _on_ui_editor_add_long_note(cell: Vector2, _note_position: Vector2=Vector2.
 			#print("Cell %s" % grid.calculate_grid_coordinates_with_offset(long_note_sprite.back.global_position))
 			note = ChartNote.new(beat, ChartNote.Note_Type.LONG_BACK, lane)
 			
-			var back_cell: Vector2 = grid.calculate_grid_coordinates_with_offset(long_note_sprite.back.global_position)
 			long_note_sprite.back_cell = cell
 			
 			if _ticks != 0:
@@ -383,16 +382,17 @@ func _on_ui_editor_add_long_double_arrow_note(cell: Vector2, direction: int, dir
 			
 			long_note_sprite.global_position = grid.calculate_map_position_with_offset(cell)
 			long_note_sprite.front_cell = cell
-			_set_cells(cell, NoteType.LONG_DOUBLE_ARROW, long_note_sprite, note)
-			add_child(long_note_sprite)
-			
-			if _ticks != 0:
-				note.set_ticks(_ticks)
 			
 			if _note_position != Vector2.ZERO:
 				long_note_sprite.global_position = _note_position
 			else:
 				long_note_sprite.global_position = grid.calculate_map_position_with_offset(cell)
+			
+			_set_cells(cell, NoteType.LONG_DOUBLE_ARROW, long_note_sprite, note)
+			add_child(long_note_sprite)
+			
+			if _ticks != 0:
+				note.set_ticks(_ticks)
 			
 			note.set_position(long_note_sprite.global_position)
 			
@@ -401,7 +401,7 @@ func _on_ui_editor_add_long_double_arrow_note(cell: Vector2, direction: int, dir
 			var back_cell: Vector2 = grid.calculate_grid_coordinates_with_offset(long_note_sprite.back.global_position)
 			long_note_sprite.back_cell = cell
 			
-			if is_arrow_limit(back_cell, NoteType.LONG_DOUBLE_ARROW):
+			if is_arrow_limit(cell, NoteType.LONG_DOUBLE_ARROW):
 				print("Cannot add more arrow notes.")
 				return
 			
@@ -538,11 +538,11 @@ func _add_long_back_note(cell: Vector2, note_type: NoteType,
 				note = ChartNote.new(beat, ChartNote.Note_Type.LONG_ARROW, lane, direction)
 				var sprite_position: Vector2 = grid.calculate_map_position_with_offset(cell)
 				
-				if _note_position != Vector2.ZERO:
+				#if _note_position != Vector2.ZERO:
 					#print("Loaded position %s" % _note_position)
-					long_note_sprite.back.global_position = _note_position
-				else:
-					long_note_sprite.back.global_position.x = sprite_position.x - scroll_container.scroll_horizontal
+					#long_note_sprite.back.global_position = _note_position
+				#else:
+				long_note_sprite.back.global_position.x = sprite_position.x - scroll_container.scroll_horizontal
 				
 				long_note_sprite.set_line_points()
 				
@@ -565,11 +565,11 @@ func _add_long_back_note(cell: Vector2, note_type: NoteType,
 				note = ChartNote.new(beat, ChartNote.Note_Type.LONG_DOUBLE_ARROW, lane, direction, direction_2)
 				var sprite_position: Vector2 = grid.calculate_map_position_with_offset(cell)
 				
-				if _note_position != Vector2.ZERO:
-					#print("Loaded position %s" % _note_position)
-					long_note_sprite.back.global_position = _note_position
-				else:
-					long_note_sprite.back.global_position.x = sprite_position.x - scroll_container.scroll_horizontal
+				#if _note_position != Vector2.ZERO:
+					##print("Loaded position %s" % _note_position)
+					#long_note_sprite.back.global_position = _note_position
+				#else:
+				long_note_sprite.back.global_position.x = sprite_position.x - scroll_container.scroll_horizontal
 				
 				long_note_sprite.set_line_points()
 				
@@ -650,16 +650,16 @@ func load_notes(_notes: Dictionary) -> void:
 			NoteType.ARROW:
 				var _direction: GlobalSettings.Directions = _notes[cell][1] as GlobalSettings.Directions
 				
-				_on_ui_editor_add_arrow_note(cell, _direction, _position)
+				_on_ui_editor_add_arrow_note(cell, _direction, _position, _ticks)
 			NoteType.DOUBLE_ARROW:
 				var _direction: GlobalSettings.Directions = _notes[cell][1] as GlobalSettings.Directions
 				var _direction_2: GlobalSettings.Directions = _notes[cell][2] as GlobalSettings.Directions
 				
-				_on_ui_editor_add_double_arrow_note(cell, _direction, _direction_2, _position)
+				_on_ui_editor_add_double_arrow_note(cell, _direction, _direction_2, _position, _ticks)
 			NoteType.LONG:
-				_on_ui_editor_add_long_note(cell, _position)
+				_on_ui_editor_add_long_note(cell, _position, _ticks)
 			NoteType.LONG_BACK:
-				_add_long_back_note(cell, _note_type, GlobalSettings.Directions.NONE, GlobalSettings.Directions.NONE, _position)
+				_add_long_back_note(cell, _note_type, GlobalSettings.Directions.NONE, GlobalSettings.Directions.NONE, _position, _ticks)
 			NoteType.LONG_ARROW:
 				var _direction: GlobalSettings.Directions = _notes[cell][1] as GlobalSettings.Directions
 				
@@ -675,7 +675,7 @@ func load_notes(_notes: Dictionary) -> void:
 				long_note_sprite = new_long_note_sprite
 				add_child(long_note_sprite)
 				
-				_add_long_back_note(cell, _note_type, _direction, GlobalSettings.Directions.NONE, _position)
+				_add_long_back_note(cell, _note_type, _direction, GlobalSettings.Directions.NONE, _position, _ticks)
 			NoteType.LONG_DOUBLE_ARROW:
 				var _direction: GlobalSettings.Directions = _notes[cell][1] as GlobalSettings.Directions
 				var _direction_2: GlobalSettings.Directions = _notes[cell][2] as GlobalSettings.Directions
@@ -691,7 +691,7 @@ func load_notes(_notes: Dictionary) -> void:
 				long_note_sprite = new_long_note_sprite
 				add_child(long_note_sprite)
 				
-				_add_long_back_note(cell, _note_type, _direction, _direction_2, _position)
+				_add_long_back_note(cell, _note_type, _direction, _direction_2, _position, _ticks)
 	
 	loading = false
 

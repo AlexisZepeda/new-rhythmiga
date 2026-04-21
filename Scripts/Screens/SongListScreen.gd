@@ -53,6 +53,7 @@ func _on_play_pressed() -> void:
 	scene_path = main_rhythm_game_path
 	GlobalBackground.disappear_shader()
 	Loader.loaded_stream = player.stream
+	Loader.loaded_music_path = CustomMusicManager.load_song_path(hovered_btn.id)
 	Loader.beat_map_path = CustomMusicManager.load_beat_map(hovered_btn.id, song_info_container.difficulty)
 
 
@@ -65,7 +66,6 @@ func _on_mouse_entered(btn: NewSongButton) -> void:
 	player.stream = btn.audio_stream
 	
 	player.play()
-
 
 
 func load_songs() -> void:

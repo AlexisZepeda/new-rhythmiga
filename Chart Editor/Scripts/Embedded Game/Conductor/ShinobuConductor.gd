@@ -7,9 +7,9 @@ signal loaded_new_stream
 @export_file_path var sound_file: String = ""
 ## Offset (in milliseconds) of when the 1st beat of the song is in the audio
 ## file. [code]5000[/code] means the 1st beat happens 5 seconds into the track.
-@export var first_beat_offset_ms: int = 1540
+@export var first_beat_offset_ms: int = 1540: set=_set_offset_ticks
 
-var BPM: float = 155.0
+var BPM: float = 155.0: set=_set_seconds_per_tick
 
 
 var bgm_group: ShinobuGroup
@@ -21,6 +21,7 @@ var ticks: float = offset_ticks
 
 var stream: AudioStream
 
+var is_finished: bool = false
 
 func _init() -> void:
 	Shinobu.desired_buffer_size_msec = 10
@@ -37,6 +38,8 @@ func _ready() -> void:
 	GlobalSettings.OFFSET_CHANGED.connect(_on_offset_changed)
 	#init_conductor(sound_file)
 	#play()
+	
+	print("Offset ticks %s" % offset_ticks)
 
 
 func _on_bpm_changed(_bpm: float) -> void:
@@ -46,10 +49,25 @@ func _on_bpm_changed(_bpm: float) -> void:
 
 # _offset is in seconds
 func _on_offset_changed(_offset: float) -> void:
-	#print("Offset %s" % _offset)
 	first_beat_offset_ms = int(_offset * 1000) #+ int(((60.0 / bpm) * 4.0) * 1000)
 	offset_ticks = -1 * (first_beat_offset_ms / 1000.0) / seconds_per_tick
 	ticks = offset_ticks
+
+
+func _set_seconds_per_tick(value: float) -> void:
+	BPM = value
+	
+	seconds_per_tick = 60000 / (BPM * GlobalSettings.PPQ) / 1000
+
+
+func _set_offset_ticks(value: int) -> void:
+	first_beat_offset_ms = value
+	
+	offset_ticks = -1 * (first_beat_offset_ms / 1000.0) / seconds_per_tick
+	ticks = offset_ticks
+	
+	print("First beat offset changed %s" % first_beat_offset_ms)
+	print("Offset %s" % offset_ticks)
 
 
 func _process(_delta: float) -> void:
@@ -58,12 +76,21 @@ func _process(_delta: float) -> void:
 		return
 	
 	if not bgm_sound_player.is_playing():
+		if bgm_sound_player.is_at_stream_end() and not is_finished:
+			print("Finished")
+			
+			is_finished = true
+			finished.emit()
+			bgm_sound_player.stop()
+			
+			return
+		
+		print("Not playing")
 		return
 	
 	var time_in_sec: float = (bgm_sound_player.get_playback_position_msec() - Shinobu.get_actual_buffer_size())/ 1000.0
 	
 	ticks = time_in_sec / seconds_per_tick + offset_ticks
-	is_at_end()
 
 
 func init_conductor(file: String) -> void:
@@ -75,19 +102,25 @@ func init_conductor(file: String) -> void:
 		bgm_sound_player = null
 	
 	if bgm_group.connect_to_endpoint() == OK:
+		
 		var audio_file: FileAccess = FileAccess.open(file, FileAccess.READ)
+		var err: Error = FileAccess.get_open_error()
 		
-		sound_file = file
+		if err == OK:
 		
-		var audio_byte_array: PackedByteArray = audio_file.get_buffer(audio_file.get_length())
-		audio_file.close()
-		
-		var bgm_sound_source: ShinobuSoundSource = Shinobu.register_sound_from_memory("GameAudio", audio_byte_array)
-		#print("Created ShinobuSoundSource")
-		
-		bgm_sound_player = bgm_sound_source.instantiate(bgm_group)
-		#print("Created ShinobuSoundPlayer")
-		add_child(bgm_sound_player)
+			sound_file = file
+			
+			var audio_byte_array: PackedByteArray = audio_file.get_buffer(audio_file.get_length())
+			audio_file.close()
+			
+			var bgm_sound_source: ShinobuSoundSource = Shinobu.register_sound_from_memory("GameAudio", audio_byte_array)
+			#print("Created ShinobuSoundSource")
+			
+			bgm_sound_player = bgm_sound_source.instantiate(bgm_group)
+			#print("Created ShinobuSoundPlayer")
+			add_child(bgm_sound_player)
+		else:
+			print("Shinobu error opening sound file %s" % err)
 
 
 func get_current_beat() -> float:
@@ -125,7 +158,9 @@ func get_tick() -> float:
 
 
 func is_at_end() -> void:
-	if bgm_sound_player.get_playback_position_msec() >= bgm_sound_player.get_length_msec():
+	if bgm_sound_player.is_at_stream_end():
+		print("Finished")
+		
 		finished.emit()
 		bgm_sound_player.stop()
 
@@ -155,8 +190,16 @@ func pause() -> void:
 	Shinobu.pause()
 
 
+func unpause() -> void:
+	Shinobu.resume()
+
+
 func play(_to_time_msec: int=0) -> void:
 	Shinobu.resume()
+	
+	print("First beat offset %s" % first_beat_offset_ms)
+	print("Offset ticks at play %s" % offset_ticks)
+	print("BPM %s" % BPM)
 	
 	bgm_sound_player.seek(_to_time_msec)
 	bgm_sound_player.start()

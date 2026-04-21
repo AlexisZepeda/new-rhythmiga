@@ -52,6 +52,8 @@ func calculate_seconds() -> float:
 
 
 func set_position(_position: Vector2) -> void:
+	print("Set Position %s" % _position)
+	
 	position = _position
 
 

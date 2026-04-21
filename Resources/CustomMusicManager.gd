@@ -142,6 +142,13 @@ static func load_song_name() -> String:
 	return library[current_id][Library_Keys.SONG_NAME]
 
 
+static func load_song_path(id: String) -> String:
+	if id.is_empty():
+		return ""
+	
+	return library[id][Library_Keys.SONG_PATH]
+
+
 static func load_custom_music_directory() -> void:
 	if DirAccess.dir_exists_absolute(music_folder):
 		_open_directory(music_folder)

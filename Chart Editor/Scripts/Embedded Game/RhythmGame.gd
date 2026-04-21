@@ -115,6 +115,11 @@ func _parse_data_text(file: String) -> Array:
 		bpm = text_file.get_float()
 		song_offset_sec = text_file.get_float()
 		
+		shinobu_conductor.BPM = bpm
+		shinobu_conductor.first_beat_offset_ms = int(song_offset_sec * 1000)
+		
+		print("song offset sec %s" % song_offset_sec)
+		
 		while not text_file.eof_reached():
 			var line = text_file.get_line()
 			var result: RegExMatch = regex.search(line)
@@ -123,7 +128,11 @@ func _parse_data_text(file: String) -> Array:
 				beats.append(float(result.get_string()))
 				#print(result.get_string())
 				var beat: float = float(result.get_string())
-				var tick: float = float(beat * GlobalSettings.PPQ)
+				var tick: float = float(((beat / GlobalSettings.Duration.SIXTEENTH)) * GlobalSettings.PPQ)
+				
+				#print("Normal beat %s" % beat)
+				#print("Beat %s" % ((beat) / GlobalSettings.Duration.SIXTEENTH))
+				#print("Tick %s" % tick)
 				
 				var separator: int = line.find(":")
 				
@@ -231,9 +240,6 @@ func init_beatmap(file: String) -> void:
 	
 	#print("BPM %s" % bpm)
 	#print("First beat offset %s" % int(song_offset_sec * 1000))
-	
-	shinobu_conductor.BPM = bpm
-	shinobu_conductor.first_beat_offset_ms = int(song_offset_sec * 1000)
 	
 	await game_ui.start_animation()
 	

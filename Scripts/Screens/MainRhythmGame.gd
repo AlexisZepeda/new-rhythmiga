@@ -4,7 +4,7 @@ extends BaseUIScreen
 @export_file_path var result_screen_path: String
 @export_file_path var song_list_screen_path: String
 
-@export var conductor: ChartConductor
+#@export var conductor: ChartConductor
 @export var shinobu_conductor: ShinobuConductor
 @export var rhythm_game: RhythmGame
 @export var pause_container: MarginContainer
@@ -17,8 +17,8 @@ func _ready() -> void:
 	_connect_signals()
 	
 	EmbeddedGlobalSettings.enable_input = true
-	conductor.load_stream(Loader.loaded_stream)
-	#shinobu_conductor.load_stream()
+	#conductor.load_stream(Loader.loaded_stream)
+	shinobu_conductor.load_stream(Loader.loaded_music_path)
 	
 	rhythm_game.init_rhythm_game(RhythmGame.Game_Version.MAIN_GAME)
 	rhythm_game.init_beatmap(Loader.beat_map_path)
@@ -67,7 +67,7 @@ func change_scene() -> void:
 func pause() -> void:
 	pause_container.show()
 	get_tree().paused = true
-	conductor.pause_conductor()
+	shinobu_conductor.pause()
 
 
 func unpause() -> void:
@@ -76,4 +76,4 @@ func unpause() -> void:
 	
 	await get_tree().create_timer(2.0).timeout
 	
-	conductor.unpause_conductor()
+	shinobu_conductor.unpause()

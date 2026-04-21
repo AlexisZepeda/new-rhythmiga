@@ -260,8 +260,9 @@ func create_notes(y_offset: float) -> void:
 			Enums.Note_Type.LONG_BACK:
 				note = LONG_BACK_NOTE_SCENE.instantiate() as LongBackNote
 				
-				_last_long_note.back_note = note
-				note.line = _last_long_note.line
+				if is_instance_valid(_last_long_note):
+					_last_long_note.back_note = note
+					note.line = _last_long_note.line
 				note.held = true
 			Enums.Note_Type.LONG_SLIDE:
 				note = LONG_SLIDE_NOTE_SCENE.instantiate() as LongSlideNote
@@ -269,8 +270,9 @@ func create_notes(y_offset: float) -> void:
 				var direction =  _beats[beat][1]
 				note.direction = direction as Enums.Direction
 				
-				_last_long_note.back_note = note
-				note.line = _last_long_note.line
+				if is_instance_valid(_last_long_note):
+					_last_long_note.back_note = note
+					note.line = _last_long_note.line
 				note.held = true
 			Enums.Note_Type.LONG_DOUBLE_SLIDE:
 				note = LONG_DOUBLE_SLIDE_NOTE_SCENE.instantiate() as LongDoubleSlide
@@ -280,13 +282,15 @@ func create_notes(y_offset: float) -> void:
 				note.direction_1 = direction as Enums.Direction
 				note.direction_2 = direction_2 as Enums.Direction
 				
-				_last_long_note.back_note = note
-				note.line = _last_long_note.line
+				if is_instance_valid(_last_long_note):
+					_last_long_note.back_note = note
+					note.line = _last_long_note.line
 				note.held = true
 		
 		note.y_offset = y_offset
 		note.beat = beat
 		note.tick = _beats[beat][3]
+		
 		note.conductor = rhythm_game.shinobu_conductor
 		#note.update_beat(-100)
 		note.update_tick(-100)

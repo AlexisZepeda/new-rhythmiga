@@ -24,6 +24,7 @@ play_button = NodePath("Panel/AspectRatioContainer/Panel/Play Button")
 song_button_list = NodePath("Panel/AspectRatioContainer/Panel/MarginContainer/HBoxContainer/ScrollContainer/SongListContainer")
 song_info_container = NodePath("Panel/AspectRatioContainer/Panel/MarginContainer/HBoxContainer/SongInfoContainer")
 player = NodePath("AudioStreamPlayer")
+title = null
 
 [node name="Panel" parent="." unique_id=469996951 instance=ExtResource("1_b4ta6")]
 layout_mode = 1

@@ -17,7 +17,7 @@
 [ext_resource type="PackedScene" uid="uid://dstqirhphp27y" path="res://Scenes/UI Prefabs/song_panel.tscn" id="12_7yn5f"]
 [ext_resource type="PackedScene" uid="uid://ff4jy1bvdwqe" path="res://Chart Editor/Scenes/Embedded Game/UI/finish_label.tscn" id="13_ltq8h"]
 
-[node name="Rhythm Game" type="Node2D" unique_id=872145979 node_paths=PackedStringArray("note_manager", "note_manager_2", "note_manager_3", "note_manager_4", "lane_1", "lane_2", "lane_3", "lane_4", "game_manager", "shinobu_conductor", "game_ui", "debug_ui")]
+[node name="Rhythm Game" type="Node2D" unique_id=872145979 node_paths=PackedStringArray("note_manager", "note_manager_2", "note_manager_3", "note_manager_4", "lane_1", "lane_2", "lane_3", "lane_4", "game_manager", "game_ui", "debug_ui")]
 script = ExtResource("1_76km0")
 data = "res://Chart Data/data.txt"
 note_manager = NodePath("GameManager/Notes")
@@ -30,7 +30,6 @@ lane_3 = NodePath("Judgement Sprites/Lane 3")
 lane_4 = NodePath("Judgement Sprites/Lane 4")
 play_stats = ExtResource("6_164ha")
 game_manager = NodePath("GameManager")
-shinobu_conductor = NodePath("")
 game_ui = NodePath("CanvasLayer/Game UI")
 debug_ui = NodePath("CanvasLayer/Debug")
 
@@ -171,9 +170,14 @@ miss = NodePath("Hit Count/Miss")
 
 [node name="Note Deltas" type="VBoxContainer" parent="CanvasLayer/Debug" unique_id=613648715]
 visible = false
-layout_mode = 0
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -64.0
 offset_right = 40.0
-offset_bottom = 40.0
+offset_bottom = 64.0
+grow_vertical = 2
 
 [node name="Curr Beat" type="Label" parent="CanvasLayer/Debug/Note Deltas" unique_id=952193181]
 layout_mode = 2

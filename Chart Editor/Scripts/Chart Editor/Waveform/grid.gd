@@ -11,13 +11,10 @@ signal cell_position_change()
 
 
 func set_grid_size(value: Vector2) -> void:
-	print("set grid size")
 	size = value
 
 
 func set_cell_size(value: Vector2) -> void:
-	print("set cell size")
-	
 	cell_size = value
 	_half_cell_size = cell_size / 2
 
