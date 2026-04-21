@@ -97,9 +97,7 @@ func _set_cells(cell: Vector2, note_type: NoteType, sprite: Sprite2D, note: Char
 	current_notes.set_note(note.beat, note)
 
 
-func _on_ui_editor_add_tap_note(cell: Vector2) -> void:
-	print("Cell %s" % cell)
-	
+func _on_ui_editor_add_tap_note(cell: Vector2, _note_position: Vector2=Vector2.ZERO, _ticks: int=0) -> void:
 	if is_occupied(cell) or _occupied_cells_by_lines.has(cell):
 		print("Cell is occupied.")
 		return
@@ -114,7 +112,16 @@ func _on_ui_editor_add_tap_note(cell: Vector2) -> void:
 	var sprite: NoteGridSprite = NoteGridSprite.new()
 	var note: ChartNote = ChartNote.new(beat, ChartNote.Note_Type.TAP, lane)
 	sprite.texture = _tap_texture
-	sprite.global_position = grid.calculate_map_position_with_offset(cell)
+	
+	if _note_position != Vector2.ZERO:
+		sprite.global_position = _note_position
+	else:
+		sprite.global_position = grid.calculate_map_position_with_offset(cell)
+	
+	if _ticks != 0:
+		note.set_ticks(_ticks)
+	
+	note.set_position(sprite.global_position)
 	
 	_set_cells(cell, NoteType.TAP, sprite, note)
 	add_child(sprite)
@@ -124,7 +131,9 @@ func _on_ui_editor_drop_tap_note(_cell: Vector2) -> void:
 	pass
 
 
-func _on_ui_editor_add_arrow_note(cell: Vector2, direction: GlobalSettings.Directions) -> void:
+func _on_ui_editor_add_arrow_note(cell: Vector2, direction: GlobalSettings.Directions,
+		_note_position: Vector2=Vector2.ZERO,
+		_ticks: int=0) -> void:
 	if is_occupied(cell) or _occupied_cells_by_lines.has(cell):
 		print("Cell is occupied.")
 		return
@@ -149,11 +158,23 @@ func _on_ui_editor_add_arrow_note(cell: Vector2, direction: GlobalSettings.Direc
 	sprite.global_position = grid.calculate_map_position_with_offset(cell)
 	sprite.set_arrow_direction(direction)
 	
+	if _note_position != Vector2.ZERO:
+		sprite.global_position = _note_position
+	else:
+		sprite.global_position = grid.calculate_map_position_with_offset(cell)
+	
+	if _ticks != 0:
+		note.set_ticks(_ticks)
+	
+	note.set_position(sprite.global_position)
+	
 	_set_cells(cell, NoteType.ARROW, sprite, note)
 	add_child(sprite)
 
 
-func _on_ui_editor_add_double_arrow_note(cell: Vector2, direction_1: int, direction_2: int) -> void:
+func _on_ui_editor_add_double_arrow_note(cell: Vector2, direction_1: int, direction_2: int,
+		_note_position: Vector2=Vector2.ZERO,
+		_ticks: int=0) -> void:
 	if is_occupied(cell) or _occupied_cells_by_lines.has(cell):
 		print("Cell is occupied.")
 		return
@@ -178,11 +199,22 @@ func _on_ui_editor_add_double_arrow_note(cell: Vector2, direction_1: int, direct
 	sprite.global_position = grid.calculate_map_position_with_offset(cell)
 	sprite.set_arrow_direction(direction_1, direction_2)
 	
+	if _note_position != Vector2.ZERO:
+		sprite.global_position = _note_position
+	else:
+		sprite.global_position = grid.calculate_map_position_with_offset(cell)
+	
+	if _ticks != 0:
+		note.set_ticks(_ticks)
+	
+	note.set_position(sprite.global_position)
+	
 	_set_cells(cell, NoteType.DOUBLE_ARROW, sprite, note)
 	add_child(sprite)
 
 
-func _on_ui_editor_add_long_note(cell: Vector2) -> void:
+func _on_ui_editor_add_long_note(cell: Vector2, _note_position: Vector2=Vector2.ZERO,
+		_ticks: int=0) -> void:
 	if is_occupied(cell) or _occupied_cells_by_lines.has(cell):
 		print("Cell is occupied.")
 		return
@@ -212,6 +244,16 @@ func _on_ui_editor_add_long_note(cell: Vector2) -> void:
 			
 			long_note_sprite.global_position = grid.calculate_map_position_with_offset(cell)
 			long_note_sprite.front_cell = cell
+			if _ticks != 0:
+				note.set_ticks(_ticks)
+			
+			if _note_position != Vector2.ZERO:
+				long_note_sprite.global_position = _note_position
+			else:
+				long_note_sprite.global_position = grid.calculate_map_position_with_offset(cell)
+			
+			note.set_position(long_note_sprite.global_position)
+			
 			_set_cells(cell, NoteType.LONG, long_note_sprite, note)
 			add_child(long_note_sprite)
 			_long_note = EnumLongNote.BACK
@@ -224,12 +266,24 @@ func _on_ui_editor_add_long_note(cell: Vector2) -> void:
 			var back_cell: Vector2 = grid.calculate_grid_coordinates_with_offset(long_note_sprite.back.global_position)
 			long_note_sprite.back_cell = cell
 			
+			if _ticks != 0:
+				note.set_ticks(_ticks)
+			
+			if _note_position != Vector2.ZERO:
+				long_note_sprite.back.global_position = _note_position
+			#else:
+				#long_note_sprite.back.global_position = grid.calculate_map_position_with_offset(cell)
+			
+			note.set_position(long_note_sprite.back.global_position)
+			
 			_find_occupied_cells(long_note_sprite.front_cell, long_note_sprite.back_cell)
 			_set_cells(cell, NoteType.LONG_BACK, long_note_sprite, note)
 			_long_note = EnumLongNote.NONE
 
 
-func _on_ui_editor_add_long_arrow_note(cell: Vector2, direction: int) -> void:
+func _on_ui_editor_add_long_arrow_note(cell: Vector2, direction: int,
+		_note_position: Vector2=Vector2.ZERO,
+		_ticks: int=0) -> void:
 	if is_occupied(cell) or _occupied_cells_by_lines.has(cell):
 		print("Cell is occupied.")
 		return
@@ -257,6 +311,17 @@ func _on_ui_editor_add_long_arrow_note(cell: Vector2, direction: int) -> void:
 			
 			long_note_sprite.global_position = grid.calculate_map_position_with_offset(cell)
 			long_note_sprite.front_cell = cell
+			
+			if _ticks != 0:
+				note.set_ticks(_ticks)
+			
+			if _note_position != Vector2.ZERO:
+				long_note_sprite.global_position = _note_position
+			else:
+				long_note_sprite.global_position = grid.calculate_map_position_with_offset(cell)
+			
+			note.set_position(long_note_sprite.global_position)
+			
 			_set_cells(cell, NoteType.LONG, long_note_sprite, note)
 			add_child(long_note_sprite)
 			_long_note = EnumLongNote.BACK
@@ -277,10 +342,21 @@ func _on_ui_editor_add_long_arrow_note(cell: Vector2, direction: int) -> void:
 			long_note_sprite.set_arrow_direction(direction)
 			_find_occupied_cells(long_note_sprite.front_cell, long_note_sprite.back_cell)
 			_set_cells(cell, NoteType.LONG_ARROW, long_note_sprite, note)
+			
+			if _ticks != 0:
+				note.set_ticks(_ticks)
+				
+			if _note_position != Vector2.ZERO:
+				long_note_sprite.back.global_position = _note_position
+			
+			note.set_position(long_note_sprite.back.global_position)
+			
 			_long_note = EnumLongNote.NONE
 
 
-func _on_ui_editor_add_long_double_arrow_note(cell: Vector2, direction: int, direction_2: int) -> void:
+func _on_ui_editor_add_long_double_arrow_note(cell: Vector2, direction: int, direction_2: int,
+		_note_position: Vector2=Vector2.ZERO,
+		_ticks: int=0) -> void:
 	if is_occupied(cell) or _occupied_cells_by_lines.has(cell):
 		print("Cell is occupied.")
 		return
@@ -309,6 +385,17 @@ func _on_ui_editor_add_long_double_arrow_note(cell: Vector2, direction: int, dir
 			long_note_sprite.front_cell = cell
 			_set_cells(cell, NoteType.LONG_DOUBLE_ARROW, long_note_sprite, note)
 			add_child(long_note_sprite)
+			
+			if _ticks != 0:
+				note.set_ticks(_ticks)
+			
+			if _note_position != Vector2.ZERO:
+				long_note_sprite.global_position = _note_position
+			else:
+				long_note_sprite.global_position = grid.calculate_map_position_with_offset(cell)
+			
+			note.set_position(long_note_sprite.global_position)
+			
 			_long_note = EnumLongNote.BACK
 		EnumLongNote.BACK:
 			var back_cell: Vector2 = grid.calculate_grid_coordinates_with_offset(long_note_sprite.back.global_position)
@@ -327,6 +414,15 @@ func _on_ui_editor_add_long_double_arrow_note(cell: Vector2, direction: int, dir
 			long_note_sprite.set_arrow_direction(direction, direction_2)
 			_find_occupied_cells(long_note_sprite.front_cell, long_note_sprite.back_cell)
 			_set_cells(cell, NoteType.LONG_DOUBLE_ARROW, long_note_sprite, note)
+			
+			if _ticks != 0:
+				note.set_ticks(_ticks)
+			
+			if _note_position != Vector2.ZERO:
+				long_note_sprite.back.global_position = _note_position
+			
+			note.set_position(long_note_sprite.back.global_position)
+			
 			_long_note = EnumLongNote.NONE
 
 
@@ -396,7 +492,8 @@ func _erase_occupied_cells(beginning_cell: Vector2, end_cell: Vector2) -> void:
 
 func _add_long_back_note(cell: Vector2, note_type: NoteType, 
 	direction: GlobalSettings.Directions=GlobalSettings.Directions.NONE, 
-	direction_2: GlobalSettings.Directions=GlobalSettings.Directions.NONE) -> void:
+	direction_2: GlobalSettings.Directions=GlobalSettings.Directions.NONE,
+	_note_position: Vector2=Vector2.ZERO, _ticks: int=0) -> void:
 	
 	if _long_note == EnumLongNote.BACK:
 		var beat: float = float(cell.x) / GlobalSettings.beat_duration
@@ -407,16 +504,26 @@ func _add_long_back_note(cell: Vector2, note_type: NoteType,
 				#print("Cell %s" % grid.calculate_grid_coordinates_with_offset(long_note_sprite.back.global_position))
 				note = ChartNote.new(beat, ChartNote.Note_Type.LONG_BACK, lane)
 				
-				print("Cell %s" % cell)
+				#print("Cell %s" % cell)
 				
 				var sprite_position: Vector2 = grid.calculate_map_position_with_offset(cell)
 				
-				print("Sprite position %s" % sprite_position)
-				print("Scroll container %s" % scroll_container.scroll_horizontal)
+				#print("Sprite position %s" % sprite_position)
+				#print("Scroll container %s" % scroll_container.scroll_horizontal)
 				
 				long_note_sprite.back_cell = cell
-				long_note_sprite.back.global_position.x = sprite_position.x - scroll_container.scroll_horizontal
+				
+				if _note_position != Vector2.ZERO:
+					long_note_sprite.back.global_position = _note_position
+				else:
+					long_note_sprite.back.global_position.x = sprite_position.x - scroll_container.scroll_horizontal
+				
 				long_note_sprite.set_line_points()
+				
+				if _ticks != 0:
+					note.set_ticks(_ticks)
+				
+				note.set_position(long_note_sprite.back.global_position)
 				
 				_find_occupied_cells(long_note_sprite.front_cell, long_note_sprite.back_cell)
 				_set_cells(cell, NoteType.LONG_BACK, long_note_sprite, note)
@@ -430,8 +537,19 @@ func _add_long_back_note(cell: Vector2, note_type: NoteType,
 				
 				note = ChartNote.new(beat, ChartNote.Note_Type.LONG_ARROW, lane, direction)
 				var sprite_position: Vector2 = grid.calculate_map_position_with_offset(cell)
-				long_note_sprite.back.global_position.x = sprite_position.x - scroll_container.scroll_horizontal
+				
+				if _note_position != Vector2.ZERO:
+					#print("Loaded position %s" % _note_position)
+					long_note_sprite.back.global_position = _note_position
+				else:
+					long_note_sprite.back.global_position.x = sprite_position.x - scroll_container.scroll_horizontal
+				
 				long_note_sprite.set_line_points()
+				
+				if _ticks != 0:
+					note.set_ticks(_ticks)
+				
+				note.set_position(long_note_sprite.back.global_position)
 				
 				long_note_sprite.set_arrow_direction(direction)
 				_find_occupied_cells(long_note_sprite.front_cell, long_note_sprite.back_cell)
@@ -441,13 +559,24 @@ func _add_long_back_note(cell: Vector2, note_type: NoteType,
 				long_note_sprite.back_cell = cell
 				
 				if is_arrow_limit(cell, NoteType.LONG_DOUBLE_ARROW):
-					print("Cannot add more arrow notes.")
+					#print("Cannot add more arrow notes.")
 					return
 				
 				note = ChartNote.new(beat, ChartNote.Note_Type.LONG_DOUBLE_ARROW, lane, direction, direction_2)
 				var sprite_position: Vector2 = grid.calculate_map_position_with_offset(cell)
-				long_note_sprite.back.global_position.x = sprite_position.x - scroll_container.scroll_horizontal
+				
+				if _note_position != Vector2.ZERO:
+					#print("Loaded position %s" % _note_position)
+					long_note_sprite.back.global_position = _note_position
+				else:
+					long_note_sprite.back.global_position.x = sprite_position.x - scroll_container.scroll_horizontal
+				
 				long_note_sprite.set_line_points()
+				
+				if _ticks != 0:
+					note.set_ticks(_ticks)
+				
+				note.set_position(long_note_sprite.back.global_position)
 				
 				long_note_sprite.set_arrow_direction(direction, direction_2)
 				_find_occupied_cells(long_note_sprite.front_cell, long_note_sprite.back_cell)
@@ -508,25 +637,29 @@ func load_notes(_notes: Dictionary) -> void:
 		var _note: Array = _notes[cell]
 		
 		var _note_type: NoteType = _notes[cell][0]
+		var _position: Vector2 = _notes[cell][3]
+		var _ticks: int = _notes[cell][4]
 		
 		#print("Note Type %s" % _note_type)
+		#print("Position %s" % _position)
+		
 		
 		match _note_type:
 			NoteType.TAP:
-				_on_ui_editor_add_tap_note(cell)
+				_on_ui_editor_add_tap_note(cell, _position, _ticks)
 			NoteType.ARROW:
 				var _direction: GlobalSettings.Directions = _notes[cell][1] as GlobalSettings.Directions
 				
-				_on_ui_editor_add_arrow_note(cell, _direction)
+				_on_ui_editor_add_arrow_note(cell, _direction, _position)
 			NoteType.DOUBLE_ARROW:
 				var _direction: GlobalSettings.Directions = _notes[cell][1] as GlobalSettings.Directions
 				var _direction_2: GlobalSettings.Directions = _notes[cell][2] as GlobalSettings.Directions
 				
-				_on_ui_editor_add_double_arrow_note(cell, _direction, _direction_2)
+				_on_ui_editor_add_double_arrow_note(cell, _direction, _direction_2, _position)
 			NoteType.LONG:
-				_on_ui_editor_add_long_note(cell)
+				_on_ui_editor_add_long_note(cell, _position)
 			NoteType.LONG_BACK:
-				_add_long_back_note(cell, _note_type)
+				_add_long_back_note(cell, _note_type, GlobalSettings.Directions.NONE, GlobalSettings.Directions.NONE, _position)
 			NoteType.LONG_ARROW:
 				var _direction: GlobalSettings.Directions = _notes[cell][1] as GlobalSettings.Directions
 				
@@ -542,7 +675,7 @@ func load_notes(_notes: Dictionary) -> void:
 				long_note_sprite = new_long_note_sprite
 				add_child(long_note_sprite)
 				
-				_add_long_back_note(cell, _note_type, _direction)
+				_add_long_back_note(cell, _note_type, _direction, GlobalSettings.Directions.NONE, _position)
 			NoteType.LONG_DOUBLE_ARROW:
 				var _direction: GlobalSettings.Directions = _notes[cell][1] as GlobalSettings.Directions
 				var _direction_2: GlobalSettings.Directions = _notes[cell][2] as GlobalSettings.Directions
@@ -558,7 +691,7 @@ func load_notes(_notes: Dictionary) -> void:
 				long_note_sprite = new_long_note_sprite
 				add_child(long_note_sprite)
 				
-				_add_long_back_note(cell, _note_type, _direction, _direction_2)
+				_add_long_back_note(cell, _note_type, _direction, _direction_2, _position)
 	
 	loading = false
 
@@ -567,11 +700,7 @@ func load_notes(_notes: Dictionary) -> void:
 func clear_grid() -> void:
 	if not _cells.is_empty():
 		
-		print("Initial _cells")
-		print(_cells)
-		
 		for cell in _cells:
-			print(cell)
 			#current_notes.remove_note(cell.x, _cells[cell][Keys.NOTE])
 			_cells[cell][Keys.NOTE] = null
 			_cells[cell][Keys.SPRITE].queue_free()

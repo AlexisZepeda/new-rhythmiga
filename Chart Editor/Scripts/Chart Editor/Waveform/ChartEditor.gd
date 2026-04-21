@@ -132,7 +132,7 @@ func _on_load_beat_map_file_dialog_file_selected(path: String) -> void:
 	#
 	#var info_file: FileAccess = FileAccess.open(info_file_path, FileAccess.READ)
 	
-	print("Path %s" % path)
+	#print("Path %s" % path)
 	
 	if FileAccess.get_open_error() != OK:
 		print("Could not file %s" % FileAccess.get_open_error())
@@ -302,13 +302,18 @@ func save(save_file: FileAccess) -> void:
 			var _note_time: float = _note._time
 			var _note_ticks: float = _note._ticks
 			
+			var _position: Vector2 = _note.position
+			
 			save_file.store_float(_cell.x)
 			save_file.store_float(_cell.y)
 			#save_file.store_float(_note_beat)
+			save_file.store_float(_note_ticks)
 			save_file.store_8(_note_type)
 			#save_file.store_8(_note_lane)
 			save_file.store_8(_direction)
 			save_file.store_8(_direction_2)
+			
+			save_file.store_var(_position)
 		save_file.close()
 	
 	unpause()
@@ -329,7 +334,7 @@ func loading_file(load_file: FileAccess) -> void:
 	
 	scroll_container.scroll_horizontal = 0
 	
-	print("Clear Grid")
+	#print("Clear Grid")
 	note_grid.clear_grid()
 	
 	#await get_tree().create_timer(1.0).timeout
@@ -360,15 +365,10 @@ func loading_file(load_file: FileAccess) -> void:
 		current_audio_file_path = _audio_path
 	
 	print("Audio Path %s" % _audio_path)
-	print("Current Audio File Path %s" % _audio_path)
 	
 	var _bpm: float = load_file.get_float()
 	var _beat_duration: GlobalSettings.Duration = load_file.get_8() as GlobalSettings.Duration
 	var _song_offset: float = load_file.get_float()
-	
-	print(_bpm)
-	print(_beat_duration)
-	print(_song_offset)
 	
 	var audio_stream: AudioStream = Utils.create_audio_stream(current_audio_file_path)
 	if audio_stream != null:
@@ -393,13 +393,16 @@ func loading_file(load_file: FileAccess) -> void:
 			
 			# Public Note variables
 			#var _beat: float = load_file.get_float() / 4
+			var _ticks: float = load_file.get_float()
 			var _note_type: ChartNote.Note_Type = load_file.get_8() as ChartNote.Note_Type
 			#var _note_lane: int = load_file.get_8()
 			var _direction: int = load_file.get_8()
 			var _direction_2: int = load_file.get_8()
 			
+			var _position: Vector2 = load_file.get_var()
+			
 			#var _note: Note = Note.new(_beat, _note_type, _note_lane, _direction, _direction_2)
-			_notes[_cell] = [_note_type, _direction, _direction_2]
+			_notes[_cell] = [_note_type, _direction, _direction_2, _position, _ticks]
 			
 			#await get_tree().process_frame
 			
@@ -408,7 +411,7 @@ func loading_file(load_file: FileAccess) -> void:
 		await get_tree().process_frame
 		#await get_tree().create_timer(0.5).timeout
 		
-		print("Load notes")
+		#print("Load notes")
 		note_grid.load_notes(_notes)
 	else:
 		accept_dialog.show()

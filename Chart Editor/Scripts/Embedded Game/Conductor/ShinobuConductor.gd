@@ -25,7 +25,7 @@ var stream: AudioStream
 func _init() -> void:
 	Shinobu.desired_buffer_size_msec = 10
 	if Shinobu.initialize() == OK:
-		print("Shinobu is initialized.")
+		#print("Shinobu is initialized.")
 		
 		bgm_group = Shinobu.create_group("BGM", null)
 		if bgm_group.connect_to_endpoint() == OK:
@@ -83,10 +83,10 @@ func init_conductor(file: String) -> void:
 		audio_file.close()
 		
 		var bgm_sound_source: ShinobuSoundSource = Shinobu.register_sound_from_memory("GameAudio", audio_byte_array)
-		print("Created ShinobuSoundSource")
+		#print("Created ShinobuSoundSource")
 		
 		bgm_sound_player = bgm_sound_source.instantiate(bgm_group)
-		print("Created ShinobuSoundPlayer")
+		#print("Created ShinobuSoundPlayer")
 		add_child(bgm_sound_player)
 
 
