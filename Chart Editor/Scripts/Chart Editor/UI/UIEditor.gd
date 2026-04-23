@@ -144,10 +144,8 @@ func _on_cursor_mouse_hover(mouse_position: Vector2, cell: Vector2) -> void:
 
 
 func _on_note_check_boxes_arrow_direction_selection(direction: int) -> void:
-	print(GlobalSettings.Directions.keys()[direction])
 	arrow_direction = direction as GlobalSettings.Directions
 
 
 func _on_note_check_boxes_arrow_2_direction_selection(direction: int) -> void:
-	print(GlobalSettings.Directions.keys()[direction])
 	arrow_2_direction = direction as GlobalSettings.Directions

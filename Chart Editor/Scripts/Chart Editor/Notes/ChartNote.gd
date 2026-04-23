@@ -52,8 +52,6 @@ func calculate_seconds() -> float:
 
 
 func set_position(_position: Vector2) -> void:
-	print("Set Position %s" % _position)
-	
 	position = _position
 
 
@@ -62,4 +60,4 @@ func set_ticks(_new_ticks: int) -> void:
 	beat = Utils.get_beat(_ticks)
 	
 	var note_type: String = Note_Type.keys()[type]
-	print("Setted %s note at %s beat with %s ticks and time %s(secs)." % [note_type, beat, _ticks, _time])
+	print("Set %s note at %s beat with %s ticks and time %s(secs)." % [note_type, beat, _ticks, _time])

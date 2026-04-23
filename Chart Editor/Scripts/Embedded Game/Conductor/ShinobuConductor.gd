@@ -38,8 +38,6 @@ func _ready() -> void:
 	GlobalSettings.OFFSET_CHANGED.connect(_on_offset_changed)
 	#init_conductor(sound_file)
 	#play()
-	
-	print("Offset ticks %s" % offset_ticks)
 
 
 func _on_bpm_changed(_bpm: float) -> void:
@@ -65,9 +63,6 @@ func _set_offset_ticks(value: int) -> void:
 	
 	offset_ticks = -1 * (first_beat_offset_ms / 1000.0) / seconds_per_tick
 	ticks = offset_ticks
-	
-	print("First beat offset changed %s" % first_beat_offset_ms)
-	print("Offset %s" % offset_ticks)
 
 
 func _process(_delta: float) -> void:
@@ -85,7 +80,6 @@ func _process(_delta: float) -> void:
 			
 			return
 		
-		print("Not playing")
 		return
 	
 	var time_in_sec: float = (bgm_sound_player.get_playback_position_msec() - Shinobu.get_actual_buffer_size())/ 1000.0
@@ -196,10 +190,6 @@ func unpause() -> void:
 
 func play(_to_time_msec: int=0) -> void:
 	Shinobu.resume()
-	
-	print("First beat offset %s" % first_beat_offset_ms)
-	print("Offset ticks at play %s" % offset_ticks)
-	print("BPM %s" % BPM)
 	
 	bgm_sound_player.seek(_to_time_msec)
 	bgm_sound_player.start()
