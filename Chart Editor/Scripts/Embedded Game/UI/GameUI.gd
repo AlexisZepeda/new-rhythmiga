@@ -6,6 +6,7 @@ extends Control
 @export var song_progress_bar: ProgressBar
 
 @export var song_name: SongPanel
+@export var chain_label: Label
 @export var score_label: Label
 
 @export var start_label: PackedScene
@@ -71,7 +72,7 @@ func _on_loaded_new_stream() -> void:
 
 func _on_play_stats_changed() -> void:
 	score_label.set_score(rhythm_game.play_stats.target_score)
-	
+	set_chain()
 	#score_label.set_text(str(rhythm_game.play_stats.target_score))
 
 
@@ -82,6 +83,19 @@ func init_game_signals(note_manager: NoteManager) -> void:
 func set_song_panel() -> void:
 	song_name.visible = true
 	song_name.set_info()
+
+
+func set_chain() -> void:
+	var combo: int = rhythm_game.play_stats.combo
+	
+	if combo == 0:
+		chain_label.visible = false
+	else:
+		chain_label.visible = true
+	
+	var chain: String = "%s chain" % rhythm_game.play_stats.combo
+	
+	chain_label.set_text(chain)
 
 
 func start_animation() -> void:

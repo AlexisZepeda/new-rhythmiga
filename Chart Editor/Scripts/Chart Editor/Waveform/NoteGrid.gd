@@ -346,6 +346,10 @@ func _on_ui_editor_add_long_arrow_note(cell: Vector2, direction: int,
 			var scroll_start: Vector2 = Vector2(long_note_sprite.global_position.x + scroll_container.scroll_horizontal, long_note_sprite.global_position.y)
 			var scroll_end: Vector2 = Vector2(long_note_sprite.back.global_position.x + scroll_container.scroll_horizontal, long_note_sprite.back.global_position.y)
 			
+			if not _can_place_note(cell, scroll_end, NoteType.LONG):
+				print("Can't place note in this position")
+				return
+			
 			if is_lines_occupied(scroll_start, scroll_end):
 				print("Nested long note inside")
 				return
@@ -426,6 +430,10 @@ func _on_ui_editor_add_long_double_arrow_note(cell: Vector2, direction: int, dir
 			
 			var scroll_start: Vector2 = Vector2(long_note_sprite.global_position.x + scroll_container.scroll_horizontal, long_note_sprite.global_position.y)
 			var scroll_end: Vector2 = Vector2(long_note_sprite.back.global_position.x + scroll_container.scroll_horizontal, long_note_sprite.back.global_position.y)
+			
+			if not _can_place_note(cell, scroll_end, NoteType.LONG):
+				print("Can't place note in this position")
+				return
 			
 			if is_lines_occupied(scroll_start, scroll_end):
 				print("Nested long note inside")
@@ -676,7 +684,8 @@ func _can_place_note(cell: Vector2, note_position: Vector2, note_type: NoteType)
 		NoteType.LONG, NoteType.LONG_BACK, NoteType.LONG_ARROW, NoteType.LONG_DOUBLE_ARROW:
 			pass
 		_:
-			note_position.x -= scroll_container.scroll_horizontal
+			pass
+			#note_position.x -= scroll_container.scroll_horizontal
 	
 	if is_occupied_position(note_position):
 		print("Position is occupied %s" % note_position)

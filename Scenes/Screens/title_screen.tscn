@@ -5,9 +5,10 @@
 [ext_resource type="PackedScene" uid="uid://blt2xfgped1n8" path="res://Scenes/UI Prefabs/outer_side_panel.tscn" id="2_ed76m"]
 [ext_resource type="Resource" uid="uid://dd4w4wre7bldh" path="res://Resources/UserConfig.tres" id="2_ogsbk"]
 [ext_resource type="PackedScene" uid="uid://d3tcsll630mrm" path="res://Scenes/UI Prefabs/inner_side_panel.tscn" id="3_ogsbk"]
+[ext_resource type="PackedScene" uid="uid://btd6fu7rvirlr" path="res://Scenes/UI Prefabs/music_player_panel.tscn" id="4_1pj1r"]
 [ext_resource type="PackedScene" uid="uid://spd0payvbbux" path="res://Scenes/UI Prefabs/header_text_prefab.tscn" id="7_1pj1r"]
 
-[node name="Title Screen" type="Control" unique_id=1142186767 node_paths=PackedStringArray("header")]
+[node name="Title Screen" type="Control" unique_id=1142186767 node_paths=PackedStringArray("header", "music_player_panel")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -19,6 +20,7 @@ script = ExtResource("1_wk421")
 main_ui_path = "uid://fu7al4v7g23w"
 user_config = ExtResource("2_ogsbk")
 header = NodePath("Panel/AspectRatioContainer/Inner Side Panel/CenterContainer/VBoxContainer/Header Text Prefab")
+music_player_panel = NodePath("Panel/MusicPlayerPanel")
 
 [node name="Panel" parent="." unique_id=469996951 instance=ExtResource("2_ed76m")]
 layout_mode = 1
@@ -64,3 +66,13 @@ layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 8
 text = "Click Anywhere"
+
+[node name="MusicPlayerPanel" parent="Panel" unique_id=435044229 instance=ExtResource("4_1pj1r")]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+offset_left = -117.0
+offset_top = -64.0
+grow_horizontal = 0
+grow_vertical = 0

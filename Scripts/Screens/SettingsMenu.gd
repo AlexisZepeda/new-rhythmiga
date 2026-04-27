@@ -3,7 +3,6 @@ extends BaseUIScreen
 
 @export_file var main_menu_path: String
 @export var user_config: UserConfig
-@export var player: AudioStreamPlayer
 @export var sfx_player: AudioStreamPlayer
 @export var animation_player: AnimationPlayer
 
@@ -35,7 +34,6 @@ func _on_back_button_pressed() -> void:
 	user_config.save_config()
 	
 	animation_player.play("disappear")
-	lower_volume()
 	
 	await animation_player.animation_finished
 	
@@ -58,8 +56,3 @@ func _on_resolution_aspect_ratio_changed(aspect_ratio: float) -> void:
 
 func change_scene() -> void:
 	Loader.load_scene(self, main_menu_path, get_parent())
-
-
-func lower_volume() -> void:
-	var vol_tween: Tween = create_tween()
-	vol_tween.tween_property(player, "volume_linear", 0.0, 0.75)

@@ -81,6 +81,52 @@ static func check_valid_info_dat(array: PackedStringArray) -> String:
 	return ""
 
 
+## Returns [member Library_Keys.ARTIST if [param key] is in [member library].
+static func get_artist_name(key: String) -> String:
+	if library.has(key):
+		return library[key][Library_Keys.ARTIST]
+	else:
+		return ""
+
+
+static func get_library_size() -> int:
+	if library.is_empty():
+		return 0
+	else:
+		return library.size()
+
+
+static func get_song_key(index: int) -> String:
+	if library.is_empty():
+		return ""
+	
+	var count: int = 0
+	
+	for key: String in library:
+		if count == index:
+			return key
+		
+		count += 1
+	
+	return ""
+
+
+## Returns [member Library_Keys.SONG_NAME] if [param key] is in [member library].
+static func get_song_name(key: String) -> String:
+	if library.has(key):
+		return library[key][Library_Keys.SONG_NAME]
+	else:
+		return ""
+
+
+## Returns [member Library_Keys.SONG_PATH] if [param key] is in [member library].
+static func get_song_path_on_key(key: String) -> String:
+	if library.has(key):
+		return library[key][Library_Keys.SONG_PATH]
+	else:
+		return ""
+
+
 static func get_song_path(id: String) -> String:
 	for key: String in library:
 		if library[key][Library_Keys.SONG_NAME] == id:
@@ -89,6 +135,7 @@ static func get_song_path(id: String) -> String:
 	return ""
 
 
+## Returns [AudioStream] using [member Library_Keys.SONG_NAME].
 static func load_audio(song_name: String) -> AudioStream:
 	var file = get_song_path(song_name)
 	
@@ -101,6 +148,25 @@ static func load_audio(song_name: String) -> AudioStream:
 			stream = AudioStreamOggVorbis.load_from_file(file)
 	
 	return stream
+
+## Returns [AudioStream] using [member Library_Keys.SONG_PATH].
+static func load_audio_on_path(song_path: String) -> AudioStream:
+	var stream: AudioStream
+	
+	match song_path.get_extension():
+		CustomMusicManager.WAV_EXTENSION:
+			stream = AudioStreamWAV.load_from_file(song_path)
+		CustomMusicManager.OGG_EXTENSION:
+			stream = AudioStreamOggVorbis.load_from_file(song_path)
+	
+	return stream
+
+
+static func load_artist_name() -> String:
+	if current_id.is_empty():
+		return ""
+	
+	return library[current_id][Library_Keys.ARTIST]
 
 
 static func load_beat_map(id: String, difficulty: Enums.Difficulty) -> String:
@@ -121,18 +187,18 @@ static func load_beat_map(id: String, difficulty: Enums.Difficulty) -> String:
 	return result
 
 
-static func load_artist_name() -> String:
-	if current_id.is_empty():
-		return ""
-	
-	return library[current_id][Library_Keys.ARTIST]
-
-
 static func load_cover_art() -> String:
 	if current_id.is_empty():
 		return ""
 	
 	return library[current_id][Library_Keys.COVER_PATH]
+
+
+static func load_custom_music_directory() -> void:
+	if DirAccess.dir_exists_absolute(music_folder):
+		_open_directory(music_folder)
+	else:
+		_create_directory(music_folder)
 
 
 static func load_song_name() -> String:
@@ -147,13 +213,6 @@ static func load_song_path(id: String) -> String:
 		return ""
 	
 	return library[id][Library_Keys.SONG_PATH]
-
-
-static func load_custom_music_directory() -> void:
-	if DirAccess.dir_exists_absolute(music_folder):
-		_open_directory(music_folder)
-	else:
-		_create_directory(music_folder)
 
 
 static func open_folder(folder_name: String) -> void:
