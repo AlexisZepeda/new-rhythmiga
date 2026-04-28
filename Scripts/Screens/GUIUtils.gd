@@ -1,5 +1,7 @@
 class_name GUIUtils
 
+const GUI_MARGIN: int = 67
+
 
 static func update_container(panel: Panel, arc: AspectRatioContainer, gui_aspect_ratio: float, gui_margin: float) -> void:
 	# The code within this function needs to be run deferred to work around an issue with containers

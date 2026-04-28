@@ -1,5 +1,6 @@
 [gd_scene format=3 uid="uid://btd6fu7rvirlr"]
 
+[ext_resource type="Theme" uid="uid://kwgoi4r6jr0i" path="res://Resources/Themes/Global.tres" id="1_0v8qh"]
 [ext_resource type="Script" uid="uid://rwmaqoi7gwh7" path="res://Scripts/UI Prefabs/MusicPlayerPanel.gd" id="1_5ttx7"]
 
 [sub_resource type="Animation" id="Animation_qlhwe"]
@@ -201,13 +202,21 @@ _data = {
 }
 
 [node name="MusicPlayerPanel" type="MarginContainer" unique_id=435044229 node_paths=PackedStringArray("song_title", "artist", "animation_player")]
-anchors_preset = 15
+top_level = true
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+offset_left = -111.0
+offset_top = -64.0
+grow_horizontal = 0
+grow_vertical = 0
 scale = Vector2(1e-05, 1)
 pivot_offset_ratio = Vector2(1, 0)
+theme = ExtResource("1_0v8qh")
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_right = 10
 script = ExtResource("1_5ttx7")
 song_title = NodePath("HBoxContainer/VBoxContainer/Title")
 artist = NodePath("HBoxContainer/VBoxContainer/Artist")

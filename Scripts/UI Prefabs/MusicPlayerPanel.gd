@@ -1,4 +1,3 @@
-class_name MusicPlayerPanel
 extends MarginContainer
 
 @export_category("Song Info")
@@ -14,8 +13,18 @@ var artist_str: String = "Artist": set=set_artist
 #var cover_art_texture: String = "": set=set_cover_art
 
 
+func _init() -> void:
+	MenuMusicPlayer.song_info_transmitted.connect(_on_song_info_transmitted)
+
+
 func _ready() -> void:
 	visible = false
+
+
+func _on_song_info_transmitted(song_name: String, artist_name: String) -> void:
+	set_info(song_name, artist_name)
+	
+	play_animations()
 
 
 func set_info(_song_title: String, _artist: String) -> void:

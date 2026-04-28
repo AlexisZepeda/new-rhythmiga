@@ -1,6 +1,6 @@
 extends Node
 
-signal song_played(song_key: String)
+signal song_info_transmitted(song_name: String, artist_name: String)
 
 
 @export var audio_stream_player: AudioStreamPlayer
@@ -12,6 +12,8 @@ var current_song_ptr: int = -1
 var current_song_index: int = -1
 
 var song_position_sec: float = 0.0
+
+var is_playing: bool = true
 
 
 func _init() -> void:
@@ -38,15 +40,15 @@ func _get_playlist_index() -> int:
 	return playlist[current_song_ptr]
 
 
+#func _input(event: InputEvent) -> void:
+	#if event is InputEventMouseButton:
+		#if event.button_index == MOUSE_BUTTON_RIGHT and event.is_pressed():
+			#next_song()
+
+
 func _on_finished() -> void:
 	# Move on to next song in playlist
 	next_song()
-
-
-#func _input(event: InputEvent) -> void:
-	#if event is InputEventMouseButton:
-		#if event.button_index == MOUSE_BUTTON_RIGHT and event.pressed == true:
-			#next_song()
 
 
 ## Increments the [member current_song_ptr] by one and re-shuffles the [member playlist]
@@ -66,21 +68,27 @@ func init_menu_music_player() -> void:
 	load_song()
 
 
+func is_playing_song() -> void:
+	if not is_playing:
+		var song_key: String = CustomMusicManager.get_song_key(current_song_index)
+		song_info(song_key)
+		raise_volume()
+
+
 func load_song() -> void:
 	var song_key: String = CustomMusicManager.get_song_key(current_song_index)
 	var song_path: String = CustomMusicManager.get_song_path_on_key(song_key)
-	
 	var audio_stream: AudioStream = CustomMusicManager.load_audio_on_path(song_path)
 	
 	audio_stream_player.stream = audio_stream
-	
-	song_played.emit(song_key)
 	audio_stream_player.play()
+	
+	song_info(song_key)
 
 
 func lower_volume() -> void:
 	var vol_tween: Tween = create_tween()
-	vol_tween.tween_property(audio_stream_player, "volume_linear", 0.0, 1.0)
+	vol_tween.tween_property(audio_stream_player, "volume_linear", 0.0, 1.5)
 	
 	await vol_tween.finished
 	
@@ -94,8 +102,24 @@ func next_song() -> void:
 
 func play_song() -> void:
 	audio_stream_player.play(song_position_sec)
+	is_playing = true
+
+
+func raise_volume() -> void:
+	var vol_tween: Tween = create_tween()
+	vol_tween.tween_property(audio_stream_player, "volume_linear", 1.0, 0.5)
+	
+	play_song()
+
+
+func song_info(song_key: String) -> void:
+	var song_name: String = CustomMusicManager.get_song_name(song_key)
+	var artist_name: String = CustomMusicManager.get_artist_name(song_key)
+	
+	song_info_transmitted.emit(song_name, artist_name)
 
 
 func stop_song() -> void:
 	song_position_sec = audio_stream_player.get_playback_position()
 	audio_stream_player.stop()
+	is_playing = false

@@ -118,8 +118,6 @@ func _parse_data_text(file: String) -> Array:
 		shinobu_conductor.BPM = bpm
 		shinobu_conductor.first_beat_offset_ms = int(song_offset_sec * 1000)
 		
-		print("song offset sec %s" % song_offset_sec)
-		
 		while not text_file.eof_reached():
 			var line = text_file.get_line()
 			var result: RegExMatch = regex.search(line)

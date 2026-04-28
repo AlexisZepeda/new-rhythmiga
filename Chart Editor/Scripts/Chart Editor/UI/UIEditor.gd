@@ -16,6 +16,8 @@ signal ADD_LONG_DOUBLE_ARROW_NOTE(cell: Vector2, direction: GlobalSettings.Direc
 
 signal REMOVE_NOTE(cell: Vector2)
 
+signal REMOVE_LONG_NOTE
+
 @export var cursor: Cursor
 @export var lines: Lines
 @export var notes: NoteGrid
@@ -32,7 +34,13 @@ enum Toggle {
 	LONG_DOUBLE_ARROW,
 }
 
-var _note_toggle_state: Toggle = Toggle.NONE
+var _previous_toggle_state: Toggle = Toggle.NONE
+var _note_toggle_state: Toggle = Toggle.NONE:
+	set(value):
+		if _note_toggle_state != Toggle.NONE:
+			_previous_toggle_state = _note_toggle_state
+		_note_toggle_state = value
+
 var arrow_direction: GlobalSettings.Directions = GlobalSettings.Directions.NONE
 var arrow_2_direction: GlobalSettings.Directions = GlobalSettings.Directions.NONE
 
@@ -44,6 +52,8 @@ func _on_tap_toggled(toggled_on: bool) -> void:
 	else:
 		_note_toggle_state = Toggle.NONE
 		cursor.set_toggle_none()
+	
+	_remove_long_note_on_toggle(Toggle.TAP)
 
 
 func _on_arrow_toggled(toggled_on: bool) -> void:
@@ -53,6 +63,8 @@ func _on_arrow_toggled(toggled_on: bool) -> void:
 	else:
 		_note_toggle_state = Toggle.NONE
 		cursor.set_toggle_none()
+	
+	_remove_long_note_on_toggle(Toggle.ARROW)
 
 
 func _on_double_arrow_toggled(toggled_on: bool) -> void:
@@ -62,6 +74,8 @@ func _on_double_arrow_toggled(toggled_on: bool) -> void:
 	else:
 		_note_toggle_state = Toggle.NONE
 		cursor.set_toggle_none()
+		
+	_remove_long_note_on_toggle(Toggle.DOUBLE_ARROW)
 
 
 func _on_long_toggled(toggled_on: bool) -> void:
@@ -71,6 +85,8 @@ func _on_long_toggled(toggled_on: bool) -> void:
 	else:
 		_note_toggle_state = Toggle.NONE
 		cursor.set_toggle_none()
+	
+	_remove_long_note_on_toggle(Toggle.LONG)
 
 
 func _on_note_check_boxes_long_release_selection(toggled_on: bool) -> void:
@@ -89,6 +105,8 @@ func _on_long_arrow_toggled(toggled_on: bool) -> void:
 	else:
 		_note_toggle_state = Toggle.NONE
 		cursor.set_toggle_none()
+	
+	_remove_long_note_on_toggle(Toggle.LONG_ARROW)
 
 
 func _on_long_double_arrow_toggled(toggled_on: bool) -> void:
@@ -98,6 +116,8 @@ func _on_long_double_arrow_toggled(toggled_on: bool) -> void:
 	else:
 		_note_toggle_state = Toggle.NONE
 		cursor.set_toggle_none()
+	
+	_remove_long_note_on_toggle(Toggle.LONG_DOUBLE_ARROW)
 
 
 func _on_note_grid_long_note_set() -> void:
@@ -149,3 +169,16 @@ func _on_note_check_boxes_arrow_direction_selection(direction: int) -> void:
 
 func _on_note_check_boxes_arrow_2_direction_selection(direction: int) -> void:
 	arrow_2_direction = direction as GlobalSettings.Directions
+
+
+func _remove_long_note_on_toggle(current_state: Toggle) -> void:
+	if notes._long_note == notes.EnumLongNote.NONE or notes._long_note == notes.EnumLongNote.FRONT:
+		pass
+	elif notes._long_note == notes.EnumLongNote.BACK and _previous_toggle_state == current_state:
+		pass
+	else:
+		print("Remove Long Note")
+		REMOVE_LONG_NOTE.emit()
+	
+	#if (notes._long_note == notes.EnumLongNote.FRONT) or _previous_toggle_state != current_state:
+		#print("Remove Long Note second if")

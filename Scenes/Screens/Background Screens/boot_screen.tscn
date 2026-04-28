@@ -1,0 +1,27 @@
+[gd_scene format=3 uid="uid://dv0ajg47xtack"]
+
+[ext_resource type="Script" uid="uid://b57egn3w2wwkx" path="res://Scripts/Screens/BootScreen.gd" id="1_cqaks"]
+[ext_resource type="Texture2D" uid="uid://etsyp7amdmm7" path="res://logo_large_monochrome_dark.png" id="1_nmha2"]
+
+[node name="BootScreen" type="Control" unique_id=22328868 node_paths=PackedStringArray("splash_img")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_cqaks")
+title_screen_path = "uid://cjn1upblkcud"
+splash_img = NodePath("TextureRect")
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=875053410]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_nmha2")
+expand_mode = 1
+stretch_mode = 5

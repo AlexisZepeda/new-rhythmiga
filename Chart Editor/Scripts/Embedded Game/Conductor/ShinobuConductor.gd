@@ -72,8 +72,6 @@ func _process(_delta: float) -> void:
 	
 	if not bgm_sound_player.is_playing():
 		if bgm_sound_player.is_at_stream_end() and not is_finished:
-			print("Finished")
-			
 			is_finished = true
 			finished.emit()
 			bgm_sound_player.stop()
@@ -182,10 +180,12 @@ func load_stream(new_stream: String) -> void:
 
 func pause() -> void:
 	Shinobu.pause()
+	bgm_sound_player.stop()
 
 
 func unpause() -> void:
 	Shinobu.resume()
+	bgm_sound_player.start()
 
 
 func play(_to_time_msec: int=0) -> void:

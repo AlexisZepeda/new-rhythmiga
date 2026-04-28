@@ -8,8 +8,12 @@ extends BaseUIScreen
 @export var shinobu_conductor: ShinobuConductor
 @export var rhythm_game: RhythmGame
 @export var pause_container: MarginContainer
+
+@export_group("Buttons")
+@export var continue_btn: Button
 @export var retry_btn: Button
 @export var song_list_btn: Button
+@export_group("")
 
 
 func _ready() -> void:
@@ -26,8 +30,14 @@ func _ready() -> void:
 
 func _connect_signals() -> void:
 	rhythm_game.game_finished.connect(_on_game_finished)
+	continue_btn.pressed.connect(_on_continue_pressed)
 	retry_btn.pressed.connect(_on_retry_pressed)
 	song_list_btn.pressed.connect(_on_song_list_pressed)
+
+
+func _on_continue_pressed() -> void:
+	#await get_tree().create_timer(3.0).timeout
+	unpause()
 
 
 func _on_game_finished() -> void:
@@ -73,7 +83,5 @@ func pause() -> void:
 func unpause() -> void:
 	pause_container.hide()
 	get_tree().paused = false
-	
-	await get_tree().create_timer(2.0).timeout
 	
 	shinobu_conductor.unpause()

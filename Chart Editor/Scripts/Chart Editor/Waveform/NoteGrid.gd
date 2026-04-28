@@ -243,8 +243,6 @@ func _on_ui_editor_add_long_note(cell: Vector2, _note_position: Vector2=Vector2.
 			note = ChartNote.new(beat, ChartNote.Note_Type.LONG, lane)
 			long_note_sprite = _long_note_grid_sprite_prefab.instantiate()
 			
-			print("Position %s" % sprite_position) 
-			
 			#long_note_sprite.global_position = grid.calculate_map_position_with_offset(cell)
 			long_note_sprite.front_cell = cell
 			if _ticks != 0:
@@ -256,7 +254,6 @@ func _on_ui_editor_add_long_note(cell: Vector2, _note_position: Vector2=Vector2.
 				long_note_sprite.global_position = sprite_position
 			
 			
-			print("set position %s" % long_note_sprite.global_position)
 			note.set_position(long_note_sprite.global_position)
 			
 			_set_cells(cell, NoteType.LONG, long_note_sprite, note)
@@ -266,7 +263,6 @@ func _on_ui_editor_add_long_note(cell: Vector2, _note_position: Vector2=Vector2.
 			#print("Back")
 			#print("Input cell %s" % cell)
 			#print("Cell %s" % grid.calculate_grid_coordinates_with_offset(long_note_sprite.back.global_position))
-			print("Front global position %s" % long_note_sprite.global_position)
 			
 			var scroll_start: Vector2 = Vector2(long_note_sprite.global_position.x + scroll_container.scroll_horizontal, long_note_sprite.global_position.y)
 			var scroll_end: Vector2 = Vector2(long_note_sprite.back.global_position.x + scroll_container.scroll_horizontal, long_note_sprite.back.global_position.y)
@@ -354,7 +350,7 @@ func _on_ui_editor_add_long_arrow_note(cell: Vector2, direction: int,
 				print("Nested long note inside")
 				return
 			
-			if is_arrow_limit(back_cell, NoteType.LONG_ARROW):
+			if is_arrow_limit(cell, NoteType.LONG_ARROW):
 				print("Cannot add more arrow notes.")
 				return
 			
@@ -409,8 +405,7 @@ func _on_ui_editor_add_long_double_arrow_note(cell: Vector2, direction: int, dir
 			long_note_sprite.global_position = sprite_position
 			long_note_sprite.front_cell = cell
 			
-			print("Front cell %s" % cell)
-			
+				
 			if _note_position != Vector2.ZERO:
 				long_note_sprite.global_position = _note_position
 			else:
@@ -515,6 +510,11 @@ func _on_ui_editor_remove_note(cell: Vector2) -> void:
 				
 				current_notes.remove_note(_cells[cell][Keys.NOTE].beat, _cells[cell][Keys.NOTE])
 				_cells.erase(cell)
+
+
+func _on_ui_editor_remove_long_note() -> void:
+	print(long_note_sprite)
+	_on_ui_editor_remove_note(long_note_sprite.front_cell)
 
 
 func _on_ui_editor_hover_long_note(cell: Vector2) -> void:
@@ -744,11 +744,8 @@ func is_occupied(cell: Vector2) -> bool:
 func is_occupied_position(_position: Vector2) -> bool:
 	#print("Cell of picked position %s" % grid.calculate_grid_coordinates_with_offset(_position))
 	#var temp_position: Vector2 = Vector2(_position.x + scroll_container.scroll_horizontal, _position.y)
-	print("Real position %s" % _position)
-	#print("Temp position %s" % temp_position)
 	
 	for array: Array in _occupied_cells_by_position:
-		print("Array %s" % [array])
 		
 		if _position.x < array[OccupiedPositions.START].x:
 			continue
@@ -763,9 +760,6 @@ func is_occupied_position(_position: Vector2) -> bool:
 func is_lines_occupied(_start_position: Vector2, _end_position: Vector2) -> bool:
 	#_start_position = Vector2(_start_position.x + scroll_container.scroll_horizontal, _start_position.y)
 	#_end_position = Vector2(_end_position.x + scroll_container.scroll_horizontal, _end_position.y)
-	
-	print("Start %s" % _start_position)
-	print("End %s" % _end_position)
 	
 	for array: Array in _occupied_cells_by_position:
 		#print("Array %s" % [array])

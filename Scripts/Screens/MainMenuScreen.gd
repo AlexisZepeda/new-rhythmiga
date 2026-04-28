@@ -17,6 +17,8 @@ func _ready() -> void:
 	
 	state = MainUIScreen.UI_Screens.MAIN_MENU
 	
+	MenuMusicPlayer.is_playing_song()
+	
 	all_buttons = GUIUtils.get_all_buttons(button_vbox)
 	
 	for btn: MenuButtonPrefab in all_buttons:
