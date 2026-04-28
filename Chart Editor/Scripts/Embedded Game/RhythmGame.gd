@@ -49,7 +49,6 @@ var judgement_line: float = 0.0
 
 var state: Game_Version = Game_Version.MAIN_GAME
 
-var notes: Array = []
 
 func _ready() -> void:
 	play_stats.reset()
@@ -88,7 +87,7 @@ func _init_game_ui() -> void:
 	game_ui.set_song_panel()
 
 
-func _init_text_notes(_notes: Array) -> void:
+func _init_text_notes() -> void:
 	#note_manager.set_note_beats(notes)
 	#note_manager.create_notes(50.0)
 	
@@ -100,65 +99,35 @@ func _init_text_notes(_notes: Array) -> void:
 	init_game()
 
 
-func _parse_data_text(file: String) -> Array:
-	var beats: Array = []
-	var _beat_dictionary: Dictionary = {}
-	var regex: RegEx = RegEx.new()
-	regex.compile("^[^:]+")
+func _parse_data_text(file: String) -> void:
+	var file_reader: FileReader = FileReader.new()
+	var dictionary: Dictionary = file_reader.beatmap_open(file)
 	
-	#print(file)
+	bpm = dictionary[FileReader.Beatmap_Keys.INIT_BPM]
+	song_offset_sec = dictionary[FileReader.Beatmap_Keys.INIT_BPM]
+	var beat_dictionary: Dictionary = dictionary[FileReader.Beatmap_Keys.NOTES]
 	
-	if FileAccess.file_exists(file):
-		var text_file: FileAccess = FileAccess.open(file, FileAccess.READ)
-		#var content = text_file.get_as_text()
-		
-		bpm = text_file.get_float()
-		song_offset_sec = text_file.get_float()
-		
-		shinobu_conductor.BPM = bpm
-		shinobu_conductor.first_beat_offset_ms = int(song_offset_sec * 1000)
-		
-		while not text_file.eof_reached():
-			var line = text_file.get_line()
-			var result: RegExMatch = regex.search(line)
+	for tick in beat_dictionary:
+		for array: Array in beat_dictionary[tick]:
+			var note: Array = array
+			var note_lane: int = note[0]
+			var note_type: int = note[1]
+			var direction: int = note[2]
+			var direction_2: int = note[3]
 			
-			if result:
-				beats.append(float(result.get_string()))
-				#print(result.get_string())
-				var beat: float = float(result.get_string())
-				var tick: float = float(((beat / GlobalSettings.Duration.SIXTEENTH)) * GlobalSettings.PPQ)
-				
-				#print("Normal beat %s" % beat)
-				#print("Beat %s" % ((beat) / GlobalSettings.Duration.SIXTEENTH))
-				#print("Tick %s" % tick)
-				
-				var separator: int = line.find(":")
-				
-				var content: String = line.substr(separator + 1)
-				
-				var note_type: int = int(content[0])
-				var note_lane: int = int(content[1])
-				var direction: int = int(content[2])
-				var direction_2: int = int(content[3])
-				
-				_beat_dictionary[beat] = [note_type, note_lane, direction, direction_2]
-				
-				match note_lane:
-					0:
-						note_manager.set_notes(beat, note_type, direction, direction_2, tick)
-					1:
-						note_manager_2.set_notes(beat, note_type, direction, direction_2, tick)
-					2:
-						note_manager_3.set_notes(beat, note_type, direction, direction_2, tick)
-					3:
-						note_manager_4.set_notes(beat, note_type, direction, direction_2, tick)
-				
-				#print("Type %s Lane %s Direction %s" % [note_type, note_lane, direction])
-		#print(content)
-	else:
-		printerr("File not found.")
-	
-	return beats
+			var beat: float = tick / GlobalSettings.PPQ
+			
+			match note_lane:
+				0:
+					note_manager.set_notes(beat, note_type, direction, direction_2, tick)
+				1:
+					note_manager_2.set_notes(beat, note_type, direction, direction_2, tick)
+				2:
+					note_manager_3.set_notes(beat, note_type, direction, direction_2, tick)
+				3:
+					note_manager_4.set_notes(beat, note_type, direction, direction_2, tick)
+			
+			play_stats.total_notes += 1
 
 
 func _reinit_queue() -> void:
@@ -226,15 +195,15 @@ func _on_current_notes_changed() -> void:
 				3:
 					note_manager_4.set_notes(beat, note_type, direction, direction_2, tick)
 	
-	_init_text_notes([])
+	_init_text_notes()
 
 
 func init_beatmap(file: String) -> void:
 	#print(file)
 	
-	notes = _parse_data_text(file)
-	play_stats.total_notes = notes.size()
-	_init_text_notes(notes)
+	_parse_data_text(file)
+	#play_stats.total_notes = notes.size()
+	_init_text_notes()
 	
 	#print("BPM %s" % bpm)
 	#print("First beat offset %s" % int(song_offset_sec * 1000))

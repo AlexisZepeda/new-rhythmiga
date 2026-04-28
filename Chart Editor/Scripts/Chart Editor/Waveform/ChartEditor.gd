@@ -147,14 +147,14 @@ func _on_load_beat_map_file_dialog_file_selected(path: String) -> void:
 func _on_export_file_dialog_file_selected(path: String) -> void:
 	var base_path: String = path.get_base_dir()
 	
-	var info_file: FileAccess = FileAccess.open(path, FileAccess.WRITE)
+	#var info_file: FileAccess = FileAccess.open(path, FileAccess.WRITE)
+	#
+	#if FileAccess.get_open_error() == OK:
+		#print("Save file created at %s" % [path])
+	#else:
+		#print(FileAccess.get_open_error())
 	
-	if FileAccess.get_open_error() == OK:
-		print("Save file created at %s" % [path])
-	else:
-		print(FileAccess.get_open_error())
-	
-	export(info_file, base_path)
+	export(path, base_path)
 
 
 func _on_accept_dialog_confirmed() -> void:
@@ -201,14 +201,15 @@ func _file_error() -> void:
 	push_error("Error!")
 
 
-func export(info_file: FileAccess, path: String) -> void:
+func export(info_file: String, path: String) -> void:
 	print("EXPORT INFO DATA")
 	
 	pause()
 	
 	var controls_info: Dictionary = controls_ui.export()
 	print(controls_info)
-	info_file.store_var(controls_info)
+	var file_reader: FileReader = FileReader.new()
+	file_reader.info_create(info_file, controls_info)
 	
 	print("EXPORT BEATMAP")
 	
@@ -220,19 +221,24 @@ func export(info_file: FileAccess, path: String) -> void:
 	
 	var result: Array = note_grid.get_all_notes()
 	
-	var file: FileAccess = FileAccess.open(path + "/" + beatmap_file_name + ".txt", FileAccess.WRITE)
+	
+	#var file: FileAccess = FileAccess.open(path + "/" + beatmap_file_name + ".txt", FileAccess.WRITE)
 	
 	var exported_bpm: float = audio_spectrum_analyzer.bpm
 	var exported_offset: float = audio_spectrum_analyzer.song_offset
 	
-	file.store_float(exported_bpm)
-	file.store_float(exported_offset)
+	var events: Dictionary = {
+	}
 	
-	for note: ChartNote in result:
-		var format: String = "%s:%s%s%s%s\n" % [note.beat, note.type, note.lane, note.direction, note.direction_2]
-		print(format)
-		
-		file.store_string(format)
+	file_reader.beatmap_create(path + "/" + beatmap_file_name + ".dat", result, events, exported_offset, exported_bpm)
+	#file.store_float(exported_bpm)
+	#file.store_float(exported_offset)
+	#
+	#for note: ChartNote in result:
+		#var format: String = "%s:%s%s%s%s\n" % [note.beat, note.type, note.lane, note.direction, note.direction_2]
+		#print(format)
+		#
+		#file.store_string(format)
 	
 	unpause()
 

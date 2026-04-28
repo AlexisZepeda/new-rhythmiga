@@ -60,9 +60,14 @@ static func check_valid_music_files(array: PackedStringArray) -> PackedStringArr
 
 
 static func check_valid_chart_files(array: PackedStringArray) -> PackedStringArray:
+	var temp: PackedStringArray = []
 	var result: PackedStringArray = []
 	
 	for file: String in array:
+		if file.get_extension() == "dat":
+			temp.append(file)
+	
+	for file: String in temp:
 		if file.begins_with("EASY"):
 			result.append(file)
 		elif file.begins_with("MEDIUM"):
@@ -246,18 +251,21 @@ static func open_folder(folder_name: String) -> void:
 	else:
 		print("Folder contains no music")
 	
+	var file_reader: FileReader = FileReader.new()
+	var dictionary: Dictionary = file_reader.info_open(path + "/" + info_dat)
+	
 	## Get info.dat
-	if info_dat != "":
-		var file: FileAccess = FileAccess.open(path + "/" + info_dat, FileAccess.READ)
-		
-		if FileAccess.get_open_error() != OK:
-			print(FileAccess.get_open_error())
-			return
+	#if info_dat != "":
+		#var file: FileAccess = FileAccess.open(path + "/" + info_dat, FileAccess.READ)
+		#
+		#if FileAccess.get_open_error() != OK:
+			#print(FileAccess.get_open_error())
+			#return
 		#else:
 			#print("Opened %s" % [info_dat])
 		
-		var dictionary: Dictionary = file.get_var()
-		
+		#var dictionary: Dictionary = file.get_var()
+	if not dictionary.is_empty():
 		library[folder_name][Library_Keys.SONG_NAME] = dictionary[Library_Keys.SONG_NAME]
 		library[folder_name][Library_Keys.ARTIST] = dictionary[Library_Keys.ARTIST]
 		library[folder_name][Library_Keys.COVER_PATH] = dictionary[Library_Keys.COVER_PATH]
