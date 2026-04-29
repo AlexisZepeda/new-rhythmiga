@@ -7,6 +7,7 @@ extends MarginContainer
 @export var offset_line: LineEdit
 @export var song_properties: SongProperties
 
+
 func _ready() -> void:
 	GlobalSettings.BPM_CHANGED.connect(_on_bpm_changed)
 	GlobalSettings.OFFSET_CHANGED.connect(_on_offset_changed)

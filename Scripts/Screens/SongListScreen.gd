@@ -12,6 +12,11 @@ extends BaseUIScreen
 
 var hovered_btn: NewSongButton
 
+var song_preview_start: float = 0.0
+var song_preview_end: float = 0.0
+
+var looping: bool = false
+
 @onready var margin: MarginContainer = $"Panel/AspectRatioContainer/Panel/MarginContainer"
 
 
@@ -63,9 +68,12 @@ func _on_mouse_entered(btn: NewSongButton) -> void:
 	song_info_container.set_info(btn.song_title_str, btn.artist_str, btn.score_str, btn.cover_art.texture)
 	song_info_container.enable_difficulties(hovered_btn.id)
 	
+	song_preview_start = CustomMusicManager.get_preview_start(hovered_btn.id)
+	song_preview_end = CustomMusicManager.get_preview_end(hovered_btn.id)
+	
 	player.stream = btn.audio_stream
 	
-	player.play()
+	player.start(song_preview_start, song_preview_end)
 
 
 func load_songs() -> void:
@@ -92,7 +100,7 @@ func load_songs() -> void:
 
 func disappear() -> void:
 	song_info_container.disappear_anim()
-	lower_volume()
+	lower_volume(0.75)
 	var buttons = song_button_list.get_children()
 	
 	for button: NewSongButton in buttons:
@@ -111,6 +119,8 @@ func set_all_button_score(difficulty: Enums.Difficulty) -> void:
 		button.set_score(score)
 
 
-func lower_volume() -> void:
+func lower_volume(time: float) -> void:
 	var vol_tween: Tween = create_tween()
-	vol_tween.tween_property(player, "volume_linear", 0.0, 0.75)
+	vol_tween.tween_property(player, "volume_linear", 0.0, time)
+	
+	await vol_tween.finished

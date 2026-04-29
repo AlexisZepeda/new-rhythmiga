@@ -101,6 +101,20 @@ static func get_library_size() -> int:
 		return library.size()
 
 
+static func get_preview_start(id: String) -> float:
+	if library.has(id):
+		return library[id][Library_Keys.SONG_PREVIEW_START]
+	else:
+		return 0.0
+
+
+static func get_preview_end(id: String) -> float:
+	if library.has(id):
+		return library[id][Library_Keys.SONG_PREVIEW_END]
+	else:
+		return 0.0
+
+
 static func get_song_key(index: int) -> String:
 	if library.is_empty():
 		return ""
@@ -269,6 +283,8 @@ static func open_folder(folder_name: String) -> void:
 		library[folder_name][Library_Keys.SONG_NAME] = dictionary[Library_Keys.SONG_NAME]
 		library[folder_name][Library_Keys.ARTIST] = dictionary[Library_Keys.ARTIST]
 		library[folder_name][Library_Keys.COVER_PATH] = dictionary[Library_Keys.COVER_PATH]
+		library[folder_name][Library_Keys.SONG_PREVIEW_START] = dictionary[Library_Keys.SONG_PREVIEW_START]
+		library[folder_name][Library_Keys.SONG_PREVIEW_END] = dictionary[Library_Keys.SONG_PREVIEW_END]
 		
 	
 	## Get beatmap paths
