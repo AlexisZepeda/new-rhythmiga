@@ -54,6 +54,8 @@ func _on_slide_toggled(toggled_on: bool) -> void:
 
 
 func _on_double_slide_toggled(toggled_on: bool) -> void:
+	
+	
 	if toggled_on:
 		double_slide_trigger_button.set_toggled()
 		_set_button_pressed(double_slide_trigger_button, false)
@@ -64,6 +66,8 @@ func _on_double_slide_toggled(toggled_on: bool) -> void:
 
 
 func _on_hold_toggled(toggled_on: bool) -> void:
+	
+	
 	if toggled_on:
 		hold_trigger_button.set_toggled()
 		_set_button_pressed(hold_trigger_button, false)
@@ -74,6 +78,8 @@ func _on_hold_toggled(toggled_on: bool) -> void:
 
 
 func _on_hold_slide_toggled(toggled_on: bool) -> void:
+	
+	
 	if toggled_on:
 		hold_slide_trigger_button.set_toggled()
 		_set_button_pressed(hold_slide_trigger_button, false)
@@ -84,6 +90,8 @@ func _on_hold_slide_toggled(toggled_on: bool) -> void:
 
 
 func _on_hold_double_slide_toggled(toggled_on: bool) -> void:
+	
+	
 	if toggled_on:
 		hold_double_slide_trigger_button.set_toggled()
 		_set_button_pressed(hold_double_slide_trigger_button, false)
@@ -91,3 +99,4 @@ func _on_hold_double_slide_toggled(toggled_on: bool) -> void:
 		hold_double_slide_trigger_button.set_untoggled()
 	
 	long_double_arrow_toggled.emit(toggled_on)
+	

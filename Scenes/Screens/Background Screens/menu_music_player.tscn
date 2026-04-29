@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://bxnayflp2axuf"]
+
+[ext_resource type="Script" uid="uid://j20ds02lt6v1" path="res://Scripts/Globals/MenuMusicPlayer.gd" id="1_lnns8"]
+
+[node name="MenuMusicPlayer" type="Node" unique_id=943162063 node_paths=PackedStringArray("audio_stream_player")]
+script = ExtResource("1_lnns8")
+audio_stream_player = NodePath("AudioStreamPlayer")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=457777210]
+bus = &"Music"

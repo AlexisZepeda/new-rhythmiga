@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://c8ltvmkvr0626"]
+
+[ext_resource type="Script" uid="uid://d0b3i6jki52il" path="res://Chart Editor/Scripts/Embedded Game/Conductor/ShinobuConductor.gd" id="1_un24v"]
+
+[node name="ShinobuConductor" type="Node" unique_id=1680695679]
+script = ExtResource("1_un24v")
+sound_file = "res://Chart Editor/Music/Battle Theme #1 Ogg.ogg"

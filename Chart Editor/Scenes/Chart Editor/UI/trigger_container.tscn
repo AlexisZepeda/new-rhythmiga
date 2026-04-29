@@ -8,6 +8,9 @@
 [ext_resource type="Texture2D" uid="uid://ckx4ypvnbn3qd" path="res://Chart Editor/Sprites/Embedded Game/Long Front.png" id="5_7yrfd"]
 [ext_resource type="Texture2D" uid="uid://cvwwb6eh14c26" path="res://Chart Editor/Sprites/Chart Editor/Button Icons/Hold Double Slide Button Icon.png" id="6_xcfh2"]
 
+[sub_resource type="ButtonGroup" id="ButtonGroup_qlakp"]
+allow_unpress = true
+
 [sub_resource type="ButtonGroup" id="ButtonGroup_432ka"]
 allow_unpress = true
 
@@ -21,9 +24,6 @@ allow_unpress = true
 allow_unpress = true
 
 [sub_resource type="ButtonGroup" id="ButtonGroup_5itxb"]
-allow_unpress = true
-
-[sub_resource type="ButtonGroup" id="ButtonGroup_kyxy2"]
 allow_unpress = true
 
 [node name="Trigger Container" type="GridContainer" unique_id=258296530 node_paths=PackedStringArray("tap_trigger_button", "slide_trigger_button", "double_slide_trigger_button", "hold_trigger_button", "hold_slide_trigger_button", "hold_double_slide_trigger_button")]
@@ -42,35 +42,35 @@ hold_double_slide_trigger_button = NodePath("Hold Double Slide")
 
 [node name="Tap" parent="." unique_id=1762702933 instance=ExtResource("1_vuodm")]
 layout_mode = 2
-button_group = SubResource("ButtonGroup_432ka")
+button_group = SubResource("ButtonGroup_qlakp")
 texture_normal = ExtResource("2_gtnif")
 texture_pressed = ExtResource("2_gtnif")
 
 [node name="Slide" parent="." unique_id=972612279 instance=ExtResource("1_vuodm")]
 layout_mode = 2
-button_group = SubResource("ButtonGroup_qina3")
+button_group = SubResource("ButtonGroup_432ka")
 texture_normal = ExtResource("3_sufe5")
 texture_pressed = ExtResource("3_sufe5")
 
 [node name="Double Slide" parent="." unique_id=1057287244 instance=ExtResource("1_vuodm")]
 layout_mode = 2
-button_group = SubResource("ButtonGroup_ra7ml")
+button_group = SubResource("ButtonGroup_qina3")
 texture_normal = ExtResource("4_7xh57")
 texture_pressed = ExtResource("4_7xh57")
 
 [node name="Hold" parent="." unique_id=1188445769 instance=ExtResource("1_vuodm")]
 layout_mode = 2
-button_group = SubResource("ButtonGroup_1yj73")
+button_group = SubResource("ButtonGroup_ra7ml")
 texture_normal = ExtResource("5_7yrfd")
 texture_pressed = ExtResource("5_7yrfd")
 
 [node name="Hold Slide" parent="." unique_id=2096715265 instance=ExtResource("1_vuodm")]
 layout_mode = 2
-button_group = SubResource("ButtonGroup_5itxb")
+button_group = SubResource("ButtonGroup_1yj73")
 
 [node name="Hold Double Slide" parent="." unique_id=354322152 instance=ExtResource("1_vuodm")]
 layout_mode = 2
-button_group = SubResource("ButtonGroup_kyxy2")
+button_group = SubResource("ButtonGroup_5itxb")
 texture_normal = ExtResource("6_xcfh2")
 texture_pressed = ExtResource("6_xcfh2")
 

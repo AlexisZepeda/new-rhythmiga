@@ -58,15 +58,17 @@ func _set_preview_pressed() -> void:
 
 
 func _cover_file_dialog_file_selected(path: String) -> void:
-	cover_art_path = path
-	
-	cover_path.set_text(path.get_file())
-	
-	var texture: ImageTexture = ImageTexture.new()
-	var image: Image = Image.load_from_file(path)
-	texture.set_image(image)
-	
-	cover_art.set_texture(texture)
+	if FileAccess.file_exists(path):
+		
+		cover_art_path = path
+		
+		cover_path.set_text(path.get_file())
+		
+		var texture: ImageTexture = ImageTexture.new()
+		var image: Image = Image.load_from_file(path)
+		texture.set_image(image)
+		
+		cover_art.set_texture(texture)
 
 
 func _difficulty_btn_pressed(index: int) -> void:

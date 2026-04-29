@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://d3tcsll630mrm" path="res://Scenes/UI Prefabs/inner_side_panel.tscn" id="2_esvqc"]
 [ext_resource type="PackedScene" uid="uid://dnmngvc88hvjb" path="res://Scenes/UI Prefabs/new_song_button.tscn" id="2_h0nqk"]
 [ext_resource type="PackedScene" uid="uid://d2im1lieant15" path="res://Scenes/UI Prefabs/song_info_container.tscn" id="6_1wg0l"]
+[ext_resource type="Script" uid="uid://d2nqibtec6iav" path="res://Scripts/UI Prefabs/AudioClipPlayer.gd" id="7_7i15l"]
 
 [node name="Song List Screen" type="Control" unique_id=289960780 node_paths=PackedStringArray("back_button", "play_button", "song_button_list", "song_info_container", "player")]
 layout_mode = 3
@@ -93,5 +94,9 @@ grow_horizontal = 0
 grow_vertical = 0
 text = "Play"
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1202427037]
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1202427037 node_paths=PackedStringArray("timer")]
 bus = &"Music"
+script = ExtResource("7_7i15l")
+timer = NodePath("Timer")
+
+[node name="Timer" type="Timer" parent="AudioStreamPlayer" unique_id=184141428]

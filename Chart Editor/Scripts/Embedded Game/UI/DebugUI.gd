@@ -41,7 +41,7 @@ func set_note_delta_labels(note_delta: float, note_delta_2: float, note_delta_3:
 	label_2.set_text("ND NM2 %s" % str(note_delta_2))
 	label_3.set_text("ND NM3 %s" % str(note_delta_3))
 	label_4.set_text("ND NM4 %s" % str(note_delta_4))
-	label_beat.set_text("Beat %s" % str(rhythm_game.conductor.get_current_beat()))
+	label_beat.set_text("Beat %s" % str(rhythm_game.shinobu_conductor.get_current_tick()))
 
 
 func print_queue(queue: PriorityQueue) -> void:

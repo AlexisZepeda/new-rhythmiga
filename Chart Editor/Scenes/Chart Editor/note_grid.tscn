@@ -1,0 +1,23 @@
+[gd_scene format=3 uid="uid://ci83pft0ibm6c"]
+
+[ext_resource type="Script" uid="uid://c03cosy1k4oyt" path="res://Chart Editor/Scripts/Chart Editor/Waveform/NoteGrid.gd" id="1_jueqn"]
+[ext_resource type="Resource" uid="uid://cly1g0vof1dv3" path="res://Chart Editor/Resources/grid.tres" id="2_3qraq"]
+[ext_resource type="Resource" uid="uid://byovroyvcdtjs" path="res://Chart Editor/Resources/CurrentNotesResource.tres" id="3_d173c"]
+[ext_resource type="Texture2D" uid="uid://ng76ijks21wg" path="res://Chart Editor/Sprites/Chart Editor/Tap_Icon.png" id="4_ktq20"]
+[ext_resource type="PackedScene" uid="uid://dyxfds618a6qr" path="res://Chart Editor/Scenes/Chart Editor/Notes/long_note.tscn" id="5_j1bnf"]
+[ext_resource type="PackedScene" uid="uid://ditg4gdfaoijp" path="res://Chart Editor/Scenes/Chart Editor/Notes/long_note_arrow.tscn" id="6_eefvl"]
+[ext_resource type="PackedScene" uid="uid://hbscbqcylg8g" path="res://Chart Editor/Scenes/Chart Editor/Notes/long_note_double_arrow.tscn" id="7_einu5"]
+[ext_resource type="PackedScene" uid="uid://biw8mpkjadx1i" path="res://Chart Editor/Scenes/Chart Editor/Notes/arrow_note.tscn" id="8_vmekw"]
+[ext_resource type="PackedScene" uid="uid://bs6krm1xsekj2" path="res://Chart Editor/Scenes/Chart Editor/Notes/double_arrow_note.tscn" id="9_di8av"]
+
+[node name="NoteGrid" type="Node2D" unique_id=1667884485 node_paths=PackedStringArray("scroll_container")]
+script = ExtResource("1_jueqn")
+grid = ExtResource("2_3qraq")
+current_notes = ExtResource("3_d173c")
+_tap_texture = ExtResource("4_ktq20")
+scroll_container = NodePath("")
+_long_note_grid_sprite_prefab = ExtResource("5_j1bnf")
+_long_note_arrow_grid_sprite_prefab = ExtResource("6_eefvl")
+_long_note_double_arrow_grid_sprite_prefab = ExtResource("7_einu5")
+_arrow_note_grid_sprite_prefab = ExtResource("8_vmekw")
+_double_arrow_note_grid_sprite_prefab = ExtResource("9_di8av")

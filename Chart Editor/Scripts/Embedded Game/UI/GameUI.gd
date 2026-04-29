@@ -6,6 +6,7 @@ extends Control
 @export var song_progress_bar: ProgressBar
 
 @export var song_name: SongPanel
+@export var chain_label: Label
 @export var score_label: Label
 
 @export var start_label: PackedScene
@@ -24,19 +25,22 @@ var song_length: float = 0.0
 
 
 func _ready() -> void:
-	rhythm_game.conductor.loaded_new_stream.connect(_on_loaded_new_stream)
+	rhythm_game.shinobu_conductor.loaded_new_stream.connect(_on_loaded_new_stream)
 	rhythm_game.play_stats.changed.connect(_on_play_stats_changed)
 	
 	song_name.visible = false
 	
-	if rhythm_game.conductor.stream != null:
-		song_length = rhythm_game.conductor.stream.get_length()
+	#if rhythm_game.conductor.stream != null:
+		#song_length = rhythm_game.conductor.stream.get_length()
+	
+	if not rhythm_game.shinobu_conductor.is_empty():
+		song_length = rhythm_game.shinobu_conductor.get_length()
 	
 	#song_name.set_text(CustomMusicManager.library[CustomMusicManager.current_id][CustomMusicManager.Library_Keys.SONG_NAME])
 
 
 func _process(_delta: float) -> void:
-	song_progress_bar.value = rhythm_game.conductor.get_playback_position() / song_length
+	song_progress_bar.value = rhythm_game.shinobu_conductor.get_playback_position() / song_length
 
 
 func _on_hit_type(hit_type: Enums.Hit_Type, label_position: Vector2) -> void:
@@ -61,14 +65,14 @@ func _on_hit_type(hit_type: Enums.Hit_Type, label_position: Vector2) -> void:
 
 
 func _on_loaded_new_stream() -> void: 
-	if rhythm_game.conductor.stream != null:
-		song_length = rhythm_game.conductor.stream.get_length()
+	if not rhythm_game.shinobu_conductor.is_empty():
+		song_length = rhythm_game.shinobu_conductor.get_length()
 	#song_progress_bar.max_value = rhythm_game.conductor.stream.get_length()
 
 
 func _on_play_stats_changed() -> void:
 	score_label.set_score(rhythm_game.play_stats.target_score)
-	
+	set_chain()
 	#score_label.set_text(str(rhythm_game.play_stats.target_score))
 
 
@@ -79,6 +83,19 @@ func init_game_signals(note_manager: NoteManager) -> void:
 func set_song_panel() -> void:
 	song_name.visible = true
 	song_name.set_info()
+
+
+func set_chain() -> void:
+	var combo: int = rhythm_game.play_stats.combo
+	
+	if combo == 0:
+		chain_label.visible = false
+	else:
+		chain_label.visible = true
+	
+	var chain: String = "%s chain" % rhythm_game.play_stats.combo
+	
+	chain_label.set_text(chain)
 
 
 func start_animation() -> void:

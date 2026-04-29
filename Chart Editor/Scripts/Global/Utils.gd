@@ -5,7 +5,7 @@ const OGG_EXTENSION: String = "ogg"
 
 
 static func create_audio_stream(path: String) -> AudioStream:
-	print("Create Audio Stream Audio Path %s" % path)
+	#print("Create Audio Stream Audio Path %s" % path)
 	var extension: String = path.get_extension()
 	var audio_stream: AudioStream = null
 	
@@ -43,3 +43,7 @@ static func set_score(score_int: int) -> String:
 
 static func get_difficulty(difficulty: Enums.Difficulty) -> String:
 	return (Enums.Difficulty.keys()[difficulty]).to_pascal_case()
+
+
+static func get_beat(ticks: int) -> float:
+	return float(ticks) / GlobalSettings.PPQ

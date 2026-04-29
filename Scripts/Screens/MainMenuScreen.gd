@@ -17,6 +17,8 @@ func _ready() -> void:
 	
 	state = MainUIScreen.UI_Screens.MAIN_MENU
 	
+	MenuMusicPlayer.is_playing_song()
+	
 	all_buttons = GUIUtils.get_all_buttons(button_vbox)
 	
 	for btn: MenuButtonPrefab in all_buttons:
@@ -36,10 +38,12 @@ func _on_pressed(button: MenuButtonPrefab) -> void:
 		MainUIScreen.UI_Screens.SONG_LIST:
 			CHANGING_SCENE.emit(button_position, "Quickplay", button.screen)
 			scene_path = song_list_menu_path
+			MenuMusicPlayer.lower_volume()
 		MainUIScreen.UI_Screens.CHART_EDITOR:
 			CHANGING_SCENE.emit(button_position, "Editor", button.screen)
 			scene_path = chart_editor_menu_path
 			GlobalBackground.disappear_shader()
+			MenuMusicPlayer.lower_volume()
 		MainUIScreen.UI_Screens.SETTINGS:
 			CHANGING_SCENE.emit(button_position, "Settings", button.screen)
 			scene_path = settings_menu_path

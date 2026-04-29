@@ -62,12 +62,12 @@ func _process(_delta: float) -> void:
 		front_note_type = Enums.Note_Type.NONE
 		return
 
-	var curr_beat := _get_curr_beat()
+	var curr_tick: float = _get_current_tick()
 	
 	for i in range(_notes.size()):
 		if is_instance_valid(_notes[i]):
 			var _note: Note = _notes[i]
-			_note.update_beat(curr_beat)
+			_note.update_tick(curr_tick)
 	
 	if EmbeddedGlobalSettings.enable_auto_input:
 		_auto_process_note()
@@ -101,7 +101,7 @@ func _auto_process_note() -> void:
 		#var note := _notes[0] as Note
 		if is_instance_valid(_notes.back()):
 			var note: Note = _notes.back()
-			var note_delta := _get_note_delta(note)
+			var note_delta := _get_tick_delta(note)
 			
 			if -Note.HIT_MARGIN_PERFECT <= note_delta and note_delta <= Note.HIT_MARGIN_PERFECT:
 				if note is TapNote:
@@ -132,11 +132,11 @@ func _miss_old_notes() -> void:
 		#var note := _notes[0] as Note
 		if is_instance_valid(_notes.back()):
 			var note: Note = _notes.back()
-			var note_delta := _get_note_delta(note)
+			var note_delta := _get_tick_delta(note)
 			
 			if note_delta > Note.HIT_MARGIN_GOOD:
 				# Time is past the note's hit window, miss.
-				print("Miss old note %s at current beat %s note delta %s" % [note.beat, _get_curr_beat(), note_delta])
+				print("Miss old note %s at current beat %s note delta %s" % [note.beat, _get_current_tick(), note_delta])
 				
 				
 				if note is LongNote:
@@ -172,6 +172,13 @@ func _get_note_delta(note: Note) -> float:
 	return beat_delta * rhythm_game.conductor.get_beat_duration()
 
 
+func _get_tick_delta(note: Note) -> float:
+	var curr_tick: float = _get_current_tick()
+	var tick_delta: float = curr_tick - note.tick
+	
+	return tick_delta * rhythm_game.shinobu_conductor.get_ppq_duration()
+
+
 func _get_curr_beat() -> float:
 	var curr_beat: float
 	match time_type:
@@ -191,6 +198,13 @@ func _get_curr_beat() -> float:
 	
 	return curr_beat
 
+
+func _get_current_tick() -> float:
+	var curr_tick: float = rhythm_game.shinobu_conductor.get_tick()
+	
+	return curr_tick
+
+
 func flush_notes() -> void:
 	_beats.clear()
 	_notes.clear()
@@ -204,8 +218,8 @@ func set_note_beats(param_array) -> void:
 	_note_beats.sort()
 
 
-func set_notes(beat: float, type: int, direction: int, direction_2: int) -> void:
-	_beats[beat] = [type, direction, direction_2]
+func set_notes(beat: float, type: int, direction: int, direction_2: int, tick: float) -> void:
+	_beats[beat] = [type, direction, direction_2, tick]
 	_beats.sort()
 
 
@@ -246,8 +260,9 @@ func create_notes(y_offset: float) -> void:
 			Enums.Note_Type.LONG_BACK:
 				note = LONG_BACK_NOTE_SCENE.instantiate() as LongBackNote
 				
-				_last_long_note.back_note = note
-				note.line = _last_long_note.line
+				if is_instance_valid(_last_long_note):
+					_last_long_note.back_note = note
+					note.line = _last_long_note.line
 				note.held = true
 			Enums.Note_Type.LONG_SLIDE:
 				note = LONG_SLIDE_NOTE_SCENE.instantiate() as LongSlideNote
@@ -255,8 +270,9 @@ func create_notes(y_offset: float) -> void:
 				var direction =  _beats[beat][1]
 				note.direction = direction as Enums.Direction
 				
-				_last_long_note.back_note = note
-				note.line = _last_long_note.line
+				if is_instance_valid(_last_long_note):
+					_last_long_note.back_note = note
+					note.line = _last_long_note.line
 				note.held = true
 			Enums.Note_Type.LONG_DOUBLE_SLIDE:
 				note = LONG_DOUBLE_SLIDE_NOTE_SCENE.instantiate() as LongDoubleSlide
@@ -266,14 +282,18 @@ func create_notes(y_offset: float) -> void:
 				note.direction_1 = direction as Enums.Direction
 				note.direction_2 = direction_2 as Enums.Direction
 				
-				_last_long_note.back_note = note
-				note.line = _last_long_note.line
+				if is_instance_valid(_last_long_note):
+					_last_long_note.back_note = note
+					note.line = _last_long_note.line
 				note.held = true
 		
 		note.y_offset = y_offset
 		note.beat = beat
-		note.conductor = rhythm_game.conductor
-		note.update_beat(-100)
+		note.tick = _beats[beat][3]
+		
+		note.conductor = rhythm_game.shinobu_conductor
+		#note.update_beat(-100)
+		note.update_tick(-100)
 		note.note_hit.connect(_on_note_hit)
 		add_child(note)
 		_notes.push_front(note)
@@ -286,10 +306,7 @@ func get_note_delta_of_first_note() -> float:
 	if is_instance_valid(_notes.back()):
 		var note: Note = _notes.back()
 		
-		var curr_beat := _get_curr_beat()
-		var beat_delta := curr_beat - note.beat
-		
-		return beat_delta * rhythm_game.conductor.get_beat_duration()
+		return _get_tick_delta(note)
 	
 	return MAX_NOTE_DELTA
 
@@ -335,7 +352,7 @@ func pop_back() -> void:
 ## Handles the note when a key has been pressed.
 func handle_press(key: Key) -> bool:
 	print("	HANDLE PRESS %s" % self)
-	print("	Pressed Song time %s" % str(rhythm_game.conductor.get_song_time()))
+	print("	Pressed Song time %s" % str(rhythm_game.shinobu_conductor.get_song_time()))
 	
 	if _notes.is_empty():
 		return false
@@ -345,9 +362,9 @@ func handle_press(key: Key) -> bool:
 		return false
 	
 	var note: Note = _notes.back()
-	var hit_delta: float = _get_note_delta(note)
+	var hit_delta: float = _get_tick_delta(note)
 	
-	print("	Current beat %s" % _get_curr_beat())
+	print("	Current beat %s" % _get_current_tick())
 	print("	Note %s beat %s" % [note, note.beat])
 	print("	Is long note %s" % [note is LongNote])
 	
@@ -391,7 +408,7 @@ func handle_press(key: Key) -> bool:
 ## Handles the note when a key has been released.
 func handle_release(key: Key) -> bool:
 	print("	HANDLE RELEASE")
-	print("	Release Song time %s" % str(rhythm_game.conductor.get_song_time()))
+	print("	Release Song time %s" % str(rhythm_game.shinobu_conductor.get_song_time()))
 	
 	if _notes.is_empty():
 		return false
@@ -401,9 +418,9 @@ func handle_release(key: Key) -> bool:
 		return false
 	
 	var note: Note = _notes.back()
-	var hit_delta: float = _get_note_delta(note)
+	var hit_delta: float = _get_tick_delta(note)
 	
-	print("	Current beat %s" % _get_curr_beat())
+	print("	Current beat %s" % _get_current_tick())
 	print("	Note %s beat %s" % [note, note.beat])
 	print("	note held %s and is longbacknote %s" % [note.held, (note is LongBackNote)])
 	
@@ -462,7 +479,7 @@ func handle_slide(direction: Enums.Direction) -> bool:
 		return false
 	
 	var note: Note = _notes.back()
-	var hit_delta: float = _get_note_delta(note)
+	var hit_delta: float = _get_tick_delta(note)
 	print("Evaluate at %s" % str(Time.get_ticks_usec() / 1000000.0))
 	
 	print("Is LongSlide %s" % [note is LongSlideNote])
@@ -494,7 +511,7 @@ func handle_double_slide(direction_right: Enums.Direction, direction_left: Enums
 		return false
 	
 	var note: Note = _notes.back()
-	var hit_delta: float = _get_note_delta(note)
+	var hit_delta: float = _get_tick_delta(note)
 	print("Evaluate at %s" % str(Time.get_ticks_usec() / 1000000.0))
 	
 	if note is DoubleSlideNote or note is LongDoubleSlide:

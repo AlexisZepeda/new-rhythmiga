@@ -147,6 +147,7 @@ size_flags_vertical = 6
 text = "Artist Name"
 
 [node name="Album" type="Label" parent="HBoxContainer/VBoxContainer" unique_id=518823815]
+visible = false
 layout_mode = 2
 size_flags_vertical = 6
 text = "Album"

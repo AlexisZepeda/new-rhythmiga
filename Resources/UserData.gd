@@ -17,8 +17,7 @@ static func load_data() -> void:
 	
 	if FileAccess.get_open_error() == OK:
 		save_data = file.get_var(true)
-		print(save_data)
-		print("Loaded")
+		print("Loaded User Data")
 
 
 static func save_score(score: int, difficulty: Enums.Difficulty) -> void:

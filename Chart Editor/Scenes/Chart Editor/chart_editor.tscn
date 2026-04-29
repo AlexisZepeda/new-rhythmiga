@@ -6,6 +6,7 @@
 [ext_resource type="Script" uid="uid://bghhbi5ityirq" path="res://Chart Editor/Scripts/Chart Editor/ChartEditorInputManager.gd" id="2_oui72"]
 [ext_resource type="Script" uid="uid://c3fswcg1dbr26" path="res://Chart Editor/Scripts/Chart Editor/UI/AudioSpectrum.gd" id="3_aj5v7"]
 [ext_resource type="Script" uid="uid://1bcgusmumeqv" path="res://Chart Editor/Scripts/Chart Editor/Waveform/conductor.gd" id="3_cvwhq"]
+[ext_resource type="Script" uid="uid://d0b3i6jki52il" path="res://Chart Editor/Scripts/Embedded Game/Conductor/ShinobuConductor.gd" id="4_ayos4"]
 [ext_resource type="Script" uid="uid://mylq68cj0xq2" path="res://Chart Editor/Scripts/Chart Editor/Waveform/lines.gd" id="4_cvwhq"]
 [ext_resource type="PackedScene" uid="uid://d3pjuoiblys3b" path="res://Chart Editor/Scenes/Chart Editor/UI/audio_file_dialog.tscn" id="4_fixri"]
 [ext_resource type="AudioStream" uid="uid://cgxd6qo0usaar" path="res://Chart Editor/Music/Timer SFX.wav" id="4_vi0dp"]
@@ -39,7 +40,7 @@
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_p4nwx"]
 bg_color = Color(0.6, 0.6, 0.6, 0.19607843)
 
-[node name="Chart Editor" type="Control" unique_id=1425754862 node_paths=PackedStringArray("file_menu_bar", "controls_ui", "audio_spectrum_analyzer", "scroll_container", "cursor", "loading_screen", "note_grid", "conductor", "audio_file_dialog", "beat_map_file_dialog", "load_map_file_dialog", "export_file_dialog", "accept_dialog")]
+[node name="Chart Editor" type="Control" unique_id=1425754862 node_paths=PackedStringArray("file_menu_bar", "controls_ui", "audio_spectrum_analyzer", "scroll_container", "cursor", "loading_screen", "note_grid", "shinobu_conductor", "audio_file_dialog", "beat_map_file_dialog", "load_map_file_dialog", "export_file_dialog", "accept_dialog")]
 process_mode = 3
 layout_mode = 3
 anchors_preset = 15
@@ -60,7 +61,7 @@ scroll_container = NodePath("VBoxContainer/WaveformContainer/SubViewport/CanvasL
 cursor = NodePath("VBoxContainer/WaveformContainer/SubViewport/CanvasLayer/UI Editor/AudioSpectrum/ScrollContainer/TextureRect/Lines/Cursor")
 loading_screen = NodePath("Loading")
 note_grid = NodePath("VBoxContainer/WaveformContainer/SubViewport/CanvasLayer/UI Editor/AudioSpectrum/ScrollContainer/TextureRect/Lines/NoteGrid")
-conductor = NodePath("Conductor")
+shinobu_conductor = NodePath("ShinobuConductor")
 audio_file_dialog = NodePath("Audio File Dialog")
 beat_map_file_dialog = NodePath("Beat Map File Dialog")
 load_map_file_dialog = NodePath("Load Beat Map File Dialog")
@@ -74,16 +75,20 @@ script = ExtResource("2_oui72")
 chart_editor = NodePath("..")
 conductor = NodePath("../Conductor")
 
+[node name="ShinobuConductor" type="Node" parent="." unique_id=1891233804]
+script = ExtResource("4_ayos4")
+metadata/_custom_type_script = "uid://d0b3i6jki52il"
+
 [node name="Conductor" type="AudioStreamPlayer" parent="." unique_id=809467193]
 bus = &"Music"
 script = ExtResource("3_cvwhq")
 note_duration = 4
 metadata/_custom_type_script = "uid://1bcgusmumeqv"
 
-[node name="Metronome" type="AudioStreamPlayer" parent="." unique_id=195110765 node_paths=PackedStringArray("conductor")]
+[node name="Metronome" type="AudioStreamPlayer" parent="." unique_id=195110765 node_paths=PackedStringArray("shinobu_conductor")]
 stream = ExtResource("4_vi0dp")
 script = ExtResource("5_i7pu8")
-conductor = NodePath("../Conductor")
+shinobu_conductor = NodePath("../ShinobuConductor")
 
 [node name="Audio File Dialog" parent="." unique_id=2128614875 instance=ExtResource("4_fixri")]
 
@@ -298,10 +303,10 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 color = Color(0, 0, 0, 1)
 
-[node name="Rhythm Game" parent="VBoxContainer/HBoxContainer/EmbeddedGameCenterContainer/VBoxContainer/EmbeddedGameContainer/SubViewport" unique_id=872145979 node_paths=PackedStringArray("conductor") instance=ExtResource("22_sti4a")]
+[node name="Rhythm Game" parent="VBoxContainer/HBoxContainer/EmbeddedGameCenterContainer/VBoxContainer/EmbeddedGameContainer/SubViewport" unique_id=872145979 node_paths=PackedStringArray("shinobu_conductor") instance=ExtResource("22_sti4a")]
 process_mode = 1
 current_notes = ExtResource("23_ll1b4")
-conductor = NodePath("../../../../../../../Conductor")
+shinobu_conductor = NodePath("../../../../../../../ShinobuConductor")
 
 [node name="WaveformContainer" type="SubViewportContainer" parent="VBoxContainer" unique_id=638802155]
 custom_minimum_size = Vector2(480, 200)
@@ -332,7 +337,7 @@ lines = NodePath("AudioSpectrum/ScrollContainer/TextureRect/Lines")
 notes = NodePath("AudioSpectrum/ScrollContainer/TextureRect/Lines/NoteGrid")
 audio_spectrum_analyzer = NodePath("AudioSpectrum")
 
-[node name="AudioSpectrum" type="MarginContainer" parent="VBoxContainer/WaveformContainer/SubViewport/CanvasLayer/UI Editor" unique_id=1263376185 node_paths=PackedStringArray("rhythm_game", "metronome", "player", "timeline_texture", "scroll_container", "option_menu", "spinbox_bpm", "offset_line_edit", "time_graph", "lines")]
+[node name="AudioSpectrum" type="MarginContainer" parent="VBoxContainer/WaveformContainer/SubViewport/CanvasLayer/UI Editor" unique_id=1263376185 node_paths=PackedStringArray("rhythm_game", "metronome", "shinobu_conductor", "timeline_texture", "scroll_container", "option_menu", "spinbox_bpm", "offset_line_edit", "time_graph", "lines")]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -342,7 +347,7 @@ grow_vertical = 2
 script = ExtResource("3_aj5v7")
 rhythm_game = NodePath("../../../../../HBoxContainer/EmbeddedGameCenterContainer/VBoxContainer/EmbeddedGameContainer/SubViewport/Rhythm Game")
 metronome = NodePath("../../../../../../Metronome")
-player = NodePath("../../../../../../Conductor")
+shinobu_conductor = NodePath("../../../../../../ShinobuConductor")
 timeline_texture = NodePath("ScrollContainer/TextureRect")
 scroll_container = NodePath("ScrollContainer")
 option_menu = NodePath("../../../../../HBoxContainer/ControlsContainer/Controls/TabContainer/Settings/Chart Settings/Beat Snap")
@@ -492,6 +497,7 @@ offset_bottom = 40.0
 [connection signal="ADD_TAP_NOTE" from="VBoxContainer/WaveformContainer/SubViewport/CanvasLayer/UI Editor" to="VBoxContainer/WaveformContainer/SubViewport/CanvasLayer/UI Editor/AudioSpectrum/ScrollContainer/TextureRect/Lines/NoteGrid" method="_on_ui_editor_add_tap_note"]
 [connection signal="DROP_TAP_NOTE" from="VBoxContainer/WaveformContainer/SubViewport/CanvasLayer/UI Editor" to="VBoxContainer/WaveformContainer/SubViewport/CanvasLayer/UI Editor/AudioSpectrum/ScrollContainer/TextureRect/Lines/NoteGrid" method="_on_ui_editor_drop_tap_note"]
 [connection signal="HOVER_LONG_NOTE" from="VBoxContainer/WaveformContainer/SubViewport/CanvasLayer/UI Editor" to="VBoxContainer/WaveformContainer/SubViewport/CanvasLayer/UI Editor/AudioSpectrum/ScrollContainer/TextureRect/Lines/NoteGrid" method="_on_ui_editor_hover_long_note"]
+[connection signal="REMOVE_LONG_NOTE" from="VBoxContainer/WaveformContainer/SubViewport/CanvasLayer/UI Editor" to="VBoxContainer/WaveformContainer/SubViewport/CanvasLayer/UI Editor/AudioSpectrum/ScrollContainer/TextureRect/Lines/NoteGrid" method="_on_ui_editor_remove_long_note"]
 [connection signal="REMOVE_NOTE" from="VBoxContainer/WaveformContainer/SubViewport/CanvasLayer/UI Editor" to="VBoxContainer/WaveformContainer/SubViewport/CanvasLayer/UI Editor/AudioSpectrum/ScrollContainer/TextureRect/Lines/NoteGrid" method="_on_ui_editor_remove_note"]
 [connection signal="IMAGE_LENGTH_CHANGED" from="VBoxContainer/WaveformContainer/SubViewport/CanvasLayer/UI Editor/AudioSpectrum/ScrollContainer/TextureRect/Lines" to="VBoxContainer/WaveformContainer/SubViewport/CanvasLayer/UI Editor/AudioSpectrum" method="_on_lines_image_length_changed"]
 [connection signal="IMAGE_LENGTH_CHANGED" from="VBoxContainer/WaveformContainer/SubViewport/CanvasLayer/UI Editor/AudioSpectrum/ScrollContainer/TextureRect/Lines" to="VBoxContainer/WaveformContainer/SubViewport/CanvasLayer/UI Editor/AudioSpectrum/ScrollContainer/TextureRect/Lines/Cursor" method="_on_lines_image_length_changed"]

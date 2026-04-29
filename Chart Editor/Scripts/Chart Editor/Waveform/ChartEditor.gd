@@ -15,7 +15,8 @@ const FILE_EXTENSION: String = ".dat"
 @export var cursor: Cursor
 @export var loading_screen: ColorRect
 @export var note_grid: NoteGrid
-@export var conductor: ChartConductor
+#@export var conductor: ChartConductor
+@export var shinobu_conductor: ShinobuConductor
 @export var audio_file_dialog: FileDialog
 @export var beat_map_file_dialog: FileDialog
 @export var load_map_file_dialog: FileDialog
@@ -59,8 +60,8 @@ func _ready() -> void:
 	
 	var resource_path: String = ""
 	
-	if conductor.stream != null:
-		resource_path = conductor.stream.resource_path
+	if shinobu_conductor.sound_file != null:
+		resource_path = shinobu_conductor.sound_file
 	
 	audio_name = Utils.get_file_name(resource_path, "")
 
@@ -103,11 +104,11 @@ func _on_import_audio_file_pressed() -> void:
 
 
 func _on_audio_file_dialog_file_selected(path: String) -> void:
-	var audio_stream: AudioStream = Utils.create_audio_stream(path)
+	var _audio_stream: AudioStream = Utils.create_audio_stream(path)
 	
 	current_audio_file_path = path
 	audio_name = Utils.get_file_name(path, "")
-	conductor.load_stream(audio_stream)
+	shinobu_conductor.load_stream(path)
 
 
 func _on_beat_map_file_dialog_file_selected(path: String) -> void:
@@ -131,6 +132,8 @@ func _on_load_beat_map_file_dialog_file_selected(path: String) -> void:
 	#
 	#var info_file: FileAccess = FileAccess.open(info_file_path, FileAccess.READ)
 	
+	#print("Path %s" % path)
+	
 	if FileAccess.get_open_error() != OK:
 		print("Could not file %s" % FileAccess.get_open_error())
 		return
@@ -144,14 +147,14 @@ func _on_load_beat_map_file_dialog_file_selected(path: String) -> void:
 func _on_export_file_dialog_file_selected(path: String) -> void:
 	var base_path: String = path.get_base_dir()
 	
-	var info_file: FileAccess = FileAccess.open(path, FileAccess.WRITE)
+	#var info_file: FileAccess = FileAccess.open(path, FileAccess.WRITE)
+	#
+	#if FileAccess.get_open_error() == OK:
+		#print("Save file created at %s" % [path])
+	#else:
+		#print(FileAccess.get_open_error())
 	
-	if FileAccess.get_open_error() == OK:
-		print("Save file created at %s" % [path])
-	else:
-		print(FileAccess.get_open_error())
-	
-	export(info_file, base_path)
+	export(path, base_path)
 
 
 func _on_accept_dialog_confirmed() -> void:
@@ -174,12 +177,12 @@ func _on_import_audio_file_loaded(imported_file_name: String, file_type: String,
 			audio_stream.stereo = true
 			audio_stream.data = buffer
 			
-			conductor.load_stream(audio_stream)
+			#conductor.load_stream(audio_stream)
 		"application/ogg":
 			var buffer = Marshalls.base64_to_raw(base64_data)
-			var audio_stream: AudioStreamOggVorbis = AudioStreamOggVorbis.load_from_buffer(buffer)
+			var _audio_stream: AudioStreamOggVorbis = AudioStreamOggVorbis.load_from_buffer(buffer)
 			
-			conductor.load_stream(audio_stream)
+			#conductor.load_stream(audio_stream)
 	
 	
 	current_audio_file_path = imported_file_name
@@ -198,14 +201,15 @@ func _file_error() -> void:
 	push_error("Error!")
 
 
-func export(info_file: FileAccess, path: String) -> void:
+func export(info_file: String, path: String) -> void:
 	print("EXPORT INFO DATA")
 	
 	pause()
 	
 	var controls_info: Dictionary = controls_ui.export()
 	print(controls_info)
-	info_file.store_var(controls_info)
+	var file_reader: FileReader = FileReader.new()
+	file_reader.info_create(info_file, controls_info)
 	
 	print("EXPORT BEATMAP")
 	
@@ -217,19 +221,24 @@ func export(info_file: FileAccess, path: String) -> void:
 	
 	var result: Array = note_grid.get_all_notes()
 	
-	var file: FileAccess = FileAccess.open(path + "/" + beatmap_file_name + ".txt", FileAccess.WRITE)
+	
+	#var file: FileAccess = FileAccess.open(path + "/" + beatmap_file_name + ".txt", FileAccess.WRITE)
 	
 	var exported_bpm: float = audio_spectrum_analyzer.bpm
 	var exported_offset: float = audio_spectrum_analyzer.song_offset
 	
-	file.store_float(exported_bpm)
-	file.store_float(exported_offset)
+	var events: Dictionary = {
+	}
 	
-	for note: ChartNote in result:
-		var format: String = "%s:%s%s%s%s\n" % [note.beat, note.type, note.lane, note.direction, note.direction_2]
-		print(format)
-		
-		file.store_string(format)
+	file_reader.beatmap_create(path + "/" + beatmap_file_name + ".dat", result, events, exported_offset, exported_bpm)
+	#file.store_float(exported_bpm)
+	#file.store_float(exported_offset)
+	#
+	#for note: ChartNote in result:
+		#var format: String = "%s:%s%s%s%s\n" % [note.beat, note.type, note.lane, note.direction, note.direction_2]
+		#print(format)
+		#
+		#file.store_string(format)
 	
 	unpause()
 
@@ -262,7 +271,7 @@ func save(save_file: FileAccess) -> void:
 	
 	print("Current audio file path %s" % current_audio_file_path)
 	if current_audio_file_path.is_empty():
-		_audio_path = conductor.stream.resource_path#audio_file_dialog.file_path
+		_audio_path = shinobu_conductor.sound_file
 	else:
 		_audio_path = current_audio_file_path
 	
@@ -299,13 +308,18 @@ func save(save_file: FileAccess) -> void:
 			var _note_time: float = _note._time
 			var _note_ticks: float = _note._ticks
 			
+			var _position: Vector2 = _note.position
+			
 			save_file.store_float(_cell.x)
 			save_file.store_float(_cell.y)
 			#save_file.store_float(_note_beat)
+			save_file.store_float(_note_ticks)
 			save_file.store_8(_note_type)
 			#save_file.store_8(_note_lane)
 			save_file.store_8(_direction)
 			save_file.store_8(_direction_2)
+			
+			save_file.store_var(_position)
 		save_file.close()
 	
 	unpause()
@@ -325,9 +339,11 @@ func loading_file(load_file: FileAccess) -> void:
 	pause()
 	
 	scroll_container.scroll_horizontal = 0
+	
+	#print("Clear Grid")
 	note_grid.clear_grid()
 	
-	await get_tree().create_timer(1.0).timeout
+	#await get_tree().create_timer(1.0).timeout
 
 	var song_name: String = load_file.get_pascal_string()
 	var artist: String = load_file.get_pascal_string()
@@ -355,19 +371,14 @@ func loading_file(load_file: FileAccess) -> void:
 		current_audio_file_path = _audio_path
 	
 	print("Audio Path %s" % _audio_path)
-	print("Current Audio File Path %s" % _audio_path)
 	
 	var _bpm: float = load_file.get_float()
 	var _beat_duration: GlobalSettings.Duration = load_file.get_8() as GlobalSettings.Duration
 	var _song_offset: float = load_file.get_float()
 	
-	print(_bpm)
-	print(_beat_duration)
-	print(_song_offset)
-	
 	var audio_stream: AudioStream = Utils.create_audio_stream(current_audio_file_path)
 	if audio_stream != null:
-		conductor.load_stream(audio_stream)
+		shinobu_conductor.load_stream(current_audio_file_path)
 		audio_name = Utils.get_file_name(current_audio_file_path, "")
 		
 		GlobalSettings.bpm = _bpm
@@ -378,9 +389,9 @@ func loading_file(load_file: FileAccess) -> void:
 		
 		var _notes: Dictionary = {}
 		
+		print("Read notes")
 		while load_file.get_position() < load_file.get_length():
 			# Read data
-			
 			# Key
 			var _cell_x: float = load_file.get_float()
 			var _cell_y: float = load_file.get_float()
@@ -388,18 +399,25 @@ func loading_file(load_file: FileAccess) -> void:
 			
 			# Public Note variables
 			#var _beat: float = load_file.get_float() / 4
+			var _ticks: float = load_file.get_float()
 			var _note_type: ChartNote.Note_Type = load_file.get_8() as ChartNote.Note_Type
 			#var _note_lane: int = load_file.get_8()
 			var _direction: int = load_file.get_8()
 			var _direction_2: int = load_file.get_8()
 			
+			var _position: Vector2 = load_file.get_var()
+			
 			#var _note: Note = Note.new(_beat, _note_type, _note_lane, _direction, _direction_2)
-			_notes[_cell] = [_note_type, _direction, _direction_2]
+			_notes[_cell] = [_note_type, _direction, _direction_2, _position, _ticks]
+			
+			#await get_tree().process_frame
 			
 			#print("Cell %s Note %s" % [_cell, _note])
 			#print(_notes)
-		await get_tree().create_timer(0.5).timeout
+		await get_tree().process_frame
+		#await get_tree().create_timer(0.5).timeout
 		
+		#print("Load notes")
 		note_grid.load_notes(_notes)
 	else:
 		accept_dialog.show()

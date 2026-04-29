@@ -39,7 +39,10 @@ func _ready() -> void:
 	super._ready()
 	
 	state = MainUIScreen.UI_Screens.RESULT_SCREEN
-	GUIUtils.update_margin_container.call_deferred(margin, 67)
+	
+	MenuMusicPlayer.is_playing_song()
+	
+	GUIUtils.update_margin_container.call_deferred(margin, GUIUtils.GUI_MARGIN)
 	
 	GlobalBackground.appear_shader()
 	
@@ -81,6 +84,8 @@ func _on_song_list_pressed() -> void:
 	CHANGING_SCENE.emit(button_position, "Quickplay", song_list_btn.screen)
 	scene_path = song_list_screen_path
 	
+	MenuMusicPlayer.lower_volume()
+	
 	disconnect_buttons()
 
 
@@ -88,6 +93,8 @@ func _on_retry_pressed() -> void:
 	GlobalBackground.disappear_shader()
 	CHANGING_SCENE.emit(Vector2.ZERO, "", retry_btn.screen)
 	scene_path = main_rhythm_game_path
+	
+	MenuMusicPlayer.lower_volume()
 	
 	disconnect_buttons()
 

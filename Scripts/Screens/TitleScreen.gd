@@ -12,12 +12,12 @@ var gui_margin := 0.0
 @onready var arc: AspectRatioContainer = $Panel/AspectRatioContainer
 
 
-func _init() -> void:
-	CustomMusicManager.load_custom_music_directory()
-	UserData.load_data()
+#func _init() -> void:
+	#UserData.load_data()
 
 
 func _ready() -> void:
+	MenuMusicPlayer.init_menu_music_player()
 	user_config.load_config()
 
 	# The `resized` signal will be emitted when the window size changes, as the root Control node

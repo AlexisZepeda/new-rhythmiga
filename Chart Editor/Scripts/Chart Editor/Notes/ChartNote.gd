@@ -17,6 +17,8 @@ var type: Note_Type
 var lane: int
 var direction: int
 var direction_2: int
+var position: Vector2
+var beat_duration: GlobalSettings.Duration
 
 
 func _init(_beat: float, _type: Note_Type, _lane: int, _direction:int=4, _direction_2:int=4) -> void:
@@ -25,6 +27,8 @@ func _init(_beat: float, _type: Note_Type, _lane: int, _direction:int=4, _direct
 	lane = _lane
 	direction = _direction
 	direction_2 = _direction_2
+	
+	beat_duration = GlobalSettings.beat_duration
 	
 	_ticks = calculate_ticks()
 	_time = calculate_seconds()
@@ -45,3 +49,15 @@ func calculate_seconds() -> float:
 	var seconds_per_tick: float = 60000 / (GlobalSettings.bpm * GlobalSettings.PPQ) / 1000
 	
 	return _ticks * seconds_per_tick
+
+
+func set_position(_position: Vector2) -> void:
+	position = _position
+
+
+func set_ticks(_new_ticks: int) -> void:
+	_ticks = _new_ticks
+	beat = Utils.get_beat(_ticks)
+	
+	var note_type: String = Note_Type.keys()[type]
+	print("Set %s note at %s beat with %s ticks and time %s(secs)." % [note_type, beat, _ticks, _time])

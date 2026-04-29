@@ -37,11 +37,18 @@ var lane_5_coordinates: Array[Vector2] = [Vector2(0, 150), Vector2(image_length,
 
 
 func _draw() -> void:
-	grid.set_grid_size(Vector2(beats, COLUMNS))
-	grid.song_offset = song_x_offset
+	#grid.set_grid_size(Vector2(beats, COLUMNS))
+	#grid.song_offset = song_x_offset
 	#grid.set_cell_size(Vector2(lines_per_pixel, DISTANCE_BETWEEN_LANES))
 	
 	var line_coordinates: PackedVector2Array = []
+	
+	match GlobalSettings.beat_duration:
+		GlobalSettings.Duration.TRIPLET:
+			grid.set_cell_size(Vector2(PIXELS_PER_TRIPLET, distance_between_lanes))
+		GlobalSettings.Duration.SIXTEENTH:
+			grid.set_cell_size(Vector2(PIXELS_PER_SIXTEENTH, distance_between_lanes))
+	
 	
 	# Draw Vertical beat lines
 	for i in range(beats):
@@ -68,11 +75,10 @@ func _draw() -> void:
 				#if i % 2 == 0:
 					#draw_line(Vector2(line_position_x, 0), Vector2(line_position_x, 200), Color.WHITE, 2)
 			GlobalSettings.Duration.TRIPLET:
-				grid.set_cell_size(Vector2(PIXELS_PER_TRIPLET, distance_between_lanes))
+				#grid.set_cell_size(Vector2(PIXELS_PER_TRIPLET, distance_between_lanes))
 				line_position_x = i * PIXELS_PER_TRIPLET + song_x_offset
 				
 				if i % 3 == 0:
-					draw_line(Vector2(line_position_x, 0), Vector2(line_position_x, line_length), Color.WHITE, 2)
 					var label_beat: int = int(i / 3.0) + 1
 					
 					if not _labels.has(label_beat):
@@ -90,8 +96,9 @@ func _draw() -> void:
 						label.position.x = line_position_x + 2
 					
 					draw_line(Vector2(line_position_x, 0), Vector2(line_position_x, line_length), Color.WHITE, 2)
+			#_:
 			GlobalSettings.Duration.SIXTEENTH:
-				grid.set_cell_size(Vector2(PIXELS_PER_SIXTEENTH, distance_between_lanes))
+				#grid.set_cell_size(Vector2(PIXELS_PER_SIXTEENTH, distance_between_lanes))
 				line_position_x = i * PIXELS_PER_SIXTEENTH + song_x_offset
 				
 				if i % 4 == 0:
@@ -155,6 +162,9 @@ func _on_resized() -> void:
 
 
 func set_lines() -> void:
+	grid.set_grid_size(Vector2(beats, COLUMNS))
+	grid.song_offset = song_x_offset
+	
 	grid.offset = offset + distance_between_lanes
 	
 	if image_length != roundi(PIXELS_PER_QUARTER * quarter_beats):

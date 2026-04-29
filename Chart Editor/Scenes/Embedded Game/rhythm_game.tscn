@@ -91,7 +91,7 @@ play_stats = ExtResource("6_164ha")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1955421491]
 
-[node name="Game UI" type="Control" parent="CanvasLayer" unique_id=818850164 node_paths=PackedStringArray("rhythm_game", "song_progress_bar", "song_name", "score_label")]
+[node name="Game UI" type="Control" parent="CanvasLayer" unique_id=818850164 node_paths=PackedStringArray("rhythm_game", "song_progress_bar", "song_name", "chain_label", "score_label")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -104,6 +104,7 @@ rhythm_game = NodePath("../..")
 timing_label_prefab = ExtResource("12_0i2wr")
 song_progress_bar = NodePath("ProgressBar")
 song_name = NodePath("HBoxContainer/SongPanel")
+chain_label = NodePath("HBoxContainer/ChainLabel")
 score_label = NodePath("HBoxContainer/ScoreLabelPrefab")
 start_label = ExtResource("12_6nnt3")
 finish_label = ExtResource("13_ltq8h")
@@ -119,6 +120,14 @@ grow_horizontal = 2
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+
+[node name="ChainLabel" type="Label" parent="CanvasLayer/Game UI/HBoxContainer" unique_id=280388441]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+theme_override_font_sizes/font_size = 32
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="ScoreLabelPrefab" parent="CanvasLayer/Game UI/HBoxContainer" unique_id=47682174 instance=ExtResource("11_8x8f7")]
 layout_mode = 2
@@ -170,9 +179,14 @@ miss = NodePath("Hit Count/Miss")
 
 [node name="Note Deltas" type="VBoxContainer" parent="CanvasLayer/Debug" unique_id=613648715]
 visible = false
-layout_mode = 0
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -64.0
 offset_right = 40.0
-offset_bottom = 40.0
+offset_bottom = 64.0
+grow_vertical = 2
 
 [node name="Curr Beat" type="Label" parent="CanvasLayer/Debug/Note Deltas" unique_id=952193181]
 layout_mode = 2

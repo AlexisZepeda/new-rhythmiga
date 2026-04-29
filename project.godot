@@ -11,8 +11,10 @@ config_version=5
 [application]
 
 config/name="New Rhythmiga"
-run/main_scene="uid://cjn1upblkcud"
+run/main_scene="uid://dv0ajg47xtack"
 config/features=PackedStringArray("4.6", "GL Compatibility")
+run/max_fps=120
+boot_splash/show_image=false
 config/icon="res://icon.svg"
 
 [audio]
@@ -27,6 +29,8 @@ KeyPersistence="*uid://b0awacm8hu8bn"
 GlobalBackground="*uid://cnf3osr40qit8"
 GlobalSettings="*uid://bf46474qbpv20"
 EmbeddedGlobalSettings="*uid://swsx10lp2d63"
+MenuMusicPlayer="*uid://bxnayflp2axuf"
+MusicPlayerPanel="*uid://btd6fu7rvirlr"
 
 [display]
 
@@ -35,6 +39,11 @@ window/size/window_width_override=1280
 window/size/window_height_override=720
 window/stretch/mode="canvas_items"
 window/stretch/aspect="expand"
+
+[editor]
+
+version_control/plugin_name="GitPlugin"
+version_control/autoload_on_startup=true
 
 [gui]
 

@@ -10,6 +10,7 @@ var parent: Node
 
 var loaded_stream: AudioStream = null
 var beat_map_path: String = ""
+var loaded_music_path: String = ""
 
 
 #func _ready() -> void:
