@@ -142,6 +142,12 @@ func _on_cursor_mouse_left_click(cell: Vector2) -> void:
 			audio_spectrum_analyzer.seek_seconds()
 
 
+func _on_cursor_mouse_left_click_outside_grid() -> void:
+	match _note_toggle_state:
+		Toggle.NONE:
+			pass
+
+
 func _on_cursor_mouse_left_release(cell: Vector2) -> void:
 	match _note_toggle_state:
 		Toggle.TAP:
@@ -159,8 +165,12 @@ func _on_cursor_mouse_hover(mouse_position: Vector2, cell: Vector2) -> void:
 		Toggle.LONG, Toggle.LONG_ARROW, Toggle.LONG_DOUBLE_ARROW:
 			audio_spectrum_analyzer.clear_hover_time_graph_line()
 			HOVER_LONG_NOTE.emit(cell)
-		_:
-			audio_spectrum_analyzer.clear_hover_time_graph_line()
+		#_:
+			#audio_spectrum_analyzer.clear_hover_time_graph_line()
+
+
+func _on_cursor_mouse_hover_outside_grid() -> void:
+	audio_spectrum_analyzer.clear_hover_time_graph_line()
 
 
 func _on_note_check_boxes_arrow_direction_selection(direction: int) -> void:

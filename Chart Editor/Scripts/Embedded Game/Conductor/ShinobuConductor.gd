@@ -11,7 +11,6 @@ signal loaded_new_stream
 
 var BPM: float = 155.0: set=_set_seconds_per_tick
 
-
 var bgm_group: ShinobuGroup
 var bgm_sound_player: ShinobuSoundPlayer
 var seconds_per_tick: float = 60000 / (BPM * GlobalSettings.PPQ) / 1000
@@ -22,6 +21,10 @@ var ticks: float = offset_ticks
 var stream: AudioStream
 
 var is_finished: bool = false
+var is_paused: bool = false
+
+var paused_playing_position: int = 0
+
 
 func _init() -> void:
 	Shinobu.desired_buffer_size_msec = 10
@@ -179,12 +182,16 @@ func load_stream(new_stream: String) -> void:
 
 
 func pause() -> void:
+	is_paused = true
+	paused_playing_position = bgm_sound_player.get_playback_position_msec()
 	Shinobu.pause()
 	bgm_sound_player.stop()
 
 
 func unpause() -> void:
+	is_paused = false
 	Shinobu.resume()
+	bgm_sound_player.seek(paused_playing_position)
 	bgm_sound_player.start()
 
 
@@ -196,4 +203,5 @@ func play(_to_time_msec: int=0) -> void:
 
 
 func stop() -> void:
+	is_paused = false
 	bgm_sound_player.stop()

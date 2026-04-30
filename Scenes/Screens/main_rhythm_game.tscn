@@ -7,9 +7,10 @@
 [ext_resource type="PackedScene" uid="uid://blt2xfgped1n8" path="res://Scenes/UI Prefabs/outer_side_panel.tscn" id="3_6vvyj"]
 [ext_resource type="Resource" uid="uid://byovroyvcdtjs" path="res://Chart Editor/Resources/CurrentNotesResource.tres" id="3_dha5t"]
 [ext_resource type="PackedScene" uid="uid://d3tcsll630mrm" path="res://Scenes/UI Prefabs/inner_side_panel.tscn" id="4_4ncpg"]
+[ext_resource type="PackedScene" uid="uid://8yeuxgeikrk2" path="res://Scenes/UI Prefabs/countdown.tscn" id="7_yrct1"]
 [ext_resource type="Script" uid="uid://d0b3i6jki52il" path="res://Chart Editor/Scripts/Embedded Game/Conductor/ShinobuConductor.gd" id="8_q2383"]
 
-[node name="Main Game" type="Control" unique_id=1868958031 node_paths=PackedStringArray("shinobu_conductor", "rhythm_game", "pause_container", "continue_btn", "retry_btn", "song_list_btn")]
+[node name="Main Game" type="Control" unique_id=1868958031 node_paths=PackedStringArray("shinobu_conductor", "rhythm_game", "pause_container", "button_vbox", "countdown_timer", "continue_btn", "retry_btn", "song_list_btn")]
 process_mode = 3
 layout_mode = 3
 anchors_preset = 15
@@ -25,6 +26,8 @@ song_list_screen_path = "res://Scenes/Screens/song_list_screen.tscn"
 shinobu_conductor = NodePath("ShinobuConductor")
 rhythm_game = NodePath("SubViewportContainer/SubViewport/Rhythm Game")
 pause_container = NodePath("Panel/AspectRatioContainer/Panel/PauseContainer")
+button_vbox = NodePath("Panel/AspectRatioContainer/Panel/PauseContainer/VBoxContainer")
+countdown_timer = NodePath("Panel/AspectRatioContainer/Panel/PauseContainer/Countdown")
 continue_btn = NodePath("Panel/AspectRatioContainer/Panel/PauseContainer/VBoxContainer/ContinueBtn")
 retry_btn = NodePath("Panel/AspectRatioContainer/Panel/PauseContainer/VBoxContainer/RetryBtn")
 song_list_btn = NodePath("Panel/AspectRatioContainer/Panel/PauseContainer/VBoxContainer/SongListBtn")
@@ -97,6 +100,11 @@ text = "Retry"
 [node name="SongListBtn" type="Button" parent="Panel/AspectRatioContainer/Panel/PauseContainer/VBoxContainer" unique_id=222711402]
 layout_mode = 2
 text = "Return to Song List"
+
+[node name="Countdown" parent="Panel/AspectRatioContainer/Panel/PauseContainer" unique_id=805887503 instance=ExtResource("7_yrct1")]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 4
 
 [node name="ChartConductor" type="AudioStreamPlayer" parent="." unique_id=1469945853]
 process_mode = 1

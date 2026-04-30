@@ -279,6 +279,7 @@ func handle_input(event: InputEvent) -> Command:
 					#_set_joy_axis_list(Enums.Joy_Axis.JOY_AXIS_RIGHT, true, Enums.Direction.RIGHT)
 					#return SlideCommand.new((Time.get_ticks_usec() / 1000000.0), Enums.Direction.RIGHT)
 					##return button_semi_colon
+	## RELEASE
 	else:
 		if InputMap.event_is_action(event, "Tap Right 1"):
 				held_time_e = BUTTONS_LONG_PRESSED[event.keycode][Buttons_Label.RELEASED] - BUTTONS_LONG_PRESSED[event.keycode][Buttons_Label.PRESSED]

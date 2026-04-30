@@ -3,8 +3,11 @@ extends Control
 
 signal MOUSE_RIGHT_CLICK(cell: Vector2)
 signal MOUSE_LEFT_CLICK(cell: Vector2)
+signal MOUSE_LEFT_CLICK_OUTSIDE_GRID()
 signal MOUSE_LEFT_RELEASE(cell: Vector2)
 signal MOUSE_HOVER(mouse_position: Vector2, cell: Vector2)
+signal MOUSE_HOVER_OUTSIDE_GRID(mouse_position: Vector2)
+
 
 @export var grid: Grid
 @export var scroll_container: ScrollContainer
@@ -64,10 +67,10 @@ func _input(event: InputEvent) -> void:
 			MOUSE_HOVER.emit(get_local_mouse_position(), current_cell)
 	else:
 		if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.is_pressed():
-			MOUSE_LEFT_CLICK.emit(current_cell)
+			MOUSE_LEFT_CLICK_OUTSIDE_GRID.emit()
 		
 		if event is InputEventMouseMotion:
-			MOUSE_HOVER.emit(get_local_mouse_position(), current_cell)
+			MOUSE_HOVER_OUTSIDE_GRID.emit()
 
 
 func _on_lines_image_length_changed(length: int) -> void:

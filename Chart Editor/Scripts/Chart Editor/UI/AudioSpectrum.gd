@@ -109,7 +109,7 @@ func _on_option_button_item_selected(index: int) -> void:
 
 
 func _on_play_pressed() -> void:
-	play(_seek)
+	play()
 
 
 func _on_pause_pressed() -> void:
@@ -137,11 +137,7 @@ func _on_offset_value_changed(new_text: String) -> void:
 func _on_lines_image_length_changed(length: int) -> void:
 	image_length = length
 	
-	timeline_texture.custom_minimum_size.x = image_length
-	timeline_texture.start_point = 0.0
-	timeline_texture.end_point = shinobu_conductor.get_length()
-	timeline_texture.rms_size_multiplier = 2.0
-	timeline_texture.edit(shinobu_conductor.stream)
+	_set_timeline_texture()
 	
 	_seconds_per_pixel = playable_song_length / image_length
 	_song_position_offset = song_offset / _seconds_per_pixel
@@ -173,7 +169,14 @@ func _on_conductor_loaded_new_stream() -> void:
 	song_length = shinobu_conductor.get_length()
 	
 	set_song_offset(offset)
-	
+	_set_timeline_texture()
+
+
+func _on_conductor_finished() -> void:
+	_seek = 0.0
+
+
+func _set_timeline_texture() -> void:
 	timeline_texture.custom_minimum_size.x = image_length
 	timeline_texture.start_point = 0.0
 	timeline_texture.end_point = song_length
@@ -181,16 +184,15 @@ func _on_conductor_loaded_new_stream() -> void:
 	timeline_texture.edit(shinobu_conductor.stream)
 
 
-func _on_conductor_finished() -> void:
-	_seek = 0.0
-
-
-func play(time:float):
+func play(time: float=0.0):
 	if time == 0.0:
 		rhythm_game.reset()
 	
 	EmbeddedGlobalSettings.enable_input = true
-	shinobu_conductor.play(int(time * 1000))
+	if shinobu_conductor.is_paused:
+		shinobu_conductor.unpause()
+	else:
+		shinobu_conductor.play(int(time * 1000))
 	metronome.start()
 
 
@@ -295,6 +297,9 @@ func clear_hover_time_graph_line() -> void:
 
 
 func seek_seconds() -> void:
+	if timeline_texture.end_point == -1:
+		return
+	
 	_seek = _seconds_per_pixel * mouse_position.x
 	
 	print("Seek Seconds %s" % [_seek])

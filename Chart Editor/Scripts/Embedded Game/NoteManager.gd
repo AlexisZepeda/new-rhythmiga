@@ -9,7 +9,6 @@ signal note_hit_type(hit_type: Enums.Hit_Type, position: Vector2)
 @export var rhythm_game: RhythmGame
 @export var sfx_player: AudioStreamPlayer
 @export var time_type: Enums.TimeType = Enums.TimeType.FILTERED
-#@export var chart: ChartData.Chart = ChartData.Chart.SYNC_TEST
 @export var play_stats: CurrentGameStats
 
 const NOTE_SCENE = preload("res://Chart Editor/Scenes/Embedded Game/Notes/Tap_Note.tscn")
@@ -30,24 +29,8 @@ var note_final_position: Vector2 = Vector2(0, 0)
 var _last_long_note: LongNote = null
 
 var held_key: Key = KEY_NONE
-	#set(value):
-		#print("Changing held key %s previous key %s" % [OS.get_keycode_string(held_key), OS.get_keycode_string(previous_key)])
-		#
-		#if previous_key != KEY_NONE:
-			#held_key = KEY_NONE
-		#else:
-			#held_key = value
-		#previous_note_type.emit(self, front_note_type)
 
 var previous_key: Key = KEY_NONE
-	#set(value):
-		#print("Changing previous key %s" % Enums.Note_Type.keys()[front_note_type])
-		#match front_note_type:
-			#Enums.Note_Type.TAP:
-				#previous_key = KEY_NONE
-			#_:
-				#previous_key = value
-		#previous_note_type.emit(self, front_note_type)
 
 var front_note_type: Enums.Note_Type = Enums.Note_Type.NONE
 

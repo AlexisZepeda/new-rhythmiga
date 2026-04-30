@@ -1,6 +1,7 @@
 class_name RhythmGame
 extends Node2D
 
+signal game_start
 signal game_finished
 
 #@export_category("Chart")
@@ -209,7 +210,7 @@ func init_beatmap(file: String) -> void:
 	#print("First beat offset %s" % int(song_offset_sec * 1000))
 	
 	await game_ui.start_animation()
-	
+	game_start.emit()
 	shinobu_conductor.play(0)
 
 

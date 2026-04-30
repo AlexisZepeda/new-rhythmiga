@@ -15,12 +15,21 @@ signal note_hit(hit_type: Enums.Hit_Type)
 @export_category("Children")
 @export var base_sprite: Sprite2D
 
-const HIT_MARGIN_PERFECT = 0.016667
-const HIT_MARGIN_CRITICAL = 0.033333
-const HIT_MARGIN_GREAT = 0.050
-const HIT_MARGIN_GOOD = 0.100
-const HIT_MARGIN_BAD = 0.13333
-const HIT_MARGIN_MISS = 0.200
+## Original Timing Windows
+#const HIT_MARGIN_PERFECT = 0.016667
+#const HIT_MARGIN_CRITICAL = 0.033333
+#const HIT_MARGIN_GREAT = 0.050
+#const HIT_MARGIN_GOOD = 0.100
+#const HIT_MARGIN_BAD = 0.13333
+#const HIT_MARGIN_MISS = 0.200
+
+## Timing Windows
+const HIT_MARGIN_PERFECT = 0.025
+const HIT_MARGIN_CRITICAL = 0.050
+const HIT_MARGIN_GREAT = 0.100
+const HIT_MARGIN_GOOD = 0.150
+const HIT_MARGIN_BAD = 0.200
+const HIT_MARGIN_MISS = 0.250
 
 var _speed: float
 var _movement_paused: bool = false
