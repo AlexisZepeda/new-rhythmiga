@@ -1,8 +1,8 @@
 [gd_scene format=3 uid="uid://bs6krm1xsekj2"]
 
-[ext_resource type="Script" uid="uid://byg8auv8n86ai" path="res://Scripts/Chart Editor/Notes/DoubleArrowNoteGrid.gd" id="1_vbtu7"]
-[ext_resource type="Texture2D" uid="uid://bp0t03ho82kme" path="res://Sprites/Chart Editor/Slide_Icon.png" id="1_wkqlm"]
-[ext_resource type="Texture2D" uid="uid://dc1xr7q4r7agx" path="res://Sprites/Chart Editor/Slide Arrow.png" id="3_wkqlm"]
+[ext_resource type="Script" uid="uid://byg8auv8n86ai" path="res://Chart Editor/Scripts/Chart Editor/Notes/DoubleArrowNoteGrid.gd" id="1_vbtu7"]
+[ext_resource type="Texture2D" uid="uid://bp0t03ho82kme" path="res://Chart Editor/Sprites/Chart Editor/Slide_Icon.png" id="1_wkqlm"]
+[ext_resource type="Texture2D" uid="uid://dc1xr7q4r7agx" path="res://Chart Editor/Sprites/Chart Editor/Slide Arrow.png" id="3_wkqlm"]
 
 [node name="ArrowBase" type="Sprite2D" unique_id=845290539 node_paths=PackedStringArray("arrow_1", "arrow_2")]
 texture = ExtResource("1_wkqlm")

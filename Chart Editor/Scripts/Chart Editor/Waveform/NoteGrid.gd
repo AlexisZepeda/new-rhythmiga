@@ -238,8 +238,8 @@ func _on_ui_editor_add_long_note(cell: Vector2, _note_position: Vector2=Vector2.
 	# Change state when finished adding note
 	match _long_note:
 		EnumLongNote.FRONT:
-			#print("Front")
-			#print("Cell %s" % cell)
+			print("Front")
+			print("Cell %s" % cell)
 			note = ChartNote.new(beat, ChartNote.Note_Type.LONG, lane)
 			long_note_sprite = _long_note_grid_sprite_prefab.instantiate()
 			
@@ -253,7 +253,7 @@ func _on_ui_editor_add_long_note(cell: Vector2, _note_position: Vector2=Vector2.
 			else:
 				long_note_sprite.global_position = sprite_position
 			
-			
+			print("Front Global position %s" % long_note_sprite.global_position)
 			note.set_position(long_note_sprite.global_position)
 			
 			_set_cells(cell, NoteType.LONG, long_note_sprite, note)
@@ -602,8 +602,8 @@ func _add_long_back_note(cell: Vector2, note_type: NoteType,
 				
 				var sprite_position: Vector2 = grid.calculate_map_position_with_offset(cell)
 				
-				#print("Sprite position %s" % sprite_position)
-				#print("Scroll container %s" % scroll_container.scroll_horizontal)
+				print("Sprite position %s" % sprite_position)
+				print("Scroll container %s" % scroll_container.scroll_horizontal)
 				
 				long_note_sprite.back_cell = cell
 				
@@ -612,6 +612,8 @@ func _add_long_back_note(cell: Vector2, note_type: NoteType,
 				else:
 					long_note_sprite.back.global_position.x = sprite_position.x - scroll_container.scroll_horizontal
 				
+				
+				print("Long back global position %s" % long_note_sprite.back.global_position)
 				long_note_sprite.set_line_points()
 				
 				if _ticks != 0:

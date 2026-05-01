@@ -19,7 +19,6 @@ var direction_2: GlobalSettings.Directions:
 		#print("Direction %s" % direction)
 
 
-
 func _set_sprite_offset() -> void:
 	if direction_1 == direction_2:
 		arrow_2.offset.y = OFFSET
@@ -31,3 +30,7 @@ func set_arrow_direction(param_direction_1: GlobalSettings.Directions, param_dir
 	
 	direction_1 = param_direction_1
 	direction_2 = param_direction_2
+	
+	if direction_2 < direction_1:
+		arrow_1.flip_v = true
+		arrow_2.flip_v = true

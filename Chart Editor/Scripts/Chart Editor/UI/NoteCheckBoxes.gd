@@ -80,4 +80,4 @@ func _on_arrows_panel_untoggled() -> void:
 
 
 func _on_arrows_panel_2_untoggled() -> void:
-	ARROW_DIRECTION_SELECTION.emit(GlobalSettings.Directions.NONE)
+	ARROW_2_DIRECTION_SELECTION.emit(GlobalSettings.Directions.NONE)

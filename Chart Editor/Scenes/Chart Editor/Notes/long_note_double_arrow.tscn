@@ -1,10 +1,10 @@
 [gd_scene format=3 uid="uid://hbscbqcylg8g"]
 
-[ext_resource type="Texture2D" uid="uid://ep7jm706dbm" path="res://Sprites/Chart Editor/Long Front Icon.png" id="1_ai18n"]
-[ext_resource type="Script" uid="uid://cvyhwpfy0yhr" path="res://Scripts/Chart Editor/Notes/LongNoteDoubleArrowNoteGrid.gd" id="1_sqqyb"]
-[ext_resource type="Texture2D" uid="uid://b31vrhpvvqmii" path="res://Sprites/Chart Editor/Long Back Icon.png" id="3_0ff6n"]
-[ext_resource type="Texture2D" uid="uid://b5rx0sch85ule" path="res://Sprites/Chart Editor/Long Arrow Icon.png" id="4_ai18n"]
-[ext_resource type="Texture2D" uid="uid://gmqm87ugsia5" path="res://Sprites/Chart Editor/Long_trigger_middle.png" id="5_r4pwt"]
+[ext_resource type="Texture2D" uid="uid://ep7jm706dbm" path="res://Chart Editor/Sprites/Chart Editor/Long Front Icon.png" id="1_ai18n"]
+[ext_resource type="Script" uid="uid://cvyhwpfy0yhr" path="res://Chart Editor/Scripts/Chart Editor/Notes/LongNoteDoubleArrowNoteGrid.gd" id="1_sqqyb"]
+[ext_resource type="Texture2D" uid="uid://b31vrhpvvqmii" path="res://Chart Editor/Sprites/Chart Editor/Long Back Icon.png" id="3_0ff6n"]
+[ext_resource type="Texture2D" uid="uid://b5rx0sch85ule" path="res://Chart Editor/Sprites/Chart Editor/Long Arrow Icon.png" id="4_ai18n"]
+[ext_resource type="Texture2D" uid="uid://gmqm87ugsia5" path="res://Chart Editor/Sprites/Chart Editor/Long_trigger_middle.png" id="5_r4pwt"]
 
 [node name="Long Double Arrow" type="Sprite2D" unique_id=1815450442 node_paths=PackedStringArray("arrow_1", "arrow_2", "back", "line")]
 texture = ExtResource("1_ai18n")

@@ -17,12 +17,17 @@ enum Hit_Type {
 }
 
 
-## Four cardinal directions of a slide.
+## Eight cardinal directions of a slide.
 enum Direction { 
 	UP = 0, 
 	DOWN = 1, 
 	LEFT = 2, 
 	RIGHT = 3,
+	UP_RIGHT = 4,
+	UP_LEFT = 5,
+	DOWN_RIGHT = 6,
+	DOWN_LEFT = 7,
+	NONE = 8,
 }
 
 

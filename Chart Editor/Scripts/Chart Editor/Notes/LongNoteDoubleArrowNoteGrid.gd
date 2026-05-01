@@ -31,5 +31,10 @@ func set_arrow_direction(param_direction_1: GlobalSettings.Directions, param_dir
 	direction_1 = param_direction_1
 	direction_2 = param_direction_2
 	
+	if direction_2 < direction_1:
+		arrow_1.flip_v = true
+		arrow_2.flip_v = true
+	
 	arrow_1.show()
 	arrow_2.show()
+	

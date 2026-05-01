@@ -71,8 +71,11 @@ func _unhandled_input(event: InputEvent) -> void:
 	command = _change_release_commands(command)
 	
 	# Check for double input
+	print("Right axis %s" % _joy_axis_pressed(Enums.Joy_Axis.JOY_AXIS_RIGHT))
+	print("Left axis %s" % _joy_axis_pressed(Enums.Joy_Axis.JOY_AXIS_LEFT))
+	
 	if _joy_axis_pressed(Enums.Joy_Axis.JOY_AXIS_RIGHT) and _joy_axis_pressed(Enums.Joy_Axis.JOY_AXIS_LEFT):
-		#print("Double input")
+		print("Double input")
 		
 		var axis_right_direction: Enums.Direction = JOY_AXIS_LIST[Enums.Joy_Axis.JOY_AXIS_RIGHT][Joy_Axis_Label.DIRECTION]
 		var axis_left_direction: Enums.Direction = JOY_AXIS_LIST[Enums.Joy_Axis.JOY_AXIS_LEFT][Joy_Axis_Label.DIRECTION]
@@ -131,6 +134,12 @@ func _change_release_commands(command: Command) -> Command:
 	return command
 
 
+func _create_slide_command(vector: Vector2, axis: Enums.Joy_Axis) -> Command:
+	var direction: Enums.Direction = Utils.get_direction(vector)
+	_set_joy_axis_list(axis, true, direction)
+	return SlideCommand.new((Time.get_ticks_usec() / 1000000.0), direction)
+
+
 func _create_tap_command(key: Key) -> Command:
 	_set_buttons_list(key, true)
 	var tap_command: TapCommand = TapCommand.new(Time.get_ticks_usec() / 1000000.0)
@@ -181,104 +190,6 @@ func handle_input(event: InputEvent) -> Command:
 		elif InputMap.event_is_action(event, "Tap Left 2"):
 			if not _button_is_pressed(event.keycode):
 				return _create_tap_command(event.keycode)
-		
-		# Is event a Slide Action
-		## AXIS LEFT
-		if InputMap.event_is_action(event, "Up Slide Left Joy"):
-			if not _joy_axis_pressed(Enums.Joy_Axis.JOY_AXIS_LEFT):
-				_set_joy_axis_list(Enums.Joy_Axis.JOY_AXIS_LEFT, true, Enums.Direction.UP)
-				return SlideCommand.new((Time.get_ticks_usec() / 1000000.0), Enums.Direction.UP)
-		elif InputMap.event_is_action(event, "Left Slide Left Joy"):
-			if not _joy_axis_pressed(Enums.Joy_Axis.JOY_AXIS_LEFT):
-				_set_joy_axis_list(Enums.Joy_Axis.JOY_AXIS_LEFT, true, Enums.Direction.LEFT)
-				return SlideCommand.new((Time.get_ticks_usec() / 1000000.0), Enums.Direction.LEFT)
-		elif InputMap.event_is_action(event, "Down Slide Left Joy"):
-			if not _joy_axis_pressed(Enums.Joy_Axis.JOY_AXIS_LEFT):
-				_set_joy_axis_list(Enums.Joy_Axis.JOY_AXIS_LEFT, true, Enums.Direction.DOWN)
-				return SlideCommand.new((Time.get_ticks_usec() / 1000000.0), Enums.Direction.DOWN)
-		elif InputMap.event_is_action(event, "Right Slide Left Joy"):
-				if not _joy_axis_pressed(Enums.Joy_Axis.JOY_AXIS_LEFT):
-					_set_joy_axis_list(Enums.Joy_Axis.JOY_AXIS_LEFT, true, Enums.Direction.RIGHT)
-					return SlideCommand.new((Time.get_ticks_usec() / 1000000.0), Enums.Direction.RIGHT)
-		## AXIS RIGHT
-		elif InputMap.event_is_action(event, "Up Slide Right Joy"):
-			if not _joy_axis_pressed(Enums.Joy_Axis.JOY_AXIS_RIGHT):
-				_set_joy_axis_list(Enums.Joy_Axis.JOY_AXIS_RIGHT, true, Enums.Direction.UP)
-				return SlideCommand.new((Time.get_ticks_usec() / 1000000.0), Enums.Direction.UP)
-		elif InputMap.event_is_action(event, "Left Slide Right Joy"):
-			if not _joy_axis_pressed(Enums.Joy_Axis.JOY_AXIS_RIGHT):
-				_set_joy_axis_list(Enums.Joy_Axis.JOY_AXIS_RIGHT, true, Enums.Direction.LEFT)
-				return SlideCommand.new((Time.get_ticks_usec() / 1000000.0), Enums.Direction.LEFT)
-		elif InputMap.event_is_action(event, "Down Slide Right Joy"):
-			if not _joy_axis_pressed(Enums.Joy_Axis.JOY_AXIS_RIGHT):
-				_set_joy_axis_list(Enums.Joy_Axis.JOY_AXIS_RIGHT, true, Enums.Direction.DOWN)
-				return SlideCommand.new((Time.get_ticks_usec() / 1000000.0), Enums.Direction.DOWN)
-		elif InputMap.event_is_action(event, "Right Slide Right Joy"):
-			if not _joy_axis_pressed(Enums.Joy_Axis.JOY_AXIS_RIGHT):
-				_set_joy_axis_list(Enums.Joy_Axis.JOY_AXIS_RIGHT, true, Enums.Direction.RIGHT)
-				return SlideCommand.new((Time.get_ticks_usec() / 1000000.0), Enums.Direction.RIGHT)
-		
-		#match event.keycode:
-			## Tap Buttons
-			#KEY_E:
-				#if not _button_is_pressed(KEY_E):
-					#return _create_tap_command(KEY_E)
-				##return button_e
-			#KEY_F:
-				#if not _button_is_pressed(KEY_F):
-					#return _create_tap_command(KEY_F)
-				##return button_f
-			#KEY_I:
-				#if not _button_is_pressed(KEY_I):
-					#return _create_tap_command(KEY_I)
-				##return button_i
-			#KEY_J:
-				#if not _button_is_pressed(KEY_J):
-					#return _create_tap_command(KEY_J)
-				##return button_j
-			## Slide Buttons
-			## AXIS LEFT
-			#KEY_W:
-				#if not _joy_axis_pressed(Enums.Joy_Axis.JOY_AXIS_LEFT):
-					#_set_joy_axis_list(Enums.Joy_Axis.JOY_AXIS_LEFT, true, Enums.Direction.UP)
-					#return SlideCommand.new((Time.get_ticks_usec() / 1000000.0), Enums.Direction.UP)
-					##return button_w
-			#KEY_A:
-				#if not _joy_axis_pressed(Enums.Joy_Axis.JOY_AXIS_LEFT):
-					#_set_joy_axis_list(Enums.Joy_Axis.JOY_AXIS_LEFT, true, Enums.Direction.LEFT)
-					#return SlideCommand.new((Time.get_ticks_usec() / 1000000.0), Enums.Direction.LEFT)
-					##return button_a
-			#KEY_S:
-				#if not _joy_axis_pressed(Enums.Joy_Axis.JOY_AXIS_LEFT):
-					#_set_joy_axis_list(Enums.Joy_Axis.JOY_AXIS_LEFT, true, Enums.Direction.DOWN)
-					#return SlideCommand.new((Time.get_ticks_usec() / 1000000.0), Enums.Direction.DOWN)
-					##return button_s
-			#KEY_D:
-				#if not _joy_axis_pressed(Enums.Joy_Axis.JOY_AXIS_LEFT):
-					#_set_joy_axis_list(Enums.Joy_Axis.JOY_AXIS_LEFT, true, Enums.Direction.RIGHT)
-					#return SlideCommand.new((Time.get_ticks_usec() / 1000000.0), Enums.Direction.RIGHT)
-					##return button_d
-			## AXIS RIGHT
-			#KEY_O:
-				#if not _joy_axis_pressed(Enums.Joy_Axis.JOY_AXIS_RIGHT):
-					#_set_joy_axis_list(Enums.Joy_Axis.JOY_AXIS_RIGHT, true, Enums.Direction.UP)
-					#return SlideCommand.new((Time.get_ticks_usec() / 1000000.0), Enums.Direction.UP)
-					##return button_o
-			#KEY_K:
-				#if not _joy_axis_pressed(Enums.Joy_Axis.JOY_AXIS_RIGHT):
-					#_set_joy_axis_list(Enums.Joy_Axis.JOY_AXIS_RIGHT, true, Enums.Direction.LEFT)
-					#return SlideCommand.new((Time.get_ticks_usec() / 1000000.0), Enums.Direction.LEFT)
-					##return button_k
-			#KEY_L:
-				#if not _joy_axis_pressed(Enums.Joy_Axis.JOY_AXIS_RIGHT):
-					#_set_joy_axis_list(Enums.Joy_Axis.JOY_AXIS_RIGHT, true, Enums.Direction.DOWN)
-					#return SlideCommand.new((Time.get_ticks_usec() / 1000000.0), Enums.Direction.DOWN)
-					##return button_l
-			#KEY_SEMICOLON:
-				#if not _joy_axis_pressed(Enums.Joy_Axis.JOY_AXIS_RIGHT):
-					#_set_joy_axis_list(Enums.Joy_Axis.JOY_AXIS_RIGHT, true, Enums.Direction.RIGHT)
-					#return SlideCommand.new((Time.get_ticks_usec() / 1000000.0), Enums.Direction.RIGHT)
-					##return button_semi_colon
 	## RELEASE
 	else:
 		if InputMap.event_is_action(event, "Tap Right 1"):
@@ -293,69 +204,34 @@ func handle_input(event: InputEvent) -> Command:
 		elif InputMap.event_is_action(event, "Tap Left 2"):
 				held_time_e = BUTTONS_LONG_PRESSED[event.keycode][Buttons_Label.RELEASED] - BUTTONS_LONG_PRESSED[event.keycode][Buttons_Label.PRESSED]
 				return _create_tap_release_command(event.keycode)
-		## AXIS LEFT
-		if InputMap.event_is_action(event, "Up Slide Left Joy"):
-			_set_joy_axis_list(Enums.Joy_Axis.JOY_AXIS_LEFT, false, Enums.Direction.UP)
-		elif InputMap.event_is_action(event, "Left Slide Left Joy"):
-			_set_joy_axis_list(Enums.Joy_Axis.JOY_AXIS_LEFT, false, Enums.Direction.LEFT)
-		elif InputMap.event_is_action(event, "Down Slide Left Joy"):
-			_set_joy_axis_list(Enums.Joy_Axis.JOY_AXIS_LEFT, false, Enums.Direction.DOWN)
-		elif InputMap.event_is_action(event, "Right Slide Left Joy"):
-				_set_joy_axis_list(Enums.Joy_Axis.JOY_AXIS_LEFT, false, Enums.Direction.RIGHT)
-		## AXIS RIGHT
-		elif InputMap.event_is_action(event, "Up Slide Right Joy"):
-			_set_joy_axis_list(Enums.Joy_Axis.JOY_AXIS_RIGHT, false, Enums.Direction.UP)
-		elif InputMap.event_is_action(event, "Left Slide Right Joy"):
-			_set_joy_axis_list(Enums.Joy_Axis.JOY_AXIS_RIGHT, false, Enums.Direction.LEFT)
-		elif InputMap.event_is_action(event, "Down Slide Right Joy"):
-			_set_joy_axis_list(Enums.Joy_Axis.JOY_AXIS_RIGHT, false, Enums.Direction.DOWN)
-		elif InputMap.event_is_action(event, "Right Slide Right Joy"):
-			_set_joy_axis_list(Enums.Joy_Axis.JOY_AXIS_RIGHT, false, Enums.Direction.RIGHT)
-		#match event.keycode:
-			#KEY_E:
-				#held_time_e = BUTTONS_LONG_PRESSED[KEY_E][Buttons_Label.RELEASED] - BUTTONS_LONG_PRESSED[KEY_E][Buttons_Label.PRESSED]
-				#return _create_tap_release_command(KEY_E)
-				##return button_e_release
-			#KEY_F:
-				#held_time_f = BUTTONS_LONG_PRESSED[KEY_F][Buttons_Label.RELEASED] - BUTTONS_LONG_PRESSED[KEY_F][Buttons_Label.PRESSED]
-				#return _create_tap_release_command(KEY_F)
-				##return button_f_release
-			#KEY_I:
-				#held_time_i = BUTTONS_LONG_PRESSED[KEY_I][Buttons_Label.RELEASED] - BUTTONS_LONG_PRESSED[KEY_I][Buttons_Label.PRESSED]
-				#return _create_tap_release_command(KEY_I)
-				##return button_i_release
-			#KEY_J:
-				#held_time_j = BUTTONS_LONG_PRESSED[KEY_J][Buttons_Label.RELEASED] - BUTTONS_LONG_PRESSED[KEY_J][Buttons_Label.PRESSED]
-				#return _create_tap_release_command(KEY_J)
-				##return button_j_release
-			## Slide Buttons
-			## AXIS LEFT
-			#KEY_W:
-				#_set_joy_axis_list(Enums.Joy_Axis.JOY_AXIS_LEFT, false, Enums.Direction.UP)
-				##return null
-			#KEY_A:
-				#_set_joy_axis_list(Enums.Joy_Axis.JOY_AXIS_LEFT, false, Enums.Direction.LEFT)
-				##return null
-			#KEY_S:
-				#_set_joy_axis_list(Enums.Joy_Axis.JOY_AXIS_LEFT, false, Enums.Direction.DOWN)
-				##return null
-			#KEY_D:
-				#_set_joy_axis_list(Enums.Joy_Axis.JOY_AXIS_LEFT, false, Enums.Direction.RIGHT)
-				##return null
-			## AXIS RIGHT
-			#KEY_O:
-				#_set_joy_axis_list(Enums.Joy_Axis.JOY_AXIS_RIGHT, false, Enums.Direction.UP)
-				##return null
-			#KEY_K:
-				#_set_joy_axis_list(Enums.Joy_Axis.JOY_AXIS_RIGHT, false, Enums.Direction.LEFT)
-				##return null
-			#KEY_L:
-				#_set_joy_axis_list(Enums.Joy_Axis.JOY_AXIS_RIGHT, false, Enums.Direction.DOWN)
-				##return null
-			#KEY_SEMICOLON:
-				#_set_joy_axis_list(Enums.Joy_Axis.JOY_AXIS_RIGHT, false, Enums.Direction.RIGHT)
-				##return null
-	#else:
-		#return null
+		
+		
+		# Is event a Slide Action
+	## AXIS LEFT
+	if (Input.is_action_just_pressed("Down Slide Left Joy") or Input.is_action_just_pressed("Up Slide Left Joy")
+		or Input.is_action_just_pressed("Left Slide Left Joy") or Input.is_action_just_pressed("Right Slide Left Joy")):
+		#if not _joy_axis_pressed(Enums.Joy_Axis.JOY_AXIS_LEFT):
+			var vector: Vector2 = Input.get_vector("Left Slide Left Joy", "Right Slide Left Joy", "Up Slide Left Joy", "Down Slide Left Joy")
+			return _create_slide_command(vector, Enums.Joy_Axis.JOY_AXIS_LEFT)
+	## AXIS RIGHT
+	if (Input.is_action_just_pressed("Down Slide Right Joy") or Input.is_action_just_pressed("Up Slide Right Joy")
+		or Input.is_action_just_pressed("Left Slide Right Joy") or Input.is_action_just_pressed("Right Slide Right Joy")):
+		#if not _joy_axis_pressed(Enums.Joy_Axis.JOY_AXIS_LEFT):
+			var vector: Vector2 = Input.get_vector("Left Slide Right Joy", "Right Slide Right Joy", "Up Slide Right Joy", "Down Slide Right Joy")
+			return _create_slide_command(vector, Enums.Joy_Axis.JOY_AXIS_RIGHT)
+	
+	## AXIS LEFT RELEASE
+	if (Input.is_action_just_released("Down Slide Left Joy") or Input.is_action_just_released("Up Slide Left Joy")
+		or Input.is_action_just_released("Left Slide Left Joy") or Input.is_action_just_released("Right Slide Left Joy")):
+		var vector: Vector2 = Input.get_vector("Left Slide Left Joy", "Right Slide Left Joy", "Up Slide Left Joy", "Down Slide Left Joy")
+		var direction: Enums.Direction = Utils.get_direction(vector)
+		_set_joy_axis_list(Enums.Joy_Axis.JOY_AXIS_LEFT, false, direction)
+	
+	## AXIS RIGHT RELEASE
+	if (Input.is_action_just_released("Down Slide Right Joy") or Input.is_action_just_released("Up Slide Right Joy")
+		or Input.is_action_just_released("Left Slide Right Joy") or Input.is_action_just_released("Right Slide Right Joy")):
+		var vector: Vector2 = Input.get_vector("Left Slide Right Joy", "Right Slide Right Joy", "Up Slide Right Joy", "Down Slide Right Joy")
+		var direction: Enums.Direction = Utils.get_direction(vector)
+		_set_joy_axis_list(Enums.Joy_Axis.JOY_AXIS_RIGHT, false, direction)
 	
 	return null

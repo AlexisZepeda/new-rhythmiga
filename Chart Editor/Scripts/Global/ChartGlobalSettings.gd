@@ -12,11 +12,15 @@ enum Duration {
 }
 
 enum Directions {
-	UP,
-	DOWN,
-	LEFT,
-	RIGHT,
-	NONE,
+	UP = 0, 
+	DOWN = 1, 
+	LEFT = 2, 
+	RIGHT = 3,
+	UP_RIGHT = 4,
+	UP_LEFT = 5,
+	DOWN_RIGHT = 6,
+	DOWN_LEFT = 7,
+	NONE = 8,
 }
 
 const PPQ: int = 240
@@ -44,5 +48,13 @@ func get_arrow_angle(direction: Directions) -> float:
 			return 90.0
 		Directions.LEFT:
 			return 270.0
+		Directions.UP_RIGHT:
+			return 45.0
+		Directions.UP_LEFT:
+			return 315.0
+		Directions.DOWN_RIGHT:
+			return 135.0
+		Directions.DOWN_LEFT:
+			return 225.0
 	
 	return 0.0

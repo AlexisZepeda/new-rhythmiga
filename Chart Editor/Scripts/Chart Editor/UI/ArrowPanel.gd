@@ -15,6 +15,10 @@ enum Slide_State {
 @export var left: ArrowPanelButton
 @export var right: ArrowPanelButton
 @export var down: ArrowPanelButton
+@export var up_left: ArrowPanelButton
+@export var up_right: ArrowPanelButton
+@export var down_left: ArrowPanelButton
+@export var down_right: ArrowPanelButton
 
 @export_category("Textures")
 @export var slide_texture: Texture2D
@@ -28,7 +32,7 @@ var toggled_button: Button = null
 
 
 func _ready() -> void:
-	buttons = [up, left, right, down]
+	buttons = [up, left, right, down, up_right, up_left, down_right, down_left]
 	disable_buttons(true)
 	_set_pivot_offset()
 
@@ -81,6 +85,49 @@ func _on_down_toggled(toggled_on: bool) -> void:
 	#print("Toggled Down %s" % toggled_on)
 
 
+func _on_down_right_toggled(toggled_on: bool) -> void:
+	if toggled_on and _is_single_slide():
+		_set_button_pressed(down_right, false)
+		
+		toggled_button = down_right
+		
+		Toggled.emit(GlobalSettings.Directions.DOWN_RIGHT)
+	else:
+		Untoggled.emit()
+
+
+func _on_down_left_toggled(toggled_on: bool) -> void:
+	if toggled_on and _is_single_slide():
+		_set_button_pressed(down_left, false)
+		
+		toggled_button = down_left
+		
+		Toggled.emit(GlobalSettings.Directions.DOWN_LEFT)
+	else:
+		Untoggled.emit()
+
+
+func _on_up_right_toggled(toggled_on: bool) -> void:
+	if toggled_on and _is_single_slide():
+		_set_button_pressed(up_right, false)
+		
+		toggled_button = up_right
+		
+		Toggled.emit(GlobalSettings.Directions.UP_RIGHT)
+	else:
+		Untoggled.emit()
+
+
+func _on_up_left_toggled(toggled_on: bool) -> void:
+	if toggled_on and _is_single_slide():
+		_set_button_pressed(up_left, false)
+		
+		toggled_button = up_left
+		
+		Toggled.emit(GlobalSettings.Directions.UP_LEFT)
+	else:
+		Untoggled.emit()
+
 func _is_single_slide() -> bool:
 	return _state == Slide_State.SINGLE
 
@@ -104,6 +151,10 @@ func _set_pivot_offset() -> void:
 	left.arrow_texture.rotation_degrees = 270
 	right.arrow_texture.rotation_degrees = 90
 	down.arrow_texture.rotation_degrees = 180
+	up_left.arrow_texture.rotation_degrees = 315
+	up_right.arrow_texture.rotation_degrees = 45
+	down_left.arrow_texture.rotation_degrees = 225
+	down_right.arrow_texture.rotation_degrees = 135
 
 
 func set_button_texture() -> void:

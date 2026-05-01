@@ -24,15 +24,17 @@ func _ready() -> void:
 
 
 func _set_rotation() -> void:
-	match direction:
-		Enums.Direction.UP:
-			arrow.rotation_degrees = 0
-		Enums.Direction.RIGHT:
-			arrow.rotation_degrees = 90
-		Enums.Direction.DOWN:
-			arrow.rotation_degrees = 180
-		Enums.Direction.LEFT:
-			arrow.rotation_degrees = -90
+	#match direction:
+		#Enums.Direction.UP:
+			#arrow.rotation_degrees = 0
+		#Enums.Direction.RIGHT:
+			#arrow.rotation_degrees = 90
+		#Enums.Direction.DOWN:
+			#arrow.rotation_degrees = 180
+		#Enums.Direction.LEFT:
+			#arrow.rotation_degrees = -90
+	var temp: GlobalSettings.Directions = int(direction) as GlobalSettings.Directions
+	arrow.rotation_degrees = GlobalSettings.get_arrow_angle(temp)
 
 
 #func evaluate(param_delta: float, param_direction:Enums.Direction=Enums.Direction.UP, _param_direction_2:Enums.Direction=Enums.Direction.UP, _key:Key=KEY_NONE) -> bool:

@@ -34,8 +34,8 @@ func _init(_beat: float, _type: Note_Type, _lane: int, _direction:int=4, _direct
 	_time = calculate_seconds()
 	
 	
-	var note_type: String = Note_Type.keys()[type]
-	print("Created %s note at %s beat with %s ticks and time %s(secs)." % [note_type, beat, _ticks, _time])
+	#var note_type: String = Note_Type.keys()[type]
+	#print("Created %s note at %s beat with %s ticks and time %s(secs)." % [note_type, beat, _ticks, _time])
 
 
 func calculate_ticks() -> int:
@@ -45,7 +45,6 @@ func calculate_ticks() -> int:
 ## Calculates the metric time (seconds) of the note based on the BPM and PPQ.
 ## In case of tempo changes the most recent BPM before the note must be used.
 func calculate_seconds() -> float:
-	print("PPQ duration %s" % [60000 / (GlobalSettings.bpm * GlobalSettings.PPQ) / 1000])
 	var seconds_per_tick: float = 60000 / (GlobalSettings.bpm * GlobalSettings.PPQ) / 1000
 	
 	return _ticks * seconds_per_tick
@@ -59,5 +58,5 @@ func set_ticks(_new_ticks: int) -> void:
 	_ticks = _new_ticks
 	beat = Utils.get_beat(_ticks)
 	
-	var note_type: String = Note_Type.keys()[type]
-	print("Set %s note at %s beat with %s ticks and time %s(secs)." % [note_type, beat, _ticks, _time])
+	#var note_type: String = Note_Type.keys()[type]
+	#print("Set %s note at %s beat with %s ticks and time %s(secs)." % [note_type, beat, _ticks, _time])

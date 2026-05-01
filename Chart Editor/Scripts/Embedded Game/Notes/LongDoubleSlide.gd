@@ -36,18 +36,24 @@ func _ready() -> void:
 func _set_sprite_offset() -> void:
 	if direction_1 == direction_2:
 		arrow_2.offset.y = _arrow_drawing_offset
+	
+	if direction_2 < direction_1:
+		arrow_1.flip_v = true
+		arrow_2.flip_v = true
 
 
 func _set_rotation(direction: Enums.Direction, arrow: Sprite2D) -> void:
-	match direction:
-		Enums.Direction.UP:
-			arrow.rotation_degrees = 0
-		Enums.Direction.RIGHT:
-			arrow.rotation_degrees = 90
-		Enums.Direction.DOWN:
-			arrow.rotation_degrees = 180
-		Enums.Direction.LEFT:
-			arrow.rotation_degrees = -90
+	#match direction:
+		#Enums.Direction.UP:
+			#arrow.rotation_degrees = 0
+		#Enums.Direction.RIGHT:
+			#arrow.rotation_degrees = 90
+		#Enums.Direction.DOWN:
+			#arrow.rotation_degrees = 180
+		#Enums.Direction.LEFT:
+			#arrow.rotation_degrees = -90
+	var temp: GlobalSettings.Directions = int(direction) as GlobalSettings.Directions
+	arrow.rotation_degrees = GlobalSettings.get_arrow_angle(temp)
 
 
 func _update_position() -> void:

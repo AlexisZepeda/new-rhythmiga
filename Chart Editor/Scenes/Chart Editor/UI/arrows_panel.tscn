@@ -1,14 +1,14 @@
 [gd_scene format=3 uid="uid://1s48ao4ia4fp"]
 
-[ext_resource type="Script" uid="uid://bgpvkk11yet8o" path="res://Scripts/Chart Editor/UI/ArrowPanel.gd" id="1_cssir"]
-[ext_resource type="Texture2D" uid="uid://dc1xr7q4r7agx" path="res://Sprites/Chart Editor/Slide Arrow.png" id="2_ivvkw"]
-[ext_resource type="Texture2D" uid="uid://b5rx0sch85ule" path="res://Sprites/Chart Editor/Long Arrow Icon.png" id="3_ji5i5"]
-[ext_resource type="PackedScene" uid="uid://bgwii7bk7xd1h" path="res://Scenes/Chart Editor/UI/arrow_panel_button.tscn" id="5_ji5i5"]
+[ext_resource type="Script" uid="uid://bgpvkk11yet8o" path="res://Chart Editor/Scripts/Chart Editor/UI/ArrowPanel.gd" id="1_cssir"]
+[ext_resource type="Texture2D" uid="uid://dc1xr7q4r7agx" path="res://Chart Editor/Sprites/Chart Editor/Slide Arrow.png" id="2_ivvkw"]
+[ext_resource type="Texture2D" uid="uid://b5rx0sch85ule" path="res://Chart Editor/Sprites/Chart Editor/Long Arrow Icon.png" id="3_ji5i5"]
+[ext_resource type="PackedScene" uid="uid://bgwii7bk7xd1h" path="res://Chart Editor/Scenes/Chart Editor/UI/arrow_panel_button.tscn" id="5_ji5i5"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_syhlk"]
 bg_color = Color(0.08235294, 0.08235294, 0.09411765, 1)
 
-[node name="Arrows Panel" type="PanelContainer" unique_id=142435741 node_paths=PackedStringArray("up", "left", "right", "down")]
+[node name="Arrows Panel" type="PanelContainer" unique_id=142435741 node_paths=PackedStringArray("up", "left", "right", "down", "up_left", "up_right", "down_left", "down_right")]
 offset_right = 40.0
 offset_bottom = 40.0
 script = ExtResource("1_cssir")
@@ -16,6 +16,10 @@ up = NodePath("VBoxContainer/Top/Up")
 left = NodePath("VBoxContainer/Middle/Left")
 right = NodePath("VBoxContainer/Middle/Right")
 down = NodePath("VBoxContainer/Bottom/Down")
+up_left = NodePath("VBoxContainer/Top/Up Left")
+up_right = NodePath("VBoxContainer/Top/Up Right")
+down_left = NodePath("VBoxContainer/Bottom/Down Left")
+down_right = NodePath("VBoxContainer/Bottom/Down Right")
 slide_texture = ExtResource("2_ivvkw")
 long_slide_texture = ExtResource("3_ji5i5")
 
@@ -25,22 +29,22 @@ layout_mode = 2
 [node name="Top" type="HBoxContainer" parent="VBoxContainer" unique_id=1539198850]
 layout_mode = 2
 
-[node name="TextureRect" type="TextureRect" parent="VBoxContainer/Top" unique_id=1956949806]
+[node name="Up Left" parent="VBoxContainer/Top" unique_id=1412152122 instance=ExtResource("5_ji5i5")]
 layout_mode = 2
-size_flags_horizontal = 3
+toggle_mode = true
 
 [node name="Up" parent="VBoxContainer/Top" unique_id=103621952 instance=ExtResource("5_ji5i5")]
 layout_mode = 2
 toggle_mode = true
 
-[node name="TextureRect3" type="TextureRect" parent="VBoxContainer/Top" unique_id=1898746438]
+[node name="Up Right" parent="VBoxContainer/Top" unique_id=754052817 instance=ExtResource("5_ji5i5")]
 layout_mode = 2
-size_flags_horizontal = 3
+toggle_mode = true
 
 [node name="Middle" type="HBoxContainer" parent="VBoxContainer" unique_id=1324674745]
 layout_mode = 2
 
-[node name="Left" parent="VBoxContainer/Middle" unique_id=1412152122 instance=ExtResource("5_ji5i5")]
+[node name="Left" parent="VBoxContainer/Middle" unique_id=2141096882 instance=ExtResource("5_ji5i5")]
 layout_mode = 2
 toggle_mode = true
 
@@ -57,19 +61,23 @@ toggle_mode = true
 [node name="Bottom" type="HBoxContainer" parent="VBoxContainer" unique_id=408951759]
 layout_mode = 2
 
-[node name="TextureRect" type="TextureRect" parent="VBoxContainer/Bottom" unique_id=1095200794]
+[node name="Down Left" parent="VBoxContainer/Bottom" unique_id=293832631 instance=ExtResource("5_ji5i5")]
 layout_mode = 2
-size_flags_horizontal = 3
+toggle_mode = true
 
 [node name="Down" parent="VBoxContainer/Bottom" unique_id=1681253758 instance=ExtResource("5_ji5i5")]
 layout_mode = 2
 toggle_mode = true
 
-[node name="TextureRect3" type="TextureRect" parent="VBoxContainer/Bottom" unique_id=254987275]
+[node name="Down Right" parent="VBoxContainer/Bottom" unique_id=848685465 instance=ExtResource("5_ji5i5")]
 layout_mode = 2
-size_flags_horizontal = 3
+toggle_mode = true
 
+[connection signal="toggled" from="VBoxContainer/Top/Up Left" to="." method="_on_up_left_toggled"]
 [connection signal="toggled" from="VBoxContainer/Top/Up" to="." method="_on_up_toggled"]
+[connection signal="toggled" from="VBoxContainer/Top/Up Right" to="." method="_on_up_right_toggled"]
 [connection signal="toggled" from="VBoxContainer/Middle/Left" to="." method="_on_left_toggled"]
 [connection signal="toggled" from="VBoxContainer/Middle/Right" to="." method="_on_right_toggled"]
+[connection signal="toggled" from="VBoxContainer/Bottom/Down Left" to="." method="_on_down_left_toggled"]
 [connection signal="toggled" from="VBoxContainer/Bottom/Down" to="." method="_on_down_toggled"]
+[connection signal="toggled" from="VBoxContainer/Bottom/Down Right" to="." method="_on_down_right_toggled"]
