@@ -47,7 +47,8 @@ func calculate_map_position(grid_position: Vector2) -> Vector2:
 func calculate_map_position_with_offset(grid_position: Vector2) -> Vector2:
 	var map_position = grid_position * cell_size + (_half_cell_size)
 	
-	map_position.y += offset
+	## CAUSES HOVER TEXTURE IN CURSOR TO GO LOWER THAN EXPECTED
+	#map_position.y += offset
 	map_position.x += song_offset
 	
 	return map_position
@@ -68,7 +69,7 @@ func calculate_grid_coordinates(map_position: Vector2) -> Vector2:
 
 
 func calculate_grid_coordinates_with_offset(map_position: Vector2) -> Vector2:
-	map_position.y -= offset
+	#map_position.y -= offset
 	map_position.x -= song_offset
 	var grid_position: Vector2 = (map_position / cell_size).floor()
 	

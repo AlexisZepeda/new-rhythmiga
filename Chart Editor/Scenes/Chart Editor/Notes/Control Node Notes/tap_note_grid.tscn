@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://b2awii33e7x3i"]
+
+[ext_resource type="Texture2D" uid="uid://dbb0wsgoobcgc" path="res://Chart Editor/Sprites/Chart Editor/Tap.png" id="1_o13hl"]
+[ext_resource type="Script" uid="uid://orkeoedfupxp" path="res://Chart Editor/Scripts/Chart Editor/Notes/Control Node Notes/ControlNoteGridSprite.gd" id="2_7ffoy"]
+
+[node name="TapNoteGrid" type="TextureRect" unique_id=1861837650]
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+size_flags_horizontal = 4
+size_flags_vertical = 4
+mouse_filter = 0
+mouse_behavior_recursive = 2
+texture = ExtResource("1_o13hl")
+script = ExtResource("2_7ffoy")

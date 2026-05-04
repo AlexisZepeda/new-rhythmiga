@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://dq37o3bgxn5ju"]
+
+[ext_resource type="Script" uid="uid://dr3j13j51c8ha" path="res://Chart Editor/Scripts/Chart Editor/Waveform/NewNoteGrid.gd" id="1_un24o"]
+[ext_resource type="PackedScene" uid="uid://b2awii33e7x3i" path="res://Chart Editor/Scenes/Chart Editor/Notes/Control Node Notes/tap_note_grid.tscn" id="2_o4ivl"]
+
+[node name="NoteGrid" type="Control" unique_id=80021497]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+script = ExtResource("1_un24o")
+tap_note_prefab = ExtResource("2_o4ivl")

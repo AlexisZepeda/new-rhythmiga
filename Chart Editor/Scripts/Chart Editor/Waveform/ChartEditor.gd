@@ -14,7 +14,7 @@ const FILE_EXTENSION: String = ".dat"
 @export var scroll_container: ScrollContainer
 @export var cursor: Cursor
 @export var loading_screen: ColorRect
-@export var note_grid: NoteGrid
+@export var note_grid: NewNoteGrid
 #@export var conductor: ChartConductor
 @export var shinobu_conductor: ShinobuConductor
 @export var audio_file_dialog: FileDialog

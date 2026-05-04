@@ -2,7 +2,7 @@ class_name Cursor
 extends Control
 
 signal MOUSE_RIGHT_CLICK(cell: Vector2)
-signal MOUSE_LEFT_CLICK(cell: Vector2)
+signal MOUSE_LEFT_CLICK(cell: Vector2, mouse_position: Vector2)
 signal MOUSE_LEFT_CLICK_OUTSIDE_GRID()
 signal MOUSE_LEFT_RELEASE(cell: Vector2)
 signal MOUSE_HOVER(mouse_position: Vector2, cell: Vector2)
@@ -22,6 +22,7 @@ signal MOUSE_HOVER_OUTSIDE_GRID(mouse_position: Vector2)
 var _hover_texture: Sprite2D = Sprite2D.new()
 
 var coordinates: Vector2 = Vector2(0, 0)
+var raw_coordinates: Vector2 = Vector2(0, 0)
 var current_cell: Vector2 = Vector2(0, 0)
 
 var within_grid: bool = false
@@ -42,8 +43,10 @@ func _physics_process(_delta: float) -> void:
 	if grid.is_within_bounds(cell):
 		within_grid = true
 		hover(cell)
+		
 		#_hover_texture.position = mouse_position
-		_hover_texture.global_position = coordinates
+		#_hover_texture.global_position = coordinates
+		_hover_texture.position = coordinates
 	
 		_hover_texture.show()
 	else:
@@ -55,7 +58,7 @@ func _physics_process(_delta: float) -> void:
 func _input(event: InputEvent) -> void:
 	if within_grid:
 		if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.is_pressed():
-			MOUSE_LEFT_CLICK.emit(current_cell)
+			MOUSE_LEFT_CLICK.emit(current_cell, _hover_texture.position)
 		
 		if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_RIGHT and event.is_pressed():
 			MOUSE_RIGHT_CLICK.emit(current_cell)
@@ -86,10 +89,10 @@ func resize(top_margin: float, _size: float) -> void:
 func hover(cell: Vector2) -> void:
 	if current_cell == cell:
 		return
-	
 	current_cell = cell
 	coordinates = grid.calculate_map_position_with_offset(cell)
-	coordinates.x = coordinates.x - scroll_container.scroll_horizontal
+	raw_coordinates = coordinates
+	#coordinates.x = coordinates.x - scroll_container.scroll_horizontal
 
 
 func set_toggle_tap() -> void:

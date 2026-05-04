@@ -20,7 +20,7 @@ signal REMOVE_LONG_NOTE
 
 @export var cursor: Cursor
 @export var lines: Lines
-@export var notes: NoteGrid
+@export var notes: NewNoteGrid
 @export var audio_spectrum_analyzer: AudioSpectrumAnalyzer
 
 enum Toggle {
@@ -124,10 +124,11 @@ func _on_note_grid_long_note_set() -> void:
 	cursor.set_toggle_long_back()
 
 
-func _on_cursor_mouse_left_click(cell: Vector2) -> void:
+func _on_cursor_mouse_left_click(cell: Vector2, mouse_position: Vector2) -> void:
 	match _note_toggle_state:
 		Toggle.TAP:
 			ADD_TAP_NOTE.emit(cell)
+			notes.add_tap_note(cell, mouse_position)
 		Toggle.ARROW:
 			ADD_ARROW_NOTE.emit(cell, arrow_direction)
 		Toggle.DOUBLE_ARROW:
